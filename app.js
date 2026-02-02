@@ -67,19 +67,41 @@ function updateHeaderStats() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// BANKROLL SYSTEM
+// BANKROLL SYSTEM - LIVE UPDATES
 // ═══════════════════════════════════════════════════════════════
 function initBankroll() {
     const bankroll = BOOKIE_DATA.bankroll;
-    const unitBase = bankroll.current * (bankroll.unitPercent / 100);
 
-    // Update bankroll display
-    document.getElementById('currentBankroll').textContent = '$' + bankroll.current.toLocaleString();
-    document.getElementById('startingBankroll').textContent = '$' + bankroll.starting.toLocaleString();
+    // Set up input listener for live updates
+    const bankrollInput = document.getElementById('bankrollInput');
+    if (bankrollInput) {
+        bankrollInput.value = bankroll.current;
+        bankrollInput.addEventListener('input', updateAllBankrollDisplays);
+        bankrollInput.addEventListener('keyup', updateAllBankrollDisplays);
+    }
 
-    const profit = bankroll.current - bankroll.starting;
-    document.getElementById('totalProfit').textContent = (profit >= 0 ? '+$' : '-$') + Math.abs(profit).toLocaleString();
-    document.getElementById('totalROI').textContent = ((profit / bankroll.starting) * 100).toFixed(1) + '%';
+    // Initial render
+    updateAllBankrollDisplays();
+}
+
+function updateAllBankrollDisplays() {
+    const inputVal = document.getElementById('bankrollInput')?.value;
+    const bankroll = parseFloat(inputVal) || BOOKIE_DATA.bankroll.current;
+    const starting = BOOKIE_DATA.bankroll.starting;
+    const unitBase = bankroll * 0.02; // 2%
+
+    // Update hero display
+    const currentEl = document.getElementById('currentBankroll');
+    const startingEl = document.getElementById('startingBankroll');
+    const profitEl = document.getElementById('totalProfit');
+    const roiEl = document.getElementById('totalROI');
+
+    if (currentEl) currentEl.textContent = '$' + bankroll.toLocaleString();
+    if (startingEl) startingEl.textContent = '$' + starting.toLocaleString();
+
+    const profit = bankroll - starting;
+    if (profitEl) profitEl.textContent = (profit >= 0 ? '+$' : '-$') + Math.abs(profit).toLocaleString();
+    if (roiEl) roiEl.textContent = ((profit / starting) * 100).toFixed(1) + '%';
 
     // Render unit tiers
     const unitGrid = document.getElementById('unitBreakdown');
@@ -94,38 +116,28 @@ function initBankroll() {
         `).join('');
     }
 
-    // Render growth projection
+    // Render dynamic growth projection based on bankroll input
     const growthGrid = document.getElementById('growthProjection');
     if (growthGrid) {
-        growthGrid.innerHTML = BOOKIE_DATA.growthProjection.map((month, i) => `
-            <div class="growth-month ${i === 1 ? 'current' : ''}">
-                <div class="month-label">${month.month} 2026</div>
-                <div class="month-value">$${month.bankroll.toLocaleString()}</div>
-                <div class="month-gain">${month.gain > 0 ? '+$' + month.gain : month.note}</div>
-            </div>
-        `).join('');
-    }
+        const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+        let projected = bankroll;
 
-    // Set up input listeners
-    const bankrollInput = document.getElementById('bankrollInput');
-    if (bankrollInput) {
-        bankrollInput.value = bankroll.current;
-        bankrollInput.addEventListener('input', updateUnitCalculator);
+        growthGrid.innerHTML = months.map((month, i) => {
+            const gain = i === 0 ? 0 : Math.round(projected * 0.10);
+            if (i > 0) projected += gain;
+            return `
+                <div class="growth-month ${i === 0 ? 'current' : ''}">
+                    <div class="month-label">${month} 2026</div>
+                    <div class="month-value">$${(i === 0 ? bankroll : projected).toLocaleString()}</div>
+                    <div class="month-gain">${i === 0 ? 'Current' : '+$' + gain.toLocaleString()}</div>
+                </div>
+            `;
+        }).join('');
     }
 }
 
 function updateUnitCalculator() {
-    const bankroll = parseFloat(document.getElementById('bankrollInput').value) || 0;
-    const unitBase = bankroll * 0.02; // 2%
-
-    document.getElementById('unitBreakdown').innerHTML = BOOKIE_DATA.unitTiers.map((tier, i) => `
-        <div class="unit-tier ${i === 4 ? 'active' : ''}">
-            <div class="locks">${'🔒'.repeat(tier.locks)}</div>
-            <div class="units">${tier.units}u</div>
-            <div class="amount">$${(unitBase * tier.units).toFixed(0)}</div>
-            <div class="pct">${tier.percent}%</div>
-        </div>
-    `).join('');
+    updateAllBankrollDisplays();
 }
 
 // ═══════════════════════════════════════════════════════════════

@@ -1004,21 +1004,75 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE - MOBILE OPTIMIZED
    ═══════════════════════════════════════════════════════════════ */
 @media (max-width: 1200px) {
     .unit-system { grid-template-columns: 1fr; }
     .history-stats { grid-template-columns: repeat(3, 1fr); }
     .growth-months { grid-template-columns: repeat(3, 1fr); }
+    .parlay-grid { grid-template-columns: 1fr !important; }
 }
 
 @media (max-width: 768px) {
-    .header { flex-direction: column; gap: 20px; padding: 20px; }
-    .nav { padding: 0 20px; }
-    .main { padding: 20px; }
-    .cards-grid { grid-template-columns: 1fr; }
+    .header { flex-direction: column; gap: 15px; padding: 15px; }
+    .header-stats { gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .stat-value { font-size: 22px; }
+    .logo-text { font-size: 26px; }
+    .logo-icon { width: 45px; height: 45px; font-size: 22px; }
+    .nav { padding: 0 10px; gap: 0; }
+    .nav-item { padding: 14px 16px; font-size: 11px; }
+    .main { padding: 15px; }
+    .cards-grid { grid-template-columns: 1fr; gap: 15px; }
+    .pick-card-body { padding: 15px; }
+    .matchup { font-size: 16px; }
+    .pick-value { font-size: 18px; }
+    .plays-header { padding: 15px; flex-direction: column; gap: 10px; align-items: flex-start; }
+    .plays-title { font-size: 14px; }
+    .play-item { padding: 14px 15px; flex-wrap: wrap; gap: 10px; }
+    .play-rank { width: 35px; height: 35px; font-size: 14px; margin-right: 12px; }
+    .play-matchup { font-size: 14px; }
+    .play-pick { font-size: 12px; }
+    .play-meta { width: 100%; display: flex; justify-content: space-between; margin-top: 5px; }
+    .history-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .history-stat-card { padding: 15px; }
+    .history-stat-value { font-size: 28px; }
+    .history-table-header { display: none; }
+    .history-row { grid-template-columns: 1fr 1fr; gap: 8px; padding: 15px; }
+    .history-row > div:nth-child(2) { grid-column: 1 / -1; font-weight: 600; }
+    .bankroll-hero { padding: 25px 15px; }
+    .bankroll-amount { font-size: 48px; }
+    .bankroll-stats { gap: 30px; flex-wrap: wrap; }
+    .bankroll-stat-value { font-size: 22px; }
+    .unit-card { padding: 20px; }
+    .unit-breakdown { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .unit-tier { padding: 12px 8px; }
+    .unit-tier .units { font-size: 16px; }
+    .growth-months { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .growth-month { padding: 15px; }
+    .growth-month .month-value { font-size: 18px; }
+    .form-grid { grid-template-columns: 1fr !important; gap: 15px; }
+    .logger-form { padding: 20px; }
+    .parlay-section { padding: 20px; }
+    .parlay-odds { font-size: 24px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .section-title { font-size: 20px; }
+    .game-row { grid-template-columns: 1fr !important; gap: 10px; text-align: center; }
+    .team-away, .team-home { justify-content: center !important; text-align: center !important; }
+    .game-odds { justify-content: center !important; }
+    .dj-picks-header { padding: 20px; }
+    .dj-picks-title { font-size: 22px; }
+    .footer { padding: 20px 15px; }
+}
+
+@media (max-width: 480px) {
+    .header-stats { gap: 15px; }
+    .stat-box { min-width: 70px; }
+    .stat-value { font-size: 18px; }
+    .stat-label { font-size: 9px; }
+    .nav-item { padding: 12px 12px; font-size: 10px; }
+    .bankroll-amount { font-size: 38px; }
+    .unit-breakdown { grid-template-columns: repeat(2, 1fr); }
+    .growth-months { grid-template-columns: 1fr; }
     .history-stats { grid-template-columns: 1fr; }
-    .form-grid { grid-template-columns: 1fr; }
-    .unit-breakdown { grid-template-columns: repeat(3, 1fr); }
-    .history-table-header, .history-row { grid-template-columns: 1fr; gap: 8px; }
+    .play-rank { width: 30px; height: 30px; font-size: 12px; margin-right: 10px; }
 }
