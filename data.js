@@ -37,7 +37,9 @@ const BOOKIE_DATA = {
     // TRACK RECORD - January 2026 History
     // ═══════════════════════════════════════════════════════════════
     history: [
-        // January 2026 picks (most recent first)
+        // February 2026 picks (most recent first)
+        { date: "Feb 2", sport: "NBA", pick: "Pacers +6.5 vs Rockets", odds: -110, units: 1, result: "win", pl: 0.91 },
+        { date: "Feb 2", sport: "NCAAB", pick: "UNC -11.5 vs Syracuse", odds: -110, units: 1, result: "loss", pl: -1.00 },
         { date: "Feb 1", sport: "NBA", pick: "Celtics -4.5 vs Bucks", odds: -110, units: 2, result: "win", pl: 1.82 },
         { date: "Feb 1", sport: "NHL", pick: "Lightning ML vs Bruins", odds: 125, units: 1, result: "win", pl: 1.25 },
         { date: "Jan 31", sport: "NBA", pick: "Suns -2.5 vs Lakers", odds: -110, units: 1.5, result: "loss", pl: -1.50 },
@@ -87,74 +89,153 @@ const BOOKIE_DATA = {
         {
             id: 1,
             sport: "NBA",
-            matchup: "Pacers vs Rockets",
+            matchup: "Rockets @ Pacers",
             time: "7:00 PM ET",
-            pick: "Houston Rockets -5.5",
+            pick: "Indiana Pacers +6.5",
             odds: -110,
-            units: 2,
-            conviction: 4,
+            units: 1,
+            conviction: 3,
             type: "daily",
+            result: "WIN",
+            final: "HOU 118-114 (Pacers lost by 4)",
             factors: [
-                "Rockets 30-17, Pacers 13-36 — 17 game difference",
-                "Pacers in full tank mode, no motivation",
-                "Houston elite defense vs poor Pacers offense",
-                "Rockets fighting for playoff seeding"
+                "Kevin Durant OUT (ankle) — huge loss",
+                "Rockets 2-0 without KD but 6.5 too many points",
+                "Pacers at home, scrappy despite bad record",
+                "Sengun went off (39 pts) but Pacers kept it close"
             ],
             risk: null
         },
         {
             id: 2,
-            sport: "NBA",
-            matchup: "Thunder vs Nuggets",
-            time: "9:00 PM ET",
-            pick: "Denver Nuggets +6.5",
+            sport: "NCAAB",
+            matchup: "Syracuse @ #14 UNC",
+            time: "7:00 PM ET",
+            pick: "UNC -11.5",
             odds: -110,
-            units: 1.5,
-            conviction: 3,
+            units: 1,
+            conviction: 4,
             type: "daily",
+            result: "LOSS",
+            final: "UNC 82-72 (won by 10, needed 12)",
             factors: [
-                "Nuggets 32-16, legitimate contender",
-                "Jokic keeps every game close",
-                "6.5 is too much respect for OKC vs good team",
-                "Championship DNA — won't get blown out"
+                "UNC 12-0 at home this season",
+                "85% win probability",
+                "Syracuse 2-6 as underdog",
+                "Spread was just too high"
             ],
-            risk: "Jokic questionable with bone bruise"
+            risk: "11.5 proved too much"
         },
         {
             id: 3,
-            sport: "NHL",
-            matchup: "Sabres vs Panthers",
-            time: "7:00 PM ET",
-            pick: "Buffalo Sabres ML",
-            odds: 145,
+            sport: "NCAAB",
+            matchup: "#11 Kansas @ #13 Texas Tech",
+            time: "9:00 PM ET",
+            pick: "Kansas +4.5",
+            odds: -105,
             units: 1,
             conviction: 3,
             type: "daily",
+            result: "PENDING",
             factors: [
-                "Sabres on 5-game win streak (7-2-1 L10)",
-                "Panthers cold at 6-4-0, lost 2 straight",
-                "Buffalo 31-17-5, legitimate playoff team",
-                "Value at +145 for hot team"
+                "TTU only covers 38.5% as 4.5+ favorite",
+                "Kansas has depth, 4 players projected 13+ pts",
+                "TTU coming off loss to UCF",
+                "Sharp money on TTU but public on Kansas"
             ],
-            risk: "Panthers at home, historically tough"
+            risk: "Texas Tech 11-0 at home"
         },
         {
             id: 4,
+            sport: "NBA",
+            matchup: "76ers @ Clippers",
+            time: "10:00 PM ET",
+            pick: "Philadelphia 76ers +2.5",
+            odds: -110,
+            units: 1.5,
+            conviction: 4,
+            type: "daily",
+            result: "PENDING",
+            factors: [
+                "Clippers 1-6 on back-to-backs this season",
+                "James Harden OUT (personal reasons)",
+                "PHI 14-6 ATS last 20 vs LAC",
+                "PHI 5-2 ATS last 7 road games"
+            ],
+            risk: "Embiid ankle questionable"
+        },
+        {
+            id: 5,
+            sport: "NCAAB",
+            matchup: "Kansas @ Texas Tech",
+            time: "9:00 PM ET",
+            pick: "OVER 154.5",
+            odds: -110,
+            units: 1,
+            conviction: 3,
+            type: "total",
+            result: "PENDING",
+            factors: [
+                "OVER hit 5 of 7 head-to-head meetings",
+                "OVER hit 4 of last 5 Kansas games",
+                "Both teams can score"
+            ],
+            risk: null
+        },
+        {
+            id: 6,
             sport: "NHL",
-            matchup: "Penguins vs Senators",
-            time: "7:00 PM ET",
-            pick: "Pittsburgh Penguins ML",
-            odds: -125,
+            matchup: "Stars vs Jets",
+            time: "8:30 PM ET",
+            pick: "Dallas Stars -1.5",
+            odds: 165,
+            units: 1,
+            conviction: 4,
+            type: "daily",
+            result: "PENDING",
+            factors: [
+                "Stars at home — American Airlines Center",
+                "3rd best goal differential in NHL (+30)",
+                "10th best offense (3.3 goals/game)",
+                "5th best defense (2.7 goals against)"
+            ],
+            risk: null
+        },
+        {
+            id: 7,
+            sport: "NHL",
+            matchup: "Maple Leafs vs Flames",
+            time: "10:00 PM ET",
+            pick: "Calgary Flames +1.5",
+            odds: -260,
             units: 1,
             conviction: 3,
             type: "daily",
+            result: "PENDING",
             factors: [
-                "Penguins on 5-game win streak",
-                "Ottawa inconsistent, 5-3-2 L10",
-                "Crosby/Malkin still dangerous",
-                "Pens 27-14-11, riding momentum"
+                "Home underdog value",
+                "Projection: Flames 4 - Leafs 3",
+                "Calgary playing well at home"
             ],
-            risk: null
+            risk: "Heavy favorite in Leafs"
+        },
+        {
+            id: 8,
+            sport: "NHL",
+            matchup: "Penguins vs Senators",
+            time: "7:00 PM ET",
+            pick: "Ottawa Senators ML",
+            odds: -118,
+            units: 1,
+            conviction: 3,
+            type: "daily",
+            result: "PENDING",
+            factors: [
+                "Home favorite",
+                "Penguins struggling on road",
+                "Ottawa slight edge at home"
+            ],
+            risk: "Crosby factor"
         }
     ],
 
