@@ -114,37 +114,34 @@ body {
     letter-spacing: 3px; text-transform: uppercase;
 }
 
-/* Center Balance Display */
+/* Center Balance Display - Clean Mini Logo Style */
 .balance-display {
-    text-align: center;
-    padding: 10px 40px;
-    background: linear-gradient(135deg, rgba(0, 230, 118, 0.1), rgba(0, 102, 255, 0.1));
-    border: 1px solid rgba(0, 230, 118, 0.3);
-    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #0066ff 0%, #00aaff 50%, #0066ff 100%);
+    border-radius: 12px;
+    box-shadow: 0 0 25px var(--accent-glow), inset 0 0 20px rgba(255,255,255,0.1);
+    position: relative;
 }
 
-.balance-label {
-    font-size: 10px;
-    color: var(--text-muted);
-    letter-spacing: 3px;
-    text-transform: uppercase;
+.balance-display::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .balance-amount {
-    font-size: 36px;
+    font-size: 24px;
     font-weight: 800;
-    background: linear-gradient(135deg, var(--accent-green), #69f0ae);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    letter-spacing: 1px;
 }
-
-.balance-change {
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.balance-change.positive { color: var(--accent-green); }
-.balance-change.negative { color: var(--accent-red); }
 
 .header-stats {
     display: flex;
@@ -1670,76 +1667,6 @@ body {
    BETS PAGE - Clean Modern Design
    ═══════════════════════════════════════════════════════════════ */
 
-/* Bets Hero */
-.bets-hero {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 230, 118, 0.05) 100%);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 25px 30px;
-    margin-bottom: 25px;
-}
-
-.bets-hero-icon {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, var(--accent-green), #00c853);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 30px rgba(0, 230, 118, 0.3);
-}
-
-.bets-hero-icon .hero-b {
-    font-size: 36px;
-    color: #000;
-}
-
-.bets-hero-text {
-    flex: 1;
-}
-
-.bets-hero-title {
-    font-size: 32px;
-    font-weight: 800;
-    letter-spacing: 4px;
-    background: linear-gradient(135deg, var(--accent-green), #69f0ae);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.bets-hero-date {
-    font-size: 14px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-top: 4px;
-}
-
-.bets-hero-countdown {
-    text-align: right;
-    padding: 15px 25px;
-    background: rgba(255, 71, 87, 0.1);
-    border: 1px solid var(--accent-red);
-    border-radius: 14px;
-}
-
-.countdown-label {
-    font-size: 10px;
-    color: var(--accent-red);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-.countdown-time {
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--accent-red);
-}
-
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
@@ -2146,6 +2073,43 @@ body {
     .bets-header { padding: 20px; }
     .bets-title { font-size: 28px; }
     .parlay-stakes { flex-direction: column; gap: 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE HEADER - Consistent across tabs
+   ═══════════════════════════════════════════════════════════════ */
+.page-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.page-title {
+    font-size: 36px;
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 5px;
+}
+
+.page-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Theme-specific title colors */
+.theme-bets .page-title {
+    background: linear-gradient(135deg, var(--accent-green), #69f0ae);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.theme-watch .page-title {
+    background: linear-gradient(135deg, #ff6b35, #ff8c5a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 /* ═══════════════════════════════════════════════════════════════

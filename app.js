@@ -23,16 +23,16 @@ const TEAM_LOGOS = {
     'OKC': 'https://a.espncdn.com/i/teamlogos/nba/500/okc.png',
     'SAS': 'https://a.espncdn.com/i/teamlogos/nba/500/sa.png',
     'PHX': 'https://a.espncdn.com/i/teamlogos/nba/500/phx.png',
-    'TOR': 'https://a.espncdn.com/i/teamlogos/nba/500/tor.png',
     'NYK': 'https://a.espncdn.com/i/teamlogos/nba/500/ny.png',
     'BKN': 'https://a.espncdn.com/i/teamlogos/nba/500/bkn.png',
     'CLE': 'https://a.espncdn.com/i/teamlogos/nba/500/cle.png',
 
-    // NHL Teams
+    // NHL Teams - Use different keys for NHL Toronto
     'OTT': 'https://a.espncdn.com/i/teamlogos/nhl/500/ott.png',
     'CAR': 'https://a.espncdn.com/i/teamlogos/nhl/500/car.png',
     'BUF': 'https://a.espncdn.com/i/teamlogos/nhl/500/buf.png',
     'TB': 'https://a.espncdn.com/i/teamlogos/nhl/500/tb.png',
+    'TOR': 'https://a.espncdn.com/i/teamlogos/nhl/500/tor.png',
     'EDM': 'https://a.espncdn.com/i/teamlogos/nhl/500/edm.png',
     'CGY': 'https://a.espncdn.com/i/teamlogos/nhl/500/cgy.png',
     'PIT': 'https://a.espncdn.com/i/teamlogos/nhl/500/pit.png',
@@ -115,16 +115,10 @@ function initNavigation() {
 function updateHeaderStats() {
     const stats = calculateStats();
     const bankroll = BOOKIE_DATA.bankroll;
-    const profit = bankroll.current - bankroll.starting;
 
     // Update balance display
     const balanceEl = document.getElementById('headerBalance');
-    const changeEl = document.getElementById('headerChange');
     if (balanceEl) balanceEl.textContent = '$' + bankroll.current.toLocaleString();
-    if (changeEl) {
-        changeEl.textContent = (profit >= 0 ? '+$' : '-$') + Math.abs(profit) + ' today';
-        changeEl.className = 'balance-change ' + (profit >= 0 ? 'positive' : 'negative');
-    }
 
     // Update stats
     const winRateEl = document.getElementById('headerWinRate');
