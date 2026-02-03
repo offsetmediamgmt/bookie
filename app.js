@@ -370,10 +370,10 @@ function updateUnitCalculator() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// DAILY CARD RENDERING - Watch-Style Game Cards
+// DAILY CARD RENDERING - Compact Style matching Bets Page
 // ═══════════════════════════════════════════════════════════════
 function renderDailyCard() {
-    // Render MAX Plays - Watch-style cards
+    // Render MAX Plays - Compact card style
     const maxPlaysContainer = document.getElementById('maxPlaysList');
     if (maxPlaysContainer) {
         maxPlaysContainer.innerHTML = BOOKIE_DATA.maxPlays.map((pick, i) => {
@@ -381,52 +381,28 @@ function renderDailyCard() {
             const betAmount = pick.units * 20;
             const potentialWin = calculateWin(betAmount, pick.odds);
             return `
-            <div class="daily-game-card max-play">
-                <div class="daily-card-header">
-                    <div class="daily-card-badge gold">MAX PLAY</div>
-                    <div class="daily-card-sport">${getSportEmoji(pick.sport)} ${pick.sport}</div>
-                    <div class="daily-card-time">${pick.time}</div>
+            <div class="bet-card max-play">
+                <div class="bet-card-top">
+                    <span class="bet-badge gold">MAX</span>
+                    <span class="bet-meta">${getSportEmoji(pick.sport)} ${pick.sport} · ${pick.time}</span>
+                    <span class="bet-locks">${'🔒'.repeat(pick.conviction)}</span>
                 </div>
-                <div class="daily-card-matchup">
-                    <div class="daily-card-team">
-                        ${getTeamLogo(teams.away, 55)}
-                        <div class="daily-team-abbr">${teams.away}</div>
-                    </div>
-                    <div class="daily-card-vs">@</div>
-                    <div class="daily-card-team">
-                        ${getTeamLogo(teams.home, 55)}
-                        <div class="daily-team-abbr">${teams.home}</div>
-                    </div>
+                <div class="bet-card-center">
+                    ${getTeamLogo(teams.away, 40)}
+                    <span class="bet-at">@</span>
+                    ${getTeamLogo(teams.home, 40)}
                 </div>
-                <div class="daily-card-pick">${pick.pick}</div>
-                <div class="daily-card-details">
-                    <div class="daily-detail-item">
-                        <div class="daily-detail-value">${formatOdds(pick.odds)}</div>
-                        <div class="daily-detail-label">Odds</div>
-                    </div>
-                    <div class="daily-detail-item">
-                        <div class="daily-detail-value conviction">${'🔒'.repeat(pick.conviction)}</div>
-                        <div class="daily-detail-label">Conviction</div>
-                    </div>
-                    <div class="daily-detail-item risk">
-                        <div class="daily-detail-value">$${betAmount}</div>
-                        <div class="daily-detail-label">Risk</div>
-                    </div>
-                    <div class="daily-detail-item win">
-                        <div class="daily-detail-value">$${potentialWin}</div>
-                        <div class="daily-detail-label">To Win</div>
-                    </div>
+                <div class="bet-card-pick">${pick.pick}</div>
+                <div class="bet-card-bottom">
+                    <div class="bet-stat">${formatOdds(pick.odds)}</div>
+                    <div class="bet-stat risk"><span>$${betAmount}</span><small>Risk</small></div>
+                    <div class="bet-stat win"><span>$${potentialWin}</span><small>Win</small></div>
                 </div>
-                ${pick.factors ? `
-                <div class="daily-card-factors">
-                    ${pick.factors.map(f => `<div class="factor-item">→ ${f}</div>`).join('')}
-                </div>
-                ` : ''}
             </div>
         `}).join('');
     }
 
-    // Render Today's Picks - Watch-style cards
+    // Render Today's Picks - Compact card style
     const todaysContainer = document.getElementById('todaysPicksList');
     if (todaysContainer) {
         todaysContainer.innerHTML = BOOKIE_DATA.todaysPicks.map((pick, i) => {
@@ -434,47 +410,28 @@ function renderDailyCard() {
             const betAmount = pick.units * 20;
             const potentialWin = calculateWin(betAmount, pick.odds);
             return `
-            <div class="daily-game-card">
-                <div class="daily-card-header">
-                    <div class="daily-card-num">${i + 1}</div>
-                    <div class="daily-card-sport">${getSportEmoji(pick.sport)} ${pick.sport}</div>
-                    <div class="daily-card-time">${pick.time}</div>
+            <div class="bet-card">
+                <div class="bet-card-top">
+                    <span class="bet-num">${i + 1}</span>
+                    <span class="bet-meta">${getSportEmoji(pick.sport)} ${pick.sport} · ${pick.time}</span>
+                    <span class="bet-locks">${'🔒'.repeat(pick.conviction)}</span>
                 </div>
-                <div class="daily-card-matchup">
-                    <div class="daily-card-team">
-                        ${getTeamLogo(teams.away, 50)}
-                        <div class="daily-team-abbr">${teams.away}</div>
-                    </div>
-                    <div class="daily-card-vs">@</div>
-                    <div class="daily-card-team">
-                        ${getTeamLogo(teams.home, 50)}
-                        <div class="daily-team-abbr">${teams.home}</div>
-                    </div>
+                <div class="bet-card-center">
+                    ${getTeamLogo(teams.away, 40)}
+                    <span class="bet-at">@</span>
+                    ${getTeamLogo(teams.home, 40)}
                 </div>
-                <div class="daily-card-pick">${pick.pick}</div>
-                <div class="daily-card-details">
-                    <div class="daily-detail-item">
-                        <div class="daily-detail-value">${formatOdds(pick.odds)}</div>
-                        <div class="daily-detail-label">Odds</div>
-                    </div>
-                    <div class="daily-detail-item">
-                        <div class="daily-detail-value conviction">${'🔒'.repeat(pick.conviction)}</div>
-                        <div class="daily-detail-label">Conviction</div>
-                    </div>
-                    <div class="daily-detail-item risk">
-                        <div class="daily-detail-value">$${betAmount}</div>
-                        <div class="daily-detail-label">Risk</div>
-                    </div>
-                    <div class="daily-detail-item win">
-                        <div class="daily-detail-value">$${potentialWin}</div>
-                        <div class="daily-detail-label">To Win</div>
-                    </div>
+                <div class="bet-card-pick">${pick.pick}</div>
+                <div class="bet-card-bottom">
+                    <div class="bet-stat">${formatOdds(pick.odds)}</div>
+                    <div class="bet-stat risk"><span>$${betAmount}</span><small>Risk</small></div>
+                    <div class="bet-stat win"><span>$${potentialWin}</span><small>Win</small></div>
                 </div>
             </div>
         `}).join('');
     }
 
-    // Render Weekly Picks - Watch-style cards
+    // Render Weekly Picks - Compact card style
     const weeklyContainer = document.getElementById('weeklyPicksList');
     if (weeklyContainer) {
         weeklyContainer.innerHTML = BOOKIE_DATA.weeklyPicks.map((pick, i) => {
@@ -482,57 +439,63 @@ function renderDailyCard() {
             const betAmount = pick.units * 20;
             const potentialWin = calculateWin(betAmount, pick.odds);
             return `
-            <div class="daily-game-card">
-                <div class="daily-card-header">
-                    <div class="daily-card-num">${i + 1}</div>
-                    <div class="daily-card-sport">${getSportEmoji(pick.sport)} ${pick.sport}</div>
-                    <div class="daily-card-time">${pick.time}</div>
+            <div class="bet-card">
+                <div class="bet-card-top">
+                    <span class="bet-num">${i + 1}</span>
+                    <span class="bet-meta">${getSportEmoji(pick.sport)} ${pick.sport} · ${pick.time}</span>
+                    <span class="bet-locks">${'🔒'.repeat(pick.conviction)}</span>
                 </div>
-                <div class="daily-card-matchup">
-                    <div class="daily-card-team">
-                        ${getTeamLogo(teams.away, 50)}
-                        <div class="daily-team-abbr">${teams.away}</div>
-                    </div>
-                    <div class="daily-card-vs">vs</div>
-                    <div class="daily-card-team">
-                        ${getTeamLogo(teams.home, 50)}
-                        <div class="daily-team-abbr">${teams.home}</div>
-                    </div>
+                <div class="bet-card-center">
+                    ${getTeamLogo(teams.away, 40)}
+                    <span class="bet-at">vs</span>
+                    ${getTeamLogo(teams.home, 40)}
                 </div>
-                <div class="daily-card-pick">${pick.pick}</div>
-                <div class="daily-card-details">
-                    <div class="daily-detail-item">
-                        <div class="daily-detail-value">${formatOdds(pick.odds)}</div>
-                        <div class="daily-detail-label">Odds</div>
-                    </div>
-                    <div class="daily-detail-item">
-                        <div class="daily-detail-value conviction">${'🔒'.repeat(pick.conviction)}</div>
-                        <div class="daily-detail-label">Conviction</div>
-                    </div>
-                    <div class="daily-detail-item risk">
-                        <div class="daily-detail-value">$${betAmount}</div>
-                        <div class="daily-detail-label">Risk</div>
-                    </div>
-                    <div class="daily-detail-item win">
-                        <div class="daily-detail-value">$${potentialWin}</div>
-                        <div class="daily-detail-label">To Win</div>
-                    </div>
+                <div class="bet-card-pick">${pick.pick}</div>
+                <div class="bet-card-bottom">
+                    <div class="bet-stat">${formatOdds(pick.odds)}</div>
+                    <div class="bet-stat risk"><span>$${betAmount}</span><small>Risk</small></div>
+                    <div class="bet-stat win"><span>$${potentialWin}</span><small>Win</small></div>
                 </div>
             </div>
         `}).join('');
     }
 
-    // Render Analysis Cards (Dropdown)
-    const cardsContainer = document.getElementById('pickCardsGrid');
-    if (cardsContainer) {
-        cardsContainer.innerHTML = BOOKIE_DATA.todaysPicks.map((pick, index) => renderAnalysisCard(pick, index)).join('');
-    }
-
-    // Render Parlays Grid
+    // Render Parlays Grid - Same style as Bets page
     renderParlaysGrid();
+
+    // Render Player Props - Same style as Bets page
+    renderDailyPlayerProps();
 
     // Initialize parlay generator
     initParlayGenerator();
+}
+
+// Player Props for Daily Card - Same style as Bets page
+function renderDailyPlayerProps() {
+    const container = document.getElementById('playerPropsGrid');
+    if (!container || !BOOKIE_DATA.playerProps) return;
+
+    container.innerHTML = BOOKIE_DATA.playerProps.map(prop => {
+        const betAmount = prop.units * 20;
+        const potentialWin = calculateWin(betAmount, prop.odds);
+        return `
+            <div class="prop-card-new">
+                <div class="prop-top">
+                    ${getTeamLogo(prop.team, 36)}
+                    <div class="prop-info">
+                        <div class="prop-name">${prop.player}</div>
+                        <div class="prop-game">${prop.game}</div>
+                    </div>
+                </div>
+                <div class="prop-line-box">${prop.prop}</div>
+                <div class="prop-bottom">
+                    <div class="prop-stat">${formatOdds(prop.odds)}</div>
+                    <div class="prop-stat risk"><span>$${betAmount}</span><small>Risk</small></div>
+                    <div class="prop-stat win"><span>$${potentialWin}</span><small>Win</small></div>
+                </div>
+            </div>
+        `;
+    }).join('');
 }
 
 function renderAnalysisCard(pick, index) {
@@ -593,40 +556,35 @@ function renderParlaysGrid() {
     if (!container) return;
 
     const parlays = BOOKIE_DATA.parlays;
+    const emojis = { safe: '🔒', value: '💰', risky: '🚀' };
+
     container.innerHTML = ['safe', 'value', 'risky'].map(type => {
         const p = parlays[type];
         if (!p) return '';
         return `
-            <div class="parlay-card">
-                <div class="parlay-card-header">
-                    <div class="parlay-name">${p.name}</div>
-                    <div class="parlay-odds-badge">${p.odds}</div>
+            <div class="parlay-card-new">
+                <div class="parlay-head">
+                    <span class="parlay-icon">${emojis[type]}</span>
+                    <span class="parlay-title">${p.name}</span>
+                    <span class="parlay-total-odds">${p.odds}</span>
                 </div>
-                <div class="parlay-legs-vertical">
+                <div class="parlay-legs">
                     ${p.legs.map(leg => {
                         const teams = getLogosFromGame(leg.game);
                         return `
-                        <div class="parlay-leg-item">
-                            <div class="leg-logo">${getTeamLogo(teams.away, 32) || getTeamLogo(teams.home, 32)}</div>
-                            <div class="leg-info-wrap">
-                                <div class="leg-team-full">${leg.pick}</div>
-                                <div class="leg-pick-detail">${leg.game}</div>
+                        <div class="parlay-leg">
+                            <div class="leg-logos">
+                                ${getTeamLogo(teams.away, 28)}
+                                <span class="leg-at">@</span>
+                                ${getTeamLogo(teams.home, 28)}
                             </div>
-                            <div class="leg-odds">${formatOdds(leg.odds)}</div>
+                            <div class="leg-pick">${leg.pick}</div>
                         </div>
                     `}).join('')}
                 </div>
-                <div class="parlay-card-footer">
-                    <div class="parlay-stakes">
-                        <div class="parlay-stake-item">
-                            <div class="stake-value risk">$${p.wager}</div>
-                            <div class="stake-label">Risk</div>
-                        </div>
-                        <div class="parlay-stake-item">
-                            <div class="stake-value win">$${p.payout}</div>
-                            <div class="stake-label">To Win</div>
-                        </div>
-                    </div>
+                <div class="parlay-foot">
+                    <div class="parlay-stat risk"><span>$${p.wager}</span><small>Risk</small></div>
+                    <div class="parlay-stat win"><span>$${p.payout}</span><small>Win</small></div>
                 </div>
             </div>
         `;
@@ -1320,39 +1278,22 @@ function renderStraightBets() {
         }
 
         return `
-            <div class="bet-item ${statusClass}" data-id="${bet.id}">
-                <div class="bet-header">
-                    <div class="bet-number">
-                        <div class="bet-number-value">${index + 1}</div>
-                        <div class="bet-number-label">BET</div>
-                    </div>
-                    <div class="bet-sport-tag">${getSportEmoji(bet.sport)} ${bet.sport} · ${bet.deadline}</div>
-                    <button class="bet-status-btn ${statusClass}" onclick="cycleBetStatus('${bet.id}')">
-                        ${statusIcon}
-                    </button>
+            <div class="bet-card ${statusClass}" data-id="${bet.id}">
+                <div class="bet-card-top">
+                    <span class="bet-num">${index + 1}</span>
+                    <span class="bet-meta">${getSportEmoji(bet.sport)} ${bet.sport} · ${bet.deadline}</span>
+                    <button class="bet-check ${statusClass}" onclick="cycleBetStatus('${bet.id}')">${statusIcon}</button>
                 </div>
-                <div class="bet-matchup">
-                    <div class="bet-team">
-                        ${getTeamLogo(bet.away, 50)}
-                        <div class="bet-team-abbr">${bet.away}</div>
-                    </div>
-                    <div class="bet-vs">@</div>
-                    <div class="bet-team">
-                        ${getTeamLogo(bet.home, 50)}
-                        <div class="bet-team-abbr">${bet.home}</div>
-                    </div>
+                <div class="bet-card-center">
+                    ${getTeamLogo(bet.away, 40)}
+                    <span class="bet-at">@</span>
+                    ${getTeamLogo(bet.home, 40)}
                 </div>
-                <div class="bet-pick-display">${bet.pick}</div>
-                <div class="bet-amounts">
-                    <div class="bet-stake">
-                        <div class="bet-amount">$${bet.amount}</div>
-                        <div class="bet-amount-label">Risk</div>
-                    </div>
-                    <div class="bet-odds-display">${formatOdds(bet.odds)}</div>
-                    <div class="bet-win">
-                        <div class="bet-win-amount">$${potentialWin}</div>
-                        <div class="bet-win-label">To Win</div>
-                    </div>
+                <div class="bet-card-pick">${bet.pick}</div>
+                <div class="bet-card-bottom">
+                    <div class="bet-stat risk"><span>$${bet.amount}</span><small>Risk</small></div>
+                    <div class="bet-stat odds">${formatOdds(bet.odds)}</div>
+                    <div class="bet-stat win"><span>$${potentialWin}</span><small>Win</small></div>
                 </div>
             </div>
         `;
@@ -1392,10 +1333,10 @@ function renderParlayBets() {
             amount: 25,
             toWin: 96,
             legs: [
-                { pick: '76ers +2.5', away: 'PHI', home: 'GSW', odds: -110 },
-                { pick: 'Pistons -6', away: 'DEN', home: 'DET', odds: -110 },
-                { pick: 'Heat -4.5', away: 'MIA', home: 'ATL', odds: -110 },
-                { pick: 'Marquette -5', away: 'CREI', home: 'MARQ', odds: -110 }
+                { pick: '76ers +2.5', away: 'PHI', home: 'GSW' },
+                { pick: 'Pistons -6', away: 'DEN', home: 'DET' },
+                { pick: 'Heat -4.5', away: 'MIA', home: 'ATL' },
+                { pick: 'Marquette -5', away: 'CREI', home: 'MARQ' }
             ]
         },
         {
@@ -1406,10 +1347,10 @@ function renderParlayBets() {
             amount: 20,
             toWin: 150,
             legs: [
-                { pick: '76ers +2.5', away: 'PHI', home: 'GSW', odds: -110 },
-                { pick: "Saint Mary's +4.5", away: 'GONZ', home: 'SMC', odds: -110 },
-                { pick: 'Senators ML', away: 'OTT', home: 'CAR', odds: 145 },
-                { pick: 'UNDER 6.5', away: 'TOR', home: 'EDM', odds: -115 }
+                { pick: '76ers +2.5', away: 'PHI', home: 'GSW' },
+                { pick: "Saint Mary's +4.5", away: 'GONZ', home: 'SMC' },
+                { pick: 'Senators ML', away: 'OTT', home: 'CAR' },
+                { pick: 'UNDER 6.5', away: 'TOR', home: 'EDM' }
             ]
         },
         {
@@ -1420,11 +1361,11 @@ function renderParlayBets() {
             amount: 10,
             toWin: 290,
             legs: [
-                { pick: 'Sabres ML', away: 'BUF', home: 'TB', odds: 195 },
-                { pick: 'Senators ML', away: 'OTT', home: 'CAR', odds: 145 },
-                { pick: '76ers ML', away: 'PHI', home: 'GSW', odds: 115 },
-                { pick: 'Mavericks +8', away: 'BOS', home: 'DAL', odds: -110 },
-                { pick: 'Belmont -7.5', away: 'DRAKE', home: 'BEL', odds: -110 }
+                { pick: 'Sabres ML', away: 'BUF', home: 'TB' },
+                { pick: 'Senators ML', away: 'OTT', home: 'CAR' },
+                { pick: '76ers ML', away: 'PHI', home: 'GSW' },
+                { pick: 'Mavericks +8', away: 'BOS', home: 'DAL' },
+                { pick: 'Belmont -7.5', away: 'DRAKE', home: 'BEL' }
             ]
         }
     ];
@@ -1442,42 +1383,28 @@ function renderParlayBets() {
         }
 
         return `
-            <div class="parlay-bet-card ${statusClass}" data-id="${parlay.id}">
-                <div class="parlay-bet-header">
-                    <div class="parlay-bet-title">
-                        <span class="parlay-emoji">${parlay.emoji}</span>
-                        <span class="parlay-name">${parlay.name}</span>
-                    </div>
-                    <div class="parlay-odds-big">${parlay.odds}</div>
-                    <button class="bet-status-btn ${statusClass}" onclick="cycleBetStatus('${parlay.id}')">
-                        ${statusIcon}
-                    </button>
+            <div class="parlay-card-new ${statusClass}" data-id="${parlay.id}">
+                <div class="parlay-head">
+                    <span class="parlay-icon">${parlay.emoji}</span>
+                    <span class="parlay-title">${parlay.name}</span>
+                    <span class="parlay-total-odds">${parlay.odds}</span>
+                    <button class="bet-check ${statusClass}" onclick="cycleBetStatus('${parlay.id}')">${statusIcon}</button>
                 </div>
-                <div class="parlay-legs-list">
-                    ${parlay.legs.map((leg, i) => `
-                        <div class="parlay-leg-card">
-                            <div class="leg-number">${i + 1}</div>
-                            <div class="leg-matchup">
-                                ${getTeamLogo(leg.away, 32)}
-                                <span class="leg-vs">@</span>
-                                ${getTeamLogo(leg.home, 32)}
+                <div class="parlay-legs">
+                    ${parlay.legs.map(leg => `
+                        <div class="parlay-leg">
+                            <div class="leg-logos">
+                                ${getTeamLogo(leg.away, 28)}
+                                <span class="leg-at">@</span>
+                                ${getTeamLogo(leg.home, 28)}
                             </div>
-                            <div class="leg-pick-box">${leg.pick}</div>
-                            <div class="leg-odds-small">${formatOdds(leg.odds)}</div>
+                            <div class="leg-pick">${leg.pick}</div>
                         </div>
                     `).join('')}
                 </div>
-                <div class="parlay-bet-footer">
-                    <div class="parlay-bet-amounts">
-                        <div class="parlay-amount-box risk">
-                            <div class="amount-value">$${parlay.amount}</div>
-                            <div class="amount-label">Risk</div>
-                        </div>
-                        <div class="parlay-amount-box win">
-                            <div class="amount-value">$${parlay.toWin}</div>
-                            <div class="amount-label">To Win</div>
-                        </div>
-                    </div>
+                <div class="parlay-foot">
+                    <div class="parlay-stat risk"><span>$${parlay.amount}</span><small>Risk</small></div>
+                    <div class="parlay-stat win"><span>$${parlay.toWin}</span><small>Win</small></div>
                 </div>
             </div>
         `;
@@ -1489,15 +1416,15 @@ function renderPropBets() {
     if (!container) return;
 
     const props = [
-        { id: 'prop-1', player: 'Tyrese Maxey', teamAbbr: 'PHI', prop: 'Over 26.5 Points', odds: -115, amount: 30, away: 'PHI', home: 'GSW' },
-        { id: 'prop-2', player: 'Joel Embiid', teamAbbr: 'PHI', prop: 'Over 11.5 Rebounds', odds: -110, amount: 20, away: 'PHI', home: 'GSW' },
-        { id: 'prop-3', player: 'Cade Cunningham', teamAbbr: 'DET', prop: 'Over 7.5 Assists', odds: -120, amount: 20, away: 'DEN', home: 'DET' },
-        { id: 'prop-4', player: 'Nikola Jokic', teamAbbr: 'DEN', prop: 'Triple Double YES', odds: 180, amount: 10, away: 'DEN', home: 'DET' },
-        { id: 'prop-5', player: 'Jaylen Brown', teamAbbr: 'BOS', prop: 'Over 28.5 Points', odds: -110, amount: 20, away: 'BOS', home: 'DAL' },
-        { id: 'prop-6', player: 'Cooper Flagg', teamAbbr: 'DAL', prop: 'Over 18.5 Points', odds: -115, amount: 20, away: 'BOS', home: 'DAL' },
+        { id: 'prop-1', player: 'Tyrese Maxey', teamAbbr: 'PHI', prop: 'Over 26.5 Points', odds: -115, amount: 30, game: 'PHI @ GSW' },
+        { id: 'prop-2', player: 'Joel Embiid', teamAbbr: 'PHI', prop: 'Over 11.5 Rebounds', odds: -110, amount: 20, game: 'PHI @ GSW' },
+        { id: 'prop-3', player: 'Cade Cunningham', teamAbbr: 'DET', prop: 'Over 7.5 Assists', odds: -120, amount: 20, game: 'DEN @ DET' },
+        { id: 'prop-4', player: 'Nikola Jokic', teamAbbr: 'DEN', prop: 'Triple Double YES', odds: 180, amount: 10, game: 'DEN @ DET' },
+        { id: 'prop-5', player: 'Jaylen Brown', teamAbbr: 'BOS', prop: 'Over 28.5 Points', odds: -110, amount: 20, game: 'BOS @ DAL' },
+        { id: 'prop-6', player: 'Cooper Flagg', teamAbbr: 'DAL', prop: 'Over 18.5 Points', odds: -115, amount: 20, game: 'BOS @ DAL' },
     ];
 
-    container.innerHTML = props.map((prop, index) => {
+    container.innerHTML = props.map(prop => {
         const potentialWin = calculateWin(prop.amount, prop.odds);
         const status = betStatus[prop.id];
         let statusClass = '';
@@ -1511,31 +1438,20 @@ function renderPropBets() {
         }
 
         return `
-            <div class="prop-card ${statusClass}" data-id="${prop.id}">
-                <div class="prop-header">
-                    <div class="prop-number">${index + 1}</div>
-                    <div class="prop-game-info">${prop.away} @ ${prop.home}</div>
-                    <button class="bet-status-btn ${statusClass}" onclick="cycleBetStatus('${prop.id}')">
-                        ${statusIcon}
-                    </button>
+            <div class="prop-card-new ${statusClass}" data-id="${prop.id}">
+                <div class="prop-top">
+                    ${getTeamLogo(prop.teamAbbr, 36)}
+                    <div class="prop-info">
+                        <div class="prop-name">${prop.player}</div>
+                        <div class="prop-game">${prop.game}</div>
+                    </div>
+                    <button class="bet-check ${statusClass}" onclick="cycleBetStatus('${prop.id}')">${statusIcon}</button>
                 </div>
-                <div class="prop-main">
-                    <div class="prop-player-logo">
-                        ${getTeamLogo(prop.teamAbbr, 50)}
-                    </div>
-                    <div class="prop-player-name">${prop.player}</div>
-                    <div class="prop-line">${prop.prop}</div>
-                </div>
-                <div class="prop-footer">
-                    <div class="prop-odds-box">${formatOdds(prop.odds)}</div>
-                    <div class="prop-amount-box risk">
-                        <div class="prop-amount-value">$${prop.amount}</div>
-                        <div class="prop-amount-label">Risk</div>
-                    </div>
-                    <div class="prop-amount-box win">
-                        <div class="prop-amount-value">$${potentialWin}</div>
-                        <div class="prop-amount-label">To Win</div>
-                    </div>
+                <div class="prop-line-box">${prop.prop}</div>
+                <div class="prop-bottom">
+                    <div class="prop-stat">${formatOdds(prop.odds)}</div>
+                    <div class="prop-stat risk"><span>$${prop.amount}</span><small>Risk</small></div>
+                    <div class="prop-stat win"><span>$${potentialWin}</span><small>Win</small></div>
                 </div>
             </div>
         `;
