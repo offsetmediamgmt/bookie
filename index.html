@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BOOKIE — Elite Sports Intelligence</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="theme-bets">
     <div class="bg-grid"></div>
 
     <!-- HEADER with Casino-Style Balance -->
@@ -44,7 +44,7 @@
 
     <!-- NAVIGATION with Emojis, Centered -->
     <nav class="nav" id="mainNav">
-        <a class="nav-item" data-page="bets" data-theme="theme-bets">
+        <a class="nav-item active" data-page="bets" data-theme="theme-bets">
             <span class="nav-icon">🎯</span>
             <span class="nav-text">BETS</span>
         </a>
@@ -52,7 +52,7 @@
             <span class="nav-icon">📺</span>
             <span class="nav-text">WATCH</span>
         </a>
-        <a class="nav-item active" data-page="history" data-theme="theme-history">
+        <a class="nav-item" data-page="history" data-theme="theme-history">
             <span class="nav-icon">📈</span>
             <span class="nav-text">TRACK RECORD</span>
         </a>
@@ -70,7 +70,7 @@
         <!-- ═══════════════════════════════════════════════════════════════
              BETS PAGE
              ═══════════════════════════════════════════════════════════════ -->
-        <div class="page-section" id="page-bets">
+        <div class="page-section active" id="page-bets">
             <div class="page-header">
                 <div class="page-title">🎯 TODAY'S BETS</div>
                 <div class="page-subtitle">February 3, 2026 — All Times PST</div>
@@ -246,7 +246,7 @@
         <!-- ═══════════════════════════════════════════════════════════════
              TRACK RECORD PAGE
              ═══════════════════════════════════════════════════════════════ -->
-        <div class="page-section active" id="page-history">
+        <div class="page-section" id="page-history">
             <div class="section-header">
                 <h2 class="section-title"><span class="icon">📈</span> Track Record</h2>
                 <span class="section-badge">FEB 2 - PRESENT</span>
