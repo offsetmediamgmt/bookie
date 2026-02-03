@@ -202,35 +202,35 @@ const BOOKIE_DATA = {
         {
             id: 9,
             sport: "NCAAB",
-            away: "DUKE",
-            home: "UNC",
-            time: "9:30 PM ET",
-            pick: "UNC -3",
+            away: "AUB",
+            home: "MSST",
+            time: "9:00 PM ET",
+            pick: "Auburn -5.5",
             odds: -110,
             units: 1.5,
             conviction: 4,
             factors: [
-                "Greatest rivalry in college basketball",
-                "UNC 12-2 at home this season",
-                "Tar Heels 8-3 ATS vs ranked teams",
-                "Dean Dome is electric for Duke games"
+                "Auburn 21-3, ranked #2 in nation",
+                "Tigers 10-1 on the road this season",
+                "Miss State 8-6 at home, struggling",
+                "Auburn 7-2 ATS as road favorite"
             ]
         },
         {
             id: 10,
             sport: "NCAAB",
-            away: "UK",
-            home: "TENN",
+            away: "TEXAS",
+            home: "TCU",
             time: "9:00 PM ET",
-            pick: "Tennessee +2",
+            pick: "TCU +3.5",
             odds: -110,
             units: 1,
             conviction: 3,
             factors: [
-                "Tennessee 19-5, ranked #6 in nation",
-                "Home court at Thompson-Boling Arena",
-                "Vols 15-3 at home this season",
-                "SEC showdown, revenge game"
+                "TCU 9-4 at home this season",
+                "Horned Frogs 6-3 ATS as home dog",
+                "Texas struggling on road (5-6)",
+                "Big 12 home court advantage"
             ]
         }
     ],
@@ -460,7 +460,7 @@ const BOOKIE_DATA = {
                 { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
                 { pick: "Pistons -6", odds: -110, game: "DEN @ DET" },
                 { pick: "Heat -4.5", odds: -110, game: "MIA @ ATL" },
-                { pick: "Tennessee +2", odds: -110, game: "UK @ TENN" }
+                { pick: "TCU +3.5", odds: -110, game: "TEXAS @ TCU" }
             ]
         },
         value: {
@@ -470,7 +470,7 @@ const BOOKIE_DATA = {
             payout: 150,
             legs: [
                 { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
-                { pick: "UNC -3", odds: -110, game: "DUKE @ UNC" },
+                { pick: "Auburn -5.5", odds: -110, game: "AUB @ MSST" },
                 { pick: "Senators ML", odds: 145, game: "OTT @ CAR" },
                 { pick: "Under 6.5", odds: -115, game: "TOR @ EDM" }
             ]
@@ -505,14 +505,14 @@ const BOOKIE_DATA = {
             reasoning: "Dropped 29 last night, Curry OUT, averaging 28+ last 5 games"
         },
         {
-            player: "Joel Embiid",
+            player: "Paul George",
             team: "PHI",
             game: "76ers @ Warriors",
-            prop: "Over 11.5 Rebounds",
-            odds: -110,
+            prop: "Over 22.5 Points",
+            odds: -115,
             units: 1,
             conviction: 3,
-            reasoning: "GSW weak interior, Embiid should feast"
+            reasoning: "PG13 averaging 24+ in last 5, Warriors defense struggling"
         },
         {
             player: "Cade Cunningham",
@@ -528,11 +528,11 @@ const BOOKIE_DATA = {
             player: "Nikola Jokic",
             team: "DEN",
             game: "Nuggets @ Pistons",
-            prop: "Triple Double YES",
-            odds: 180,
-            units: 0.5,
-            conviction: 2,
-            reasoning: "8 triple doubles this season, always a threat"
+            prop: "Over 9.5 Assists",
+            odds: -120,
+            units: 1,
+            conviction: 3,
+            reasoning: "Averaging 10.2 APG, Pistons give up 27 APG to opponents"
         },
         {
             player: "Jaylen Brown",
