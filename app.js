@@ -70,25 +70,14 @@ function updateHeaderStats() {
 // BANKROLL SYSTEM - LIVE UPDATES
 // ═══════════════════════════════════════════════════════════════
 function initBankroll() {
-    const bankroll = BOOKIE_DATA.bankroll;
-
-    // Set up input listener for live updates
-    const bankrollInput = document.getElementById('bankrollInput');
-    if (bankrollInput) {
-        bankrollInput.value = bankroll.current;
-        bankrollInput.addEventListener('input', updateAllBankrollDisplays);
-        bankrollInput.addEventListener('keyup', updateAllBankrollDisplays);
-    }
-
     // Initial render
     updateAllBankrollDisplays();
 }
 
 function updateAllBankrollDisplays() {
-    const inputVal = document.getElementById('bankrollInput')?.value;
-    const bankroll = parseFloat(inputVal) || BOOKIE_DATA.bankroll.current;
+    const bankroll = BOOKIE_DATA.bankroll.current;
     const starting = BOOKIE_DATA.bankroll.starting;
-    const unitBase = bankroll * 0.02; // 2%
+    const unitBase = bankroll * 0.02; // 2% = $20
 
     // Update hero display
     const currentEl = document.getElementById('currentBankroll');
@@ -101,39 +90,90 @@ function updateAllBankrollDisplays() {
 
     const profit = bankroll - starting;
     if (profitEl) profitEl.textContent = (profit >= 0 ? '+$' : '-$') + Math.abs(profit).toLocaleString();
-    if (roiEl) roiEl.textContent = ((profit / starting) * 100).toFixed(1) + '%';
+    if (roiEl) roiEl.textContent = (profit >= 0 ? '+' : '') + ((profit / starting) * 100).toFixed(1) + '%';
 
     // Render unit tiers
     const unitGrid = document.getElementById('unitBreakdown');
     if (unitGrid) {
         unitGrid.innerHTML = BOOKIE_DATA.unitTiers.map((tier, i) => `
-            <div class="unit-tier ${i === 4 ? 'active' : ''}">
+            <div class="unit-tier ${i === 1 ? 'active' : ''}">
                 <div class="locks">${'🔒'.repeat(tier.locks)}</div>
                 <div class="units">${tier.units}u</div>
-                <div class="amount">$${(unitBase * tier.units).toFixed(0)}</div>
+                <div class="amount">$${Math.round(unitBase * tier.units)}</div>
                 <div class="pct">${tier.percent}%</div>
             </div>
         `).join('');
     }
 
-    // Render dynamic growth projection based on bankroll input
-    const growthGrid = document.getElementById('growthProjection');
-    if (growthGrid) {
-        const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
-        let projected = bankroll;
+    // Render 6-month growth projection (moderate rate)
+    renderGrowthProjection('moderate');
 
-        growthGrid.innerHTML = months.map((month, i) => {
-            const gain = i === 0 ? 0 : Math.round(projected * 0.10);
-            if (i > 0) projected += gain;
-            return `
-                <div class="growth-month ${i === 0 ? 'current' : ''}">
-                    <div class="month-label">${month} 2026</div>
-                    <div class="month-value">$${(i === 0 ? bankroll : projected).toLocaleString()}</div>
-                    <div class="month-gain">${i === 0 ? 'Current' : '+$' + gain.toLocaleString()}</div>
-                </div>
-            `;
-        }).join('');
+    // Set up growth tab listeners
+    const tabs = document.querySelectorAll('.growth-tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            renderGrowthProjection(tab.dataset.rate);
+        });
+    });
+}
+
+function renderGrowthProjection(rate) {
+    const bankroll = BOOKIE_DATA.bankroll.current;
+    const growthGrid = document.getElementById('growthProjection');
+    if (!growthGrid) return;
+
+    // Monthly unit gain based on rate
+    const monthlyUnits = {
+        conservative: 5,
+        moderate: 10,
+        aggressive: 20
+    };
+
+    const unitsPerMonth = monthlyUnits[rate] || 10;
+    const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+    let projected = bankroll;
+
+    growthGrid.innerHTML = months.map((month, i) => {
+        const unitValue = projected * 0.02;
+        const gain = i === 0 ? 0 : Math.round(unitsPerMonth * unitValue);
+        if (i > 0) projected += gain;
+        return `
+            <div class="growth-month ${i === 0 ? 'current' : ''}">
+                <div class="month-label">${month} '26</div>
+                <div class="month-value">$${Math.round(i === 0 ? bankroll : projected).toLocaleString()}</div>
+                <div class="month-gain">${i === 0 ? 'Start' : '+$' + gain.toLocaleString()}</div>
+            </div>
+        `;
+    }).join('');
+
+    // Update potential targets
+    const sixMonth = document.getElementById('sixMonthTarget');
+    const twelveMonth = document.getElementById('twelveMonthTarget');
+    const aggressive = document.getElementById('aggressiveTarget');
+
+    // Calculate 12-month projections
+    let proj6 = bankroll;
+    let proj12 = bankroll;
+    let projAgg = bankroll;
+
+    for (let i = 0; i < 12; i++) {
+        const unitVal = proj12 * 0.02;
+        proj12 += unitsPerMonth * unitVal;
+
+        const aggUnitVal = projAgg * 0.02;
+        projAgg += 20 * aggUnitVal;
+
+        if (i < 6) {
+            const unitVal6 = proj6 * 0.02;
+            proj6 += unitsPerMonth * unitVal6;
+        }
     }
+
+    if (sixMonth) sixMonth.textContent = '$' + Math.round(proj6).toLocaleString();
+    if (twelveMonth) twelveMonth.textContent = '$' + Math.round(proj12).toLocaleString();
+    if (aggressive) aggressive.textContent = '$' + Math.round(projAgg).toLocaleString() + '+';
 }
 
 function updateUnitCalculator() {
@@ -198,15 +238,177 @@ function renderDailyCard() {
         `).join('');
     }
 
-    // Render Pick Cards
+    // Render Analysis Cards (Dropdown)
     const cardsContainer = document.getElementById('pickCardsGrid');
     if (cardsContainer) {
-        const allPicks = [...BOOKIE_DATA.todaysPicks, ...BOOKIE_DATA.weeklyPicks.slice(0, 2)];
-        cardsContainer.innerHTML = allPicks.map(pick => renderPickCard(pick)).join('');
+        cardsContainer.innerHTML = BOOKIE_DATA.todaysPicks.map((pick, index) => renderAnalysisCard(pick, index)).join('');
     }
 
-    // Render Parlays
-    renderParlays();
+    // Render Parlays Grid
+    renderParlaysGrid();
+
+    // Initialize parlay generator
+    initParlayGenerator();
+}
+
+function renderAnalysisCard(pick, index) {
+    const potentialWin = calculateWin(pick.units * 20, pick.odds);
+    return `
+        <div class="analysis-card" data-index="${index}">
+            <div class="analysis-header" onclick="toggleAnalysisCard(${index})">
+                <div class="analysis-matchup">
+                    <span class="analysis-sport-tag">${pick.sport}</span>
+                    <span class="analysis-teams">${pick.matchup}</span>
+                </div>
+                <div class="analysis-pick-preview">
+                    <span class="analysis-pick-badge">${pick.pick}</span>
+                    <span class="analysis-toggle">▼</span>
+                </div>
+            </div>
+            <div class="analysis-body">
+                <div class="analysis-section">
+                    <div class="analysis-section-title">Key Factors</div>
+                    <ul class="analysis-factors">
+                        ${pick.factors.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                </div>
+                ${pick.risk ? `
+                    <div class="analysis-section">
+                        <div class="analysis-risk">${pick.risk}</div>
+                    </div>
+                ` : ''}
+                <div class="analysis-bet-info">
+                    <div class="analysis-bet-item">
+                        <div class="analysis-bet-value">${formatOdds(pick.odds)}</div>
+                        <div class="analysis-bet-label">Odds</div>
+                    </div>
+                    <div class="analysis-bet-item">
+                        <div class="analysis-bet-value">${pick.units}u</div>
+                        <div class="analysis-bet-label">Units</div>
+                    </div>
+                    <div class="analysis-bet-item">
+                        <div class="analysis-bet-value risk">$${pick.units * 20}</div>
+                        <div class="analysis-bet-label">Risk</div>
+                    </div>
+                    <div class="analysis-bet-item">
+                        <div class="analysis-bet-value win">$${potentialWin}</div>
+                        <div class="analysis-bet-label">To Win</div>
+                    </div>
+                    <div class="analysis-bet-item">
+                        <div class="analysis-bet-value">${'🔒'.repeat(pick.conviction)}</div>
+                        <div class="analysis-bet-label">Conviction</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderParlaysGrid() {
+    const container = document.getElementById('parlaysGrid');
+    if (!container) return;
+
+    const parlays = BOOKIE_DATA.parlays;
+    container.innerHTML = ['safe', 'value', 'risky'].map(type => {
+        const p = parlays[type];
+        if (!p) return '';
+        return `
+            <div class="parlay-card">
+                <div class="parlay-card-header">
+                    <div class="parlay-name">${p.name}</div>
+                    <div class="parlay-odds-badge">${p.odds}</div>
+                </div>
+                <div class="parlay-legs-vertical">
+                    ${p.legs.map(leg => `
+                        <div class="parlay-leg-item">
+                            <div>
+                                <div class="leg-team-full">${leg.pick}</div>
+                                <div class="leg-pick-detail">${leg.game}</div>
+                            </div>
+                            <div class="leg-odds">${formatOdds(leg.odds)}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="parlay-card-footer">
+                    <div class="parlay-stakes">
+                        <div class="parlay-stake-item">
+                            <div class="stake-value risk">$${p.wager}</div>
+                            <div class="stake-label">Risk</div>
+                        </div>
+                        <div class="parlay-stake-item">
+                            <div class="stake-value win">$${p.payout}</div>
+                            <div class="stake-label">To Win</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function initParlayGenerator() {
+    const buttons = document.querySelectorAll('.risk-btn');
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            generateParlay(parseInt(btn.dataset.mult));
+        });
+    });
+    generateParlay(3); // Default
+}
+
+function generateParlay(multiplier) {
+    const container = document.getElementById('generatedParlay');
+    if (!container) return;
+
+    const picks = BOOKIE_DATA.todaysPicks.filter(p => p.conviction >= 3);
+    let legs = [];
+    let targetOdds = multiplier;
+
+    // Select picks based on multiplier
+    if (multiplier <= 5) {
+        legs = picks.slice(0, 3);
+    } else if (multiplier <= 10) {
+        legs = picks.slice(0, 4);
+    } else {
+        legs = picks.slice(0, 5);
+    }
+
+    const wager = multiplier <= 5 ? 25 : multiplier <= 10 ? 20 : 10;
+    const potentialWin = wager * multiplier;
+
+    container.innerHTML = `
+        <div class="parlay-card">
+            <div class="parlay-card-header">
+                <div class="parlay-name">${multiplier}X PARLAY</div>
+                <div class="parlay-odds-badge">+${(multiplier - 1) * 100}%</div>
+            </div>
+            <div class="parlay-legs-vertical">
+                ${legs.map(pick => `
+                    <div class="parlay-leg-item">
+                        <div>
+                            <div class="leg-team-full">${pick.pick}</div>
+                            <div class="leg-pick-detail">${pick.matchup}</div>
+                        </div>
+                        <div class="leg-odds">${formatOdds(pick.odds)}</div>
+                    </div>
+                `).join('')}
+            </div>
+            <div class="parlay-card-footer">
+                <div class="parlay-stakes">
+                    <div class="parlay-stake-item">
+                        <div class="stake-value risk">$${wager}</div>
+                        <div class="stake-label">Risk</div>
+                    </div>
+                    <div class="parlay-stake-item">
+                        <div class="stake-value win">$${potentialWin}</div>
+                        <div class="stake-label">Potential</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 function renderPickCard(pick) {
@@ -285,23 +487,37 @@ function renderPlayerProps() {
     const container = document.getElementById('playerPropsGrid');
     if (!container || !BOOKIE_DATA.playerProps) return;
 
-    container.innerHTML = BOOKIE_DATA.playerProps.map(prop => `
-        <div class="prop-card">
-            <div class="prop-header">
-                <div class="prop-player">${prop.player}</div>
-                <div class="prop-team">${prop.team} | ${prop.game}</div>
-            </div>
-            <div class="prop-body">
-                <div class="prop-pick">${prop.prop}</div>
-                <div class="prop-odds">${formatOdds(prop.odds)}</div>
-                <div class="prop-reasoning">${prop.reasoning}</div>
-                <div class="prop-footer">
-                    <span class="conviction-badge">${'🔒'.repeat(prop.conviction)}</span>
-                    <span class="prop-units">${prop.units}u</span>
+    container.innerHTML = BOOKIE_DATA.playerProps.map(prop => {
+        const betAmount = prop.units * 20;
+        const potentialWin = calculateWin(betAmount, prop.odds);
+        return `
+            <div class="prop-card">
+                <div class="prop-header">
+                    <div class="prop-player">${prop.player}</div>
+                    <div class="prop-team">${prop.team} | ${prop.game}</div>
+                </div>
+                <div class="prop-body">
+                    <div class="prop-pick">${prop.prop}</div>
+                    <div class="prop-odds">${formatOdds(prop.odds)}</div>
+                    <div class="prop-reasoning">${prop.reasoning}</div>
+                    <div class="prop-footer">
+                        <span class="conviction-badge">${'🔒'.repeat(prop.conviction)}</span>
+                        <span class="prop-units">${prop.units}u</span>
+                    </div>
+                    <div class="prop-bet-info" style="display: flex; gap: 20px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+                        <div style="text-align: center;">
+                            <div style="font-size: 16px; font-weight: 800; color: var(--accent-red);">$${betAmount}</div>
+                            <div style="font-size: 9px; color: var(--text-muted); text-transform: uppercase;">Risk</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 16px; font-weight: 800; color: var(--accent-green);">$${potentialWin}</div>
+                            <div style="font-size: 9px; color: var(--text-muted); text-transform: uppercase;">To Win</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -703,84 +919,6 @@ function updateBetLogStats() {
     }
 }
 
-// ═══════════════════════════════════════════════════════════════
-// DJ'S PICKS
-// ═══════════════════════════════════════════════════════════════
-function addDJPick() {
-    const sport = document.getElementById('djSport')?.value;
-    const pick = document.getElementById('djPick')?.value;
-    const reasoning = document.getElementById('djReasoning')?.value;
-
-    if (!sport || !pick) {
-        alert('Please fill sport and pick');
-        return;
-    }
-
-    const djPick = {
-        id: Date.now(),
-        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-        sport,
-        pick,
-        reasoning,
-        result: 'pending'
-    };
-
-    BOOKIE_DATA.djPicks.unshift(djPick);
-    renderDJPicks();
-
-    document.getElementById('djPick').value = '';
-    document.getElementById('djReasoning').value = '';
-}
-
-function renderDJPicks() {
-    const container = document.getElementById('djPicksList');
-    if (!container) return;
-
-    if (BOOKIE_DATA.djPicks.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 40px;">No picks yet. Add your first pick above!</p>';
-        return;
-    }
-
-    container.innerHTML = BOOKIE_DATA.djPicks.map(pick => `
-        <div class="pick-card" style="margin-bottom: 15px;">
-            <div class="pick-card-header">
-                <div class="sport-badge">${getSportEmoji(pick.sport)} ${pick.sport}</div>
-                <span class="result-badge ${pick.result}">${pick.result.toUpperCase()}</span>
-            </div>
-            <div class="pick-card-body">
-                <div class="matchup">${pick.pick}</div>
-                <div class="matchup-time">${pick.date}</div>
-                ${pick.reasoning ? `<p style="color: var(--text-secondary); font-size: 13px; margin-top: 10px;">${pick.reasoning}</p>` : ''}
-                ${pick.result === 'pending' ? `
-                    <div style="margin-top: 15px; display: flex; gap: 10px;">
-                        <button onclick="settleDJPick(${pick.id}, 'win')" class="btn btn-success" style="padding: 8px 16px; font-size: 12px;">WIN</button>
-                        <button onclick="settleDJPick(${pick.id}, 'loss')" class="btn btn-danger" style="padding: 8px 16px; font-size: 12px;">LOSS</button>
-                    </div>
-                ` : ''}
-            </div>
-        </div>
-    `).join('');
-}
-
-function settleDJPick(id, result) {
-    const pick = BOOKIE_DATA.djPicks.find(p => p.id === id);
-    if (pick) {
-        pick.result = result;
-        renderDJPicks();
-        updateDJStats();
-    }
-}
-
-function updateDJStats() {
-    const settled = BOOKIE_DATA.djPicks.filter(p => p.result !== 'pending');
-    const wins = settled.filter(p => p.result === 'win').length;
-    const total = settled.length;
-
-    const statsEl = document.getElementById('djStats');
-    if (statsEl && total > 0) {
-        statsEl.innerHTML = `Record: ${wins}-${total - wins} (${((wins/total)*100).toFixed(1)}%)`;
-    }
-}
 
 // ═══════════════════════════════════════════════════════════════
 // UTILITY FUNCTIONS
@@ -836,20 +974,73 @@ function renderStraightBets() {
     if (!container) return;
 
     const bets = [
-        // NBA (4)
-        { id: 'straight-1', game: 'DEN @ DET', pick: 'Pistons -6', odds: -110, amount: 30, deadline: '4:00 PM PST', sport: 'NBA' },
-        { id: 'straight-2', game: 'OTT @ CAR', pick: 'Senators ML', odds: 145, amount: 20, deadline: '4:00 PM PST', sport: 'NHL' },
-        { id: 'straight-3', game: 'MIA @ ATL', pick: 'Heat -4.5', odds: -110, amount: 20, deadline: '4:30 PM PST', sport: 'NBA' },
-        { id: 'straight-4', game: 'BUF @ TB', pick: 'Sabres ML', odds: 195, amount: 20, deadline: '4:30 PM PST', sport: 'NHL' },
-        { id: 'straight-5', game: 'BOS @ DAL', pick: 'Mavericks +8', odds: -110, amount: 20, deadline: '5:00 PM PST', sport: 'NBA' },
-        { id: 'straight-6', game: 'DRAKE @ BEL', pick: 'Belmont -7.5', odds: -110, amount: 20, deadline: '5:00 PM PST', sport: 'NCAAB' },
-        { id: 'straight-7', game: 'TOR @ EDM', pick: 'UNDER 6.5', odds: -115, amount: 20, deadline: '6:00 PM PST', sport: 'NHL' },
-        { id: 'straight-8', game: 'CREI @ MARQ', pick: 'Marquette -5', odds: -110, amount: 20, deadline: '6:00 PM PST', sport: 'NCAAB' },
-        { id: 'straight-9', game: 'GONZ @ SMC', pick: "Saint Mary's +4.5", odds: -110, amount: 30, deadline: '7:00 PM PST', sport: 'NCAAB' },
-        { id: 'straight-10', game: 'PHI @ GSW', pick: '76ers +2.5', odds: -110, amount: 40, deadline: '7:00 PM PST', sport: 'NBA' },
+        { id: 'straight-1', game: 'DEN @ DET', pick: 'Pistons -6', odds: -110, amount: 30, deadline: '4:00 PM', sport: 'NBA' },
+        { id: 'straight-2', game: 'OTT @ CAR', pick: 'Senators ML', odds: 145, amount: 20, deadline: '4:00 PM', sport: 'NHL' },
+        { id: 'straight-3', game: 'MIA @ ATL', pick: 'Heat -4.5', odds: -110, amount: 20, deadline: '4:30 PM', sport: 'NBA' },
+        { id: 'straight-4', game: 'BUF @ TB', pick: 'Sabres ML', odds: 195, amount: 20, deadline: '4:30 PM', sport: 'NHL' },
+        { id: 'straight-5', game: 'BOS @ DAL', pick: 'Mavericks +8', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NBA' },
+        { id: 'straight-6', game: 'DRAKE @ BEL', pick: 'Belmont -7.5', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NCAAB' },
+        { id: 'straight-7', game: 'TOR @ EDM', pick: 'UNDER 6.5', odds: -115, amount: 20, deadline: '6:00 PM', sport: 'NHL' },
+        { id: 'straight-8', game: 'CREI @ MARQ', pick: 'Marquette -5', odds: -110, amount: 20, deadline: '6:00 PM', sport: 'NCAAB' },
+        { id: 'straight-9', game: 'GONZ @ SMC', pick: "Saint Mary's +4.5", odds: -110, amount: 30, deadline: '7:00 PM', sport: 'NCAAB' },
+        { id: 'straight-10', game: 'PHI @ GSW', pick: '76ers +2.5', odds: -110, amount: 40, deadline: '7:00 PM', sport: 'NBA' },
     ];
 
-    container.innerHTML = bets.map(bet => renderBetItem(bet)).join('');
+    container.innerHTML = bets.map(bet => {
+        const potentialWin = calculateWin(bet.amount, bet.odds);
+        const status = betStatus[bet.id];
+        let statusClass = '';
+        let statusIcon = '';
+        if (status === 'placed') {
+            statusClass = 'placed';
+            statusIcon = '✓';
+        } else if (status === 'missed') {
+            statusClass = 'missed';
+            statusIcon = '✗';
+        }
+
+        return `
+            <div class="bet-item ${statusClass}" data-id="${bet.id}">
+                <div class="bet-info">
+                    <div class="bet-sport-tag">${getSportEmoji(bet.sport)} ${bet.sport}</div>
+                    <div class="bet-game">${bet.game} · ${bet.deadline}</div>
+                    <div class="bet-pick">${bet.pick}</div>
+                </div>
+                <div class="bet-odds">${formatOdds(bet.odds)}</div>
+                <div class="bet-stake">
+                    <div class="bet-amount">$${bet.amount}</div>
+                    <div class="bet-amount-label">Risk</div>
+                </div>
+                <div class="bet-win">
+                    <div class="bet-win-amount">$${potentialWin}</div>
+                    <div class="bet-win-label">To Win</div>
+                </div>
+                <button class="bet-status-btn ${statusClass}" onclick="cycleBetStatus('${bet.id}')">
+                    ${statusIcon}
+                </button>
+            </div>
+        `;
+    }).join('');
+}
+
+function calculateWin(amount, odds) {
+    if (odds > 0) {
+        return Math.round(amount * (odds / 100));
+    } else {
+        return Math.round(amount * (100 / Math.abs(odds)));
+    }
+}
+
+function cycleBetStatus(betId) {
+    if (!betStatus[betId]) {
+        betStatus[betId] = 'placed';
+    } else if (betStatus[betId] === 'placed') {
+        betStatus[betId] = 'missed';
+    } else {
+        betStatus[betId] = null;
+    }
+    saveBetStatus();
+    renderBetsPage();
 }
 
 function renderParlayBets() {
@@ -857,28 +1048,95 @@ function renderParlayBets() {
     if (!container) return;
 
     const parlays = [
-        { id: 'parlay-1', name: '🔒 Chalky Parlay', legs: 'PHI +2.5 / DET -6 / MIA -4.5 / MARQ -5', odds: '+285', amount: 25, toWin: 96 },
-        { id: 'parlay-2', name: '💰 Value Parlay', legs: 'PHI +2.5 / SMC +4.5 / OTT ML / UNDER 6.5', odds: '+650', amount: 20, toWin: 150 },
-        { id: 'parlay-3', name: '🎰 Moon Shot', legs: 'BUF ML / OTT ML / PHI ML / DAL +8 / BEL -7.5', odds: '+2800', amount: 10, toWin: 290 },
+        {
+            id: 'parlay-1',
+            name: 'CHALKY PARLAY',
+            odds: '+285',
+            amount: 25,
+            toWin: 96,
+            legs: [
+                { team: 'Philadelphia 76ers', pick: '+2.5', game: 'PHI @ GSW', odds: -110 },
+                { team: 'Detroit Pistons', pick: '-6', game: 'DEN @ DET', odds: -110 },
+                { team: 'Miami Heat', pick: '-4.5', game: 'MIA @ ATL', odds: -110 },
+                { team: 'Marquette Golden Eagles', pick: '-5', game: 'CREI @ MARQ', odds: -110 }
+            ]
+        },
+        {
+            id: 'parlay-2',
+            name: 'VALUE PARLAY',
+            odds: '+650',
+            amount: 20,
+            toWin: 150,
+            legs: [
+                { team: 'Philadelphia 76ers', pick: '+2.5', game: 'PHI @ GSW', odds: -110 },
+                { team: "Saint Mary's Gaels", pick: '+4.5', game: 'GONZ @ SMC', odds: -110 },
+                { team: 'Ottawa Senators', pick: 'ML', game: 'OTT @ CAR', odds: 145 },
+                { team: 'Toronto/Edmonton', pick: 'UNDER 6.5', game: 'TOR @ EDM', odds: -115 }
+            ]
+        },
+        {
+            id: 'parlay-3',
+            name: 'MOON SHOT',
+            odds: '+2800',
+            amount: 10,
+            toWin: 290,
+            legs: [
+                { team: 'Buffalo Sabres', pick: 'ML', game: 'BUF @ TB', odds: 195 },
+                { team: 'Ottawa Senators', pick: 'ML', game: 'OTT @ CAR', odds: 145 },
+                { team: 'Philadelphia 76ers', pick: 'ML', game: 'PHI @ GSW', odds: 115 },
+                { team: 'Dallas Mavericks', pick: '+8', game: 'BOS @ DAL', odds: -110 },
+                { team: 'Belmont Bruins', pick: '-7.5', game: 'DRAKE @ BEL', odds: -110 }
+            ]
+        }
     ];
 
-    container.innerHTML = parlays.map(parlay => `
-        <div class="bet-item parlay ${betStatus[parlay.id] ? 'placed' : ''}" data-id="${parlay.id}">
-            <div class="bet-info">
-                <div class="bet-game">${parlay.name}</div>
-                <div class="bet-pick">${parlay.odds}</div>
-                <div class="parlay-legs-list">${parlay.legs}</div>
+    container.innerHTML = parlays.map(parlay => {
+        const status = betStatus[parlay.id];
+        let statusClass = '';
+        let statusIcon = '';
+        if (status === 'placed') {
+            statusClass = 'placed';
+            statusIcon = '✓';
+        } else if (status === 'missed') {
+            statusClass = 'missed';
+            statusIcon = '✗';
+        }
+
+        return `
+            <div class="parlay-card ${statusClass}" data-id="${parlay.id}">
+                <div class="parlay-card-header">
+                    <div class="parlay-name">${parlay.name}</div>
+                    <div class="parlay-odds-badge">${parlay.odds}</div>
+                </div>
+                <div class="parlay-legs-vertical">
+                    ${parlay.legs.map(leg => `
+                        <div class="parlay-leg-item">
+                            <div>
+                                <div class="leg-team-full">${leg.team}</div>
+                                <div class="leg-pick-detail">${leg.pick} · ${leg.game}</div>
+                            </div>
+                            <div class="leg-odds">${formatOdds(leg.odds)}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="parlay-card-footer">
+                    <div class="parlay-stakes">
+                        <div class="parlay-stake-item">
+                            <div class="stake-value risk">$${parlay.amount}</div>
+                            <div class="stake-label">Risk</div>
+                        </div>
+                        <div class="parlay-stake-item">
+                            <div class="stake-value win">$${parlay.toWin}</div>
+                            <div class="stake-label">To Win</div>
+                        </div>
+                    </div>
+                    <button class="bet-status-btn ${statusClass}" onclick="cycleBetStatus('${parlay.id}')">
+                        ${statusIcon}
+                    </button>
+                </div>
             </div>
-            <div class="bet-odds">To Win</div>
-            <div class="bet-amount">$${parlay.toWin}</div>
-            <div class="bet-amount" style="color: var(--accent-red);">$${parlay.amount}</div>
-            <div class="bet-action">
-                <button class="place-btn ${betStatus[parlay.id] ? 'placed' : ''}" onclick="toggleBetPlaced('${parlay.id}')">
-                    ${betStatus[parlay.id] ? 'Placed' : 'Place'}
-                </button>
-            </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 function renderPropBets() {
@@ -886,30 +1144,49 @@ function renderPropBets() {
     if (!container) return;
 
     const props = [
-        { id: 'prop-1', player: 'Tyrese Maxey', prop: 'Over 26.5 Points', odds: -115, amount: 30, game: 'PHI @ GSW' },
-        { id: 'prop-2', player: 'Joel Embiid', prop: 'Over 11.5 Rebounds', odds: -110, amount: 20, game: 'PHI @ GSW' },
-        { id: 'prop-3', player: 'Cade Cunningham', prop: 'Over 7.5 Assists', odds: -120, amount: 20, game: 'DEN @ DET' },
-        { id: 'prop-4', player: 'Nikola Jokic', prop: 'Triple Double YES', odds: 180, amount: 10, game: 'DEN @ DET' },
-        { id: 'prop-5', player: 'Jaylen Brown', prop: 'Over 28.5 Points', odds: -110, amount: 20, game: 'BOS @ DAL' },
-        { id: 'prop-6', player: 'Cooper Flagg', prop: 'Over 18.5 Points', odds: -115, amount: 20, game: 'BOS @ DAL' },
+        { id: 'prop-1', player: 'Tyrese Maxey', team: 'PHI 76ers', prop: 'Over 26.5 Points', odds: -115, amount: 30, game: 'PHI @ GSW' },
+        { id: 'prop-2', player: 'Joel Embiid', team: 'PHI 76ers', prop: 'Over 11.5 Rebounds', odds: -110, amount: 20, game: 'PHI @ GSW' },
+        { id: 'prop-3', player: 'Cade Cunningham', team: 'DET Pistons', prop: 'Over 7.5 Assists', odds: -120, amount: 20, game: 'DEN @ DET' },
+        { id: 'prop-4', player: 'Nikola Jokic', team: 'DEN Nuggets', prop: 'Triple Double YES', odds: 180, amount: 10, game: 'DEN @ DET' },
+        { id: 'prop-5', player: 'Jaylen Brown', team: 'BOS Celtics', prop: 'Over 28.5 Points', odds: -110, amount: 20, game: 'BOS @ DAL' },
+        { id: 'prop-6', player: 'Cooper Flagg', team: 'DAL Mavericks', prop: 'Over 18.5 Points', odds: -115, amount: 20, game: 'BOS @ DAL' },
     ];
 
-    container.innerHTML = props.map(prop => `
-        <div class="bet-item ${betStatus[prop.id] ? 'placed' : ''}" data-id="${prop.id}">
-            <div class="bet-info">
-                <div class="bet-game">${prop.player}</div>
-                <div class="bet-pick">${prop.prop}</div>
-            </div>
-            <div class="bet-odds">${formatOdds(prop.odds)}</div>
-            <div class="bet-amount">$${prop.amount}</div>
-            <div class="bet-deadline">${prop.game}</div>
-            <div class="bet-action">
-                <button class="place-btn ${betStatus[prop.id] ? 'placed' : ''}" onclick="toggleBetPlaced('${prop.id}')">
-                    ${betStatus[prop.id] ? 'Placed' : 'Place'}
+    container.innerHTML = props.map(prop => {
+        const potentialWin = calculateWin(prop.amount, prop.odds);
+        const status = betStatus[prop.id];
+        let statusClass = '';
+        let statusIcon = '';
+        if (status === 'placed') {
+            statusClass = 'placed';
+            statusIcon = '✓';
+        } else if (status === 'missed') {
+            statusClass = 'missed';
+            statusIcon = '✗';
+        }
+
+        return `
+            <div class="bet-item ${statusClass}" data-id="${prop.id}">
+                <div class="bet-info">
+                    <div class="bet-sport-tag">🏀 ${prop.team}</div>
+                    <div class="bet-game">${prop.player} · ${prop.game}</div>
+                    <div class="bet-pick">${prop.prop}</div>
+                </div>
+                <div class="bet-odds">${formatOdds(prop.odds)}</div>
+                <div class="bet-stake">
+                    <div class="bet-amount">$${prop.amount}</div>
+                    <div class="bet-amount-label">Risk</div>
+                </div>
+                <div class="bet-win">
+                    <div class="bet-win-amount">$${potentialWin}</div>
+                    <div class="bet-win-label">To Win</div>
+                </div>
+                <button class="bet-status-btn ${statusClass}" onclick="cycleBetStatus('${prop.id}')">
+                    ${statusIcon}
                 </button>
             </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 function renderBetItem(bet) {
@@ -932,30 +1209,37 @@ function renderBetItem(bet) {
     `;
 }
 
-function toggleBetPlaced(betId) {
-    betStatus[betId] = !betStatus[betId];
-    saveBetStatus();
-    renderBetsPage();
-
-    // Auto-log to history if placed
-    if (betStatus[betId]) {
-        console.log(`Bet placed: ${betId}`);
+function toggleAnalysisCard(index) {
+    const card = document.querySelector(`.analysis-card[data-index="${index}"]`);
+    if (card) {
+        card.classList.toggle('expanded');
     }
 }
 
 function updateBetCounts() {
     const total = 19; // 10 straights + 3 parlays + 6 props
-    const placed = Object.values(betStatus).filter(v => v).length;
+    const placed = Object.values(betStatus).filter(v => v === 'placed').length;
+    const missed = Object.values(betStatus).filter(v => v === 'missed').length;
     const el = document.getElementById('betsPlaced');
     if (el) {
         el.textContent = `${placed}/${total}`;
-        el.style.color = placed === total ? 'var(--accent-green)' : 'var(--accent-primary)';
+        if (placed === total) {
+            el.style.color = 'var(--accent-green)';
+        } else if (missed > 0) {
+            el.style.color = 'var(--accent-red)';
+        } else {
+            el.style.color = 'var(--accent-primary)';
+        }
     }
 
     // Update total risk display
     const totalRisk = 240 + 55 + 120; // straights + parlays + props = $415
     const riskEl = document.getElementById('totalRisk');
     if (riskEl) riskEl.textContent = '$' + totalRisk;
+
+    // Update potential win
+    const potentialEl = document.getElementById('potentialWin');
+    if (potentialEl) potentialEl.textContent = '$850+';
 }
 
 function resetAllBets() {
@@ -973,7 +1257,7 @@ function markAllPlaced() {
         'parlay-1', 'parlay-2', 'parlay-3',
         'prop-1', 'prop-2', 'prop-3', 'prop-4', 'prop-5', 'prop-6'
     ];
-    allIds.forEach(id => betStatus[id] = true);
+    allIds.forEach(id => betStatus[id] = 'placed');
     saveBetStatus();
     renderBetsPage();
 }
@@ -1233,8 +1517,7 @@ function renderGamesList(games) {
 // Make functions globally available
 window.logBet = logBet;
 window.settleBet = settleBet;
-window.addDJPick = addDJPick;
-window.settleDJPick = settleDJPick;
-window.toggleBetPlaced = toggleBetPlaced;
+window.cycleBetStatus = cycleBetStatus;
 window.resetAllBets = resetAllBets;
 window.markAllPlaced = markAllPlaced;
+window.toggleAnalysisCard = toggleAnalysisCard;
