@@ -1255,8 +1255,8 @@ function renderStraightBets() {
         { id: 'straight-5', game: 'BOS @ DAL', pick: 'Mavericks +8', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NBA', away: 'BOS', home: 'DAL' },
         { id: 'straight-6', game: 'DRAKE @ BEL', pick: 'Belmont -7.5', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NCAAB', away: 'DRAKE', home: 'BEL' },
         { id: 'straight-7', game: 'TOR @ EDM', pick: 'UNDER 6.5', odds: -115, amount: 20, deadline: '6:00 PM', sport: 'NHL', away: 'TOR', home: 'EDM' },
-        { id: 'straight-8', game: 'UK @ TENN', pick: 'Tennessee +2', odds: -110, amount: 20, deadline: 'Feb 4, 4:00 PM', sport: 'NCAAB', away: 'UK', home: 'TENN' },
-        { id: 'straight-9', game: 'DUKE @ UNC', pick: 'UNC -3', odds: -110, amount: 30, deadline: 'Feb 4, 6:00 PM', sport: 'NCAAB', away: 'DUKE', home: 'UNC' },
+        { id: 'straight-8', game: 'UK @ TENN', pick: 'Tennessee +2', odds: -110, amount: 20, deadline: '6:00 PM', sport: 'NCAAB', away: 'UK', home: 'TENN' },
+        { id: 'straight-9', game: 'DUKE @ UNC', pick: 'UNC -3', odds: -110, amount: 30, deadline: '6:30 PM', sport: 'NCAAB', away: 'DUKE', home: 'UNC' },
         { id: 'straight-10', game: 'PHI @ GSW', pick: '76ers +2.5', odds: -110, amount: 40, deadline: '7:00 PM', sport: 'NBA', away: 'PHI', home: 'GSW' },
     ];
 
@@ -1636,9 +1636,9 @@ function renderWatchPage() {
         },
         {
             id: 8,
-            time: 'Feb 4, 4:00 PM',
-            timePST: 'Feb 4, 4:00 PM PST',
-            timeET: 'Feb 4, 7:00 PM ET',
+            time: '6:00 PM',
+            timePST: '6:00 PM PST',
+            timeET: '9:00 PM ET',
             sport: 'NCAAB',
             away: { abbr: 'UK', name: 'Kentucky', record: '18-6' },
             home: { abbr: 'TENN', name: 'Tennessee', record: '19-5' },
@@ -1650,9 +1650,9 @@ function renderWatchPage() {
         },
         {
             id: 9,
-            time: 'Feb 4, 6:00 PM',
-            timePST: 'Feb 4, 6:00 PM PST',
-            timeET: 'Feb 4, 9:00 PM ET',
+            time: '6:30 PM',
+            timePST: '6:30 PM PST',
+            timeET: '9:30 PM ET',
             sport: 'NCAAB',
             away: { abbr: 'DUKE', name: 'Duke', record: '20-4' },
             home: { abbr: 'UNC', name: 'North Carolina', record: '17-7' },
