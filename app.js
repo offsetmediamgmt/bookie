@@ -373,11 +373,10 @@ function updateUnitCalculator() {
 // DAILY CARD RENDERING - Compact Style matching Bets Page
 // ═══════════════════════════════════════════════════════════════
 function renderDailyCard() {
-    // Render MAX Plays - Compact card style
+    // Render MAX Plays - Compact card style (same as Watch page)
     const maxPlaysContainer = document.getElementById('maxPlaysList');
     if (maxPlaysContainer) {
         maxPlaysContainer.innerHTML = BOOKIE_DATA.maxPlays.map((pick, i) => {
-            const teams = extractTeams(pick.matchup);
             const betAmount = pick.units * 20;
             const potentialWin = calculateWin(betAmount, pick.odds);
             return `
@@ -388,9 +387,9 @@ function renderDailyCard() {
                     <span class="bet-locks">${'🔒'.repeat(pick.conviction)}</span>
                 </div>
                 <div class="bet-card-center">
-                    ${getTeamLogo(teams.away, 40)}
+                    ${getTeamLogo(pick.away, 40)}
                     <span class="bet-at">@</span>
-                    ${getTeamLogo(teams.home, 40)}
+                    ${getTeamLogo(pick.home, 40)}
                 </div>
                 <div class="bet-card-pick">${pick.pick}</div>
                 <div class="bet-card-bottom">
@@ -402,11 +401,10 @@ function renderDailyCard() {
         `}).join('');
     }
 
-    // Render Today's Picks - Compact card style
+    // Render Today's Picks - Compact card style (same as Watch page)
     const todaysContainer = document.getElementById('todaysPicksList');
     if (todaysContainer) {
         todaysContainer.innerHTML = BOOKIE_DATA.todaysPicks.map((pick, i) => {
-            const teams = extractTeams(pick.matchup);
             const betAmount = pick.units * 20;
             const potentialWin = calculateWin(betAmount, pick.odds);
             return `
@@ -417,9 +415,9 @@ function renderDailyCard() {
                     <span class="bet-locks">${'🔒'.repeat(pick.conviction)}</span>
                 </div>
                 <div class="bet-card-center">
-                    ${getTeamLogo(teams.away, 40)}
+                    ${getTeamLogo(pick.away, 40)}
                     <span class="bet-at">@</span>
-                    ${getTeamLogo(teams.home, 40)}
+                    ${getTeamLogo(pick.home, 40)}
                 </div>
                 <div class="bet-card-pick">${pick.pick}</div>
                 <div class="bet-card-bottom">
@@ -431,11 +429,10 @@ function renderDailyCard() {
         `}).join('');
     }
 
-    // Render Weekly Picks - Compact card style
+    // Render Weekly Picks - Compact card style (same as Watch page)
     const weeklyContainer = document.getElementById('weeklyPicksList');
     if (weeklyContainer) {
         weeklyContainer.innerHTML = BOOKIE_DATA.weeklyPicks.map((pick, i) => {
-            const teams = extractTeams(pick.matchup);
             const betAmount = pick.units * 20;
             const potentialWin = calculateWin(betAmount, pick.odds);
             return `
@@ -446,9 +443,9 @@ function renderDailyCard() {
                     <span class="bet-locks">${'🔒'.repeat(pick.conviction)}</span>
                 </div>
                 <div class="bet-card-center">
-                    ${getTeamLogo(teams.away, 40)}
+                    ${getTeamLogo(pick.away, 40)}
                     <span class="bet-at">vs</span>
-                    ${getTeamLogo(teams.home, 40)}
+                    ${getTeamLogo(pick.home, 40)}
                 </div>
                 <div class="bet-card-pick">${pick.pick}</div>
                 <div class="bet-card-bottom">
@@ -609,7 +606,6 @@ function generateParlay(multiplier) {
 
     const picks = BOOKIE_DATA.todaysPicks.filter(p => p.conviction >= 3);
     let legs = [];
-    let targetOdds = multiplier;
 
     // Select picks based on multiplier
     if (multiplier <= 5) {
@@ -624,33 +620,27 @@ function generateParlay(multiplier) {
     const potentialWin = wager * multiplier;
 
     container.innerHTML = `
-        <div class="parlay-card">
-            <div class="parlay-card-header">
-                <div class="parlay-name">${multiplier}X PARLAY</div>
-                <div class="parlay-odds-badge">+${(multiplier - 1) * 100}%</div>
+        <div class="parlay-card-new">
+            <div class="parlay-head">
+                <span class="parlay-icon">🎰</span>
+                <span class="parlay-title">${multiplier}X PARLAY</span>
+                <span class="parlay-total-odds">+${(multiplier - 1) * 100}%</span>
             </div>
-            <div class="parlay-legs-vertical">
+            <div class="parlay-legs">
                 ${legs.map(pick => `
-                    <div class="parlay-leg-item">
-                        <div>
-                            <div class="leg-team-full">${pick.pick}</div>
-                            <div class="leg-pick-detail">${pick.matchup}</div>
+                    <div class="parlay-leg">
+                        <div class="leg-logos">
+                            ${getTeamLogo(pick.away, 28)}
+                            <span class="leg-at">@</span>
+                            ${getTeamLogo(pick.home, 28)}
                         </div>
-                        <div class="leg-odds">${formatOdds(pick.odds)}</div>
+                        <div class="leg-pick">${pick.pick}</div>
                     </div>
                 `).join('')}
             </div>
-            <div class="parlay-card-footer">
-                <div class="parlay-stakes">
-                    <div class="parlay-stake-item">
-                        <div class="stake-value risk">$${wager}</div>
-                        <div class="stake-label">Risk</div>
-                    </div>
-                    <div class="parlay-stake-item">
-                        <div class="stake-value win">$${potentialWin}</div>
-                        <div class="stake-label">Potential</div>
-                    </div>
-                </div>
+            <div class="parlay-foot">
+                <div class="parlay-stat risk"><span>$${wager}</span><small>Risk</small></div>
+                <div class="parlay-stat win"><span>$${potentialWin}</span><small>Win</small></div>
             </div>
         </div>
     `;

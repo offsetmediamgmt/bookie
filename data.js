@@ -64,194 +64,174 @@ const BOOKIE_DATA = {
         {
             id: 1,
             sport: "NBA",
-            matchup: "76ers @ Warriors",
+            away: "PHI",
+            home: "GSW",
             time: "10:00 PM ET",
-            pick: "Philadelphia 76ers +2.5",
+            pick: "76ers +2.5",
             odds: -110,
             units: 2,
             conviction: 4,
-            type: "daily",
-            result: "PENDING",
             factors: [
                 "STEPH CURRY OUT (knee) — massive",
                 "Jimmy Butler season-ending injury hurt GSW",
                 "76ers on 4-game win streak, beat LAC by 15",
                 "Maxey/Embiid vs depleted Warriors"
-            ],
-            risk: "Road game at Chase Center"
+            ]
         },
         {
             id: 2,
             sport: "NBA",
-            matchup: "Nuggets @ Pistons",
+            away: "DEN",
+            home: "DET",
             time: "7:00 PM ET",
-            pick: "Detroit Pistons -6",
+            pick: "Pistons -6",
             odds: -110,
             units: 1.5,
             conviction: 3,
-            type: "daily",
-            result: "PENDING",
             factors: [
                 "Pistons 36-12, best record in East",
                 "Detroit 7-1 ATS last 8 February games",
                 "Pistons 20-5 at home with elite D",
                 "Nuggets 0-5 SU last 5 in Detroit"
-            ],
-            risk: "Jokic can always go off"
+            ]
         },
         {
             id: 3,
             sport: "NBA",
-            matchup: "Celtics @ Mavericks",
+            away: "BOS",
+            home: "DAL",
             time: "8:00 PM ET",
-            pick: "Dallas Mavericks +8",
+            pick: "Mavericks +8",
             odds: -110,
             units: 1,
             conviction: 3,
-            type: "daily",
-            result: "PENDING",
             factors: [
                 "Mavs 7-3 ATS last 10 games",
                 "8 points is too many for home team",
                 "Cooper Flagg averaging 19.8 PPG",
                 "Home dog value at AAC"
-            ],
-            risk: "Celtics can blow out anyone"
+            ]
         },
         {
             id: 4,
             sport: "NBA",
-            matchup: "Heat @ Hawks",
+            away: "MIA",
+            home: "ATL",
             time: "7:30 PM ET",
-            pick: "Miami Heat -4.5",
+            pick: "Heat -4.5",
             odds: -110,
             units: 1,
             conviction: 3,
-            type: "daily",
-            result: "PENDING",
             factors: [
                 "Heat 27-24, Hawks 24-27",
                 "Miami 29-21-1 ATS this season",
                 "Heat 10-9 ATS when favored by 4.5+",
                 "Butler replacement stepping up"
-            ],
-            risk: "Trae Young revenge game"
+            ]
         },
         // NHL PICKS
         {
             id: 5,
             sport: "NHL",
-            matchup: "Sabres @ Lightning",
+            away: "BUF",
+            home: "TB",
             time: "7:30 PM ET",
-            pick: "Buffalo Sabres ML",
+            pick: "Sabres ML",
             odds: 195,
             units: 1,
             conviction: 2,
-            type: "daily",
-            result: "PENDING",
             factors: [
                 "VALUE PLAY — 3.3% model edge",
                 "Sabres 32-18-5, solid road team",
                 "Buffalo 5th best offense (3.4 GPG)",
                 "Good underdog price"
-            ],
-            risk: "Tampa at home"
+            ]
         },
         {
             id: 6,
             sport: "NHL",
-            matchup: "Senators @ Hurricanes",
+            away: "OTT",
+            home: "CAR",
             time: "7:00 PM ET",
-            pick: "Ottawa Senators ML",
+            pick: "Senators ML",
             odds: 145,
             units: 1,
             conviction: 2,
-            type: "daily",
-            result: "PENDING",
             factors: [
                 "Senators on 4-game win streak",
                 "Outscored opponents 19-6 in last 4",
                 "Giroux coming off GWG",
                 "Riding the hot hand"
-            ],
-            risk: "Carolina tough at home"
+            ]
         },
         {
             id: 7,
             sport: "NHL",
-            matchup: "Maple Leafs @ Oilers",
+            away: "TOR",
+            home: "EDM",
             time: "9:00 PM ET",
             pick: "UNDER 6.5",
             odds: -115,
             units: 1,
             conviction: 3,
-            type: "total",
-            result: "PENDING",
             factors: [
                 "Both teams tightening up before Olympic break",
                 "Sharp money on Under",
                 "Woll/Skinner both playing well",
                 "Low-scoring recent meetings"
-            ],
-            risk: "McDavid/Matthews can explode"
+            ]
         },
         // NCAAB PICKS
         {
             id: 8,
             sport: "NCAAB",
-            matchup: "Drake @ Belmont",
+            away: "DRAKE",
+            home: "BEL",
             time: "8:00 PM ET",
             pick: "Belmont -7.5",
             odds: -110,
             units: 1,
             conviction: 3,
-            type: "daily",
-            result: "PENDING",
             factors: [
                 "Belmont 19-3 at home",
                 "Drake 12-10, struggling on road",
                 "Belmont 8-2 ATS last 10",
                 "Home court advantage huge"
-            ],
-            risk: "Drake can shoot lights out"
+            ]
         },
         {
             id: 9,
             sport: "NCAAB",
-            matchup: "Gonzaga @ Saint Mary's",
+            away: "GONZ",
+            home: "SMC",
             time: "10:00 PM ET",
             pick: "Saint Mary's +4.5",
             odds: -110,
             units: 1.5,
             conviction: 4,
-            type: "daily",
-            result: "PENDING",
             factors: [
                 "Best rivalry on West Coast",
                 "Saint Mary's 11-1 at home",
                 "Gaels 7-3 ATS vs ranked teams",
                 "McKneely Gym is LOUD"
-            ],
-            risk: "Gonzaga on another level"
+            ]
         },
         {
             id: 10,
             sport: "NCAAB",
-            matchup: "Creighton @ Marquette",
+            away: "CREI",
+            home: "MARQ",
             time: "9:00 PM ET",
             pick: "Marquette -5",
             odds: -110,
             units: 1,
             conviction: 3,
-            type: "daily",
-            result: "PENDING",
             factors: [
                 "Marquette ranked #8 in nation",
                 "Home court at Fiserv Forum",
                 "Creighton struggles on road",
                 "Big East showdown"
-            ],
-            risk: "Creighton has upset potential"
+            ]
         }
     ],
 
@@ -263,176 +243,167 @@ const BOOKIE_DATA = {
         {
             id: 101,
             sport: "NFL",
-            matchup: "Patriots vs Seahawks",
+            away: "NE",
+            home: "SEA",
             time: "Feb 8, 6:30 PM ET",
             venue: "SUPER BOWL LX — Levi's Stadium",
-            pick: "New England Patriots +4.5",
+            pick: "Patriots +4.5",
             odds: -110,
             units: 2.5,
             conviction: 4,
-            type: "max",
             factors: [
                 "Underdogs 5-0 ATS in last 5 Super Bowls",
                 "Mike Vrabel: 3x SB champ as player",
                 "Drake Maye Year 2 — 4,000 yds, 35 TDs",
                 "Sharp money on Pats, public on Seattle"
-            ],
-            risk: "Seahawks getting 70% of bets"
+            ]
         },
         {
             id: 102,
             sport: "NFL",
-            matchup: "Patriots vs Seahawks",
+            away: "NE",
+            home: "SEA",
             time: "Feb 8, 6:30 PM ET",
             venue: "SUPER BOWL LX — Total",
             pick: "UNDER 45.5",
             odds: -108,
             units: 1.5,
             conviction: 4,
-            type: "weekly",
             factors: [
                 "Both teams have elite defenses",
                 "Line dropped from 46.5 opener",
                 "Sharp money hammering Under",
                 "Big game = tight game"
-            ],
-            risk: "Both QBs can air it out"
+            ]
         },
         {
             id: 103,
             sport: "NFL",
-            matchup: "Patriots vs Seahawks",
+            away: "NE",
+            home: "SEA",
             time: "Feb 8, 6:30 PM ET",
             venue: "SUPER BOWL LX — Prop",
-            pick: "Kenneth Walker III UNDER 73.5 rush yds",
+            pick: "K. Walker U73.5 rush yds",
             odds: -115,
             units: 1,
             conviction: 4,
-            type: "prop",
             factors: [
                 "95% of bets on Under at BetMGM",
                 "Line dropped from 78.5 opener",
                 "Patriots elite run defense",
                 "Most-bet prop of Super Bowl"
-            ],
-            risk: "Walker could break one"
+            ]
         },
         {
             id: 104,
             sport: "NFL",
-            matchup: "Patriots vs Seahawks",
+            away: "NE",
+            home: "SEA",
             time: "Feb 8, 6:30 PM ET",
             venue: "SUPER BOWL LX — Prop",
-            pick: "Drake Maye OVER 32.5 rush yds",
+            pick: "Drake Maye O32.5 rush yds",
             odds: -115,
             units: 1,
             conviction: 3,
-            type: "prop",
             factors: [
                 "Maye is mobile, scrambles well",
                 "Seattle D susceptible to QB runs",
                 "32.5 is low for dual-threat QB",
                 "Should hit this easily"
-            ],
-            risk: "Could stay in pocket"
+            ]
         },
         {
             id: 105,
             sport: "NFL",
-            matchup: "Patriots vs Seahawks",
+            away: "NE",
+            home: "SEA",
             time: "Feb 8, 6:30 PM ET",
             venue: "SUPER BOWL LX — Prop",
-            pick: "Kayshon Boutte Anytime TD",
+            pick: "Kayshon Boutte TD",
             odds: 310,
             units: 0.5,
             conviction: 2,
-            type: "prop",
             factors: [
                 "Boutte had 6 TDs in regular season",
                 "+310 is great value",
                 "Red zone threat",
                 "Low risk, high reward"
-            ],
-            risk: "WR3 on depth chart"
+            ]
         },
         // UFC FIGHT NIGHT 266 - FEBRUARY 7
         {
             id: 106,
             sport: "UFC",
-            matchup: "Albazi vs Horiguchi",
+            away: "UFC",
+            home: "UFC",
             time: "Feb 7, 9:00 PM ET",
             venue: "UFC Fight Night 266 — Co-Main",
             pick: "Kyoji Horiguchi ML",
             odds: -180,
             units: 2,
             conviction: 5,
-            type: "max",
             factors: [
                 "Horiguchi 35-5, former double champ",
                 "Albazi sat out ALL of 2025",
                 "Albazi had heart surgery",
                 "Horiguchi just finished Ulanbekov"
-            ],
-            risk: "Heavy juice"
+            ]
         },
         {
             id: 107,
             sport: "UFC",
-            matchup: "Bautista vs Oliveira",
+            away: "UFC",
+            home: "UFC",
             time: "Feb 7, 9:00 PM ET",
             venue: "UFC Fight Night 266 — Main Event",
             pick: "Mario Bautista ML",
             odds: 135,
             units: 1.5,
             conviction: 3,
-            type: "weekly",
             factors: [
                 "Bautista 16-3, elite wins",
                 "Beat Aldo and Patchy Mix",
                 "+135 is value",
                 "Better all-around fighter"
-            ],
-            risk: "Oliveira submission threat"
+            ]
         },
         // NCAAW - BIG GAMES
         {
             id: 108,
             sport: "NCAAW",
-            matchup: "UConn @ DePaul",
+            away: "UCONN",
+            home: "DEPAUL",
             time: "Feb 4, 8:00 PM ET",
             venue: "Big East Women's",
             pick: "UConn -24.5",
             odds: -110,
             units: 1,
             conviction: 3,
-            type: "weekly",
             factors: [
                 "UConn 38-game win streak",
                 "Sarah Strong dominating",
                 "DePaul overmatched",
                 "Huskies cover big spreads"
-            ],
-            risk: "Huge spread"
+            ]
         },
         // NBA SATURDAY
         {
             id: 109,
             sport: "NBA",
-            matchup: "Lakers vs Warriors",
+            away: "LAL",
+            home: "GSW",
             time: "Feb 7, 8:30 PM ET",
             venue: "ABC Saturday Night",
-            pick: "Los Angeles Lakers -3",
+            pick: "Lakers -3",
             odds: -110,
             units: 1.5,
             conviction: 4,
-            type: "weekly",
             factors: [
                 "Luka/LeBron duo on fire",
                 "Warriors depleted without Curry",
                 "National TV game",
                 "Lakers rolling"
-            ],
-            risk: "Curry might return"
+            ]
         }
     ],
 
@@ -443,12 +414,13 @@ const BOOKIE_DATA = {
         {
             id: 201,
             sport: "NBA",
-            matchup: "76ers @ Warriors",
+            away: "PHI",
+            home: "GSW",
             time: "Feb 3, 10:00 PM ET",
-            pick: "Philadelphia 76ers +2.5",
+            pick: "76ers +2.5",
             odds: -110,
             units: 2.5,
-            conviction: 4,
+            conviction: 5,
             factors: [
                 "STEPH CURRY OUT (knee) — game changer",
                 "Jimmy Butler season-ending injury gutted GSW",
@@ -459,12 +431,13 @@ const BOOKIE_DATA = {
         {
             id: 202,
             sport: "NFL",
-            matchup: "Patriots vs Seahawks",
+            away: "NE",
+            home: "SEA",
             time: "Feb 8, 6:30 PM ET",
             pick: "Patriots +4.5 (Super Bowl)",
             odds: -110,
             units: 2.5,
-            conviction: 4,
+            conviction: 5,
             factors: [
                 "SB underdogs 5-0 ATS last 5 years",
                 "Vrabel coaching masterclass incoming",
