@@ -4,6 +4,75 @@
    ═══════════════════════════════════════════════════════════════ */
 
 // ═══════════════════════════════════════════════════════════════
+// TEAM LOGOS - ESPN CDN
+// ═══════════════════════════════════════════════════════════════
+const TEAM_LOGOS = {
+    // NBA Teams
+    'PHI': 'https://a.espncdn.com/i/teamlogos/nba/500/phi.png',
+    'GSW': 'https://a.espncdn.com/i/teamlogos/nba/500/gs.png',
+    'DET': 'https://a.espncdn.com/i/teamlogos/nba/500/det.png',
+    'DEN': 'https://a.espncdn.com/i/teamlogos/nba/500/den.png',
+    'BOS': 'https://a.espncdn.com/i/teamlogos/nba/500/bos.png',
+    'DAL': 'https://a.espncdn.com/i/teamlogos/nba/500/dal.png',
+    'MIA': 'https://a.espncdn.com/i/teamlogos/nba/500/mia.png',
+    'ATL': 'https://a.espncdn.com/i/teamlogos/nba/500/atl.png',
+    'LAL': 'https://a.espncdn.com/i/teamlogos/nba/500/lal.png',
+    'LAC': 'https://a.espncdn.com/i/teamlogos/nba/500/lac.png',
+    'HOU': 'https://a.espncdn.com/i/teamlogos/nba/500/hou.png',
+    'IND': 'https://a.espncdn.com/i/teamlogos/nba/500/ind.png',
+    'OKC': 'https://a.espncdn.com/i/teamlogos/nba/500/okc.png',
+    'SAS': 'https://a.espncdn.com/i/teamlogos/nba/500/sa.png',
+    'PHX': 'https://a.espncdn.com/i/teamlogos/nba/500/phx.png',
+    'TOR': 'https://a.espncdn.com/i/teamlogos/nba/500/tor.png',
+    'NYK': 'https://a.espncdn.com/i/teamlogos/nba/500/ny.png',
+    'BKN': 'https://a.espncdn.com/i/teamlogos/nba/500/bkn.png',
+    'CLE': 'https://a.espncdn.com/i/teamlogos/nba/500/cle.png',
+
+    // NHL Teams
+    'OTT': 'https://a.espncdn.com/i/teamlogos/nhl/500/ott.png',
+    'CAR': 'https://a.espncdn.com/i/teamlogos/nhl/500/car.png',
+    'BUF': 'https://a.espncdn.com/i/teamlogos/nhl/500/buf.png',
+    'TB': 'https://a.espncdn.com/i/teamlogos/nhl/500/tb.png',
+    'EDM': 'https://a.espncdn.com/i/teamlogos/nhl/500/edm.png',
+    'CGY': 'https://a.espncdn.com/i/teamlogos/nhl/500/cgy.png',
+    'PIT': 'https://a.espncdn.com/i/teamlogos/nhl/500/pit.png',
+    'WPG': 'https://a.espncdn.com/i/teamlogos/nhl/500/wpg.png',
+
+    // NFL Teams
+    'NE': 'https://a.espncdn.com/i/teamlogos/nfl/500/ne.png',
+    'SEA': 'https://a.espncdn.com/i/teamlogos/nfl/500/sea.png',
+
+    // NCAAB Teams (using ESPN college IDs)
+    'GONZ': 'https://a.espncdn.com/i/teamlogos/ncaa/500/2250.png',
+    'SMC': 'https://a.espncdn.com/i/teamlogos/ncaa/500/2608.png',
+    'MARQ': 'https://a.espncdn.com/i/teamlogos/ncaa/500/269.png',
+    'CREI': 'https://a.espncdn.com/i/teamlogos/ncaa/500/156.png',
+    'BEL': 'https://a.espncdn.com/i/teamlogos/ncaa/500/2057.png',
+    'DRAKE': 'https://a.espncdn.com/i/teamlogos/ncaa/500/2181.png',
+    'KU': 'https://a.espncdn.com/i/teamlogos/ncaa/500/2305.png',
+    'TTU': 'https://a.espncdn.com/i/teamlogos/ncaa/500/2641.png',
+    'UNC': 'https://a.espncdn.com/i/teamlogos/ncaa/500/153.png',
+    'SYR': 'https://a.espncdn.com/i/teamlogos/ncaa/500/183.png',
+    'UCONN': 'https://a.espncdn.com/i/teamlogos/ncaa/500/41.png',
+    'DEPAUL': 'https://a.espncdn.com/i/teamlogos/ncaa/500/305.png',
+
+    // UFC (generic)
+    'UFC': 'https://a.espncdn.com/i/teamlogos/leagues/500/ufc.png'
+};
+
+function getTeamLogo(abbr, size = 30) {
+    const logo = TEAM_LOGOS[abbr];
+    if (logo) {
+        return `<img src="${logo}" alt="${abbr}" class="team-logo" style="width: ${size}px; height: ${size}px;" onerror="this.style.display='none'">`;
+    }
+    return '';
+}
+
+function getTeamLogoUrl(abbr) {
+    return TEAM_LOGOS[abbr] || '';
+}
+
+// ═══════════════════════════════════════════════════════════════
 // INITIALIZATION
 // ═══════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
@@ -45,9 +114,25 @@ function initNavigation() {
 // ═══════════════════════════════════════════════════════════════
 function updateHeaderStats() {
     const stats = calculateStats();
-    document.getElementById('headerWinRate').textContent = stats.winRate + '%';
-    document.getElementById('headerPL').textContent = (stats.netUnits >= 0 ? '+' : '') + stats.netUnits + 'u';
-    document.getElementById('headerTotal').textContent = stats.total;
+    const bankroll = BOOKIE_DATA.bankroll;
+    const profit = bankroll.current - bankroll.starting;
+
+    // Update balance display
+    const balanceEl = document.getElementById('headerBalance');
+    const changeEl = document.getElementById('headerChange');
+    if (balanceEl) balanceEl.textContent = '$' + bankroll.current.toLocaleString();
+    if (changeEl) {
+        changeEl.textContent = (profit >= 0 ? '+$' : '-$') + Math.abs(profit) + ' today';
+        changeEl.className = 'balance-change ' + (profit >= 0 ? 'positive' : 'negative');
+    }
+
+    // Update stats
+    const winRateEl = document.getElementById('headerWinRate');
+    const recordEl = document.getElementById('headerRecord');
+    const streakEl = document.getElementById('headerStreak');
+
+    if (winRateEl) winRateEl.textContent = stats.winRate + '%';
+    if (recordEl) recordEl.textContent = stats.record;
 
     // Calculate streak
     let streak = 0;
@@ -63,7 +148,24 @@ function updateHeaderStats() {
             break;
         }
     }
-    document.getElementById('headerStreak').textContent = streak + (streakType === 'win' ? 'W' : 'L');
+    if (streakEl) streakEl.textContent = streak + (streakType === 'win' ? 'W' : 'L');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// COLLAPSIBLE PLAYS SECTIONS
+// ═══════════════════════════════════════════════════════════════
+function togglePlaysSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.classList.toggle('expanded');
+    }
+}
+
+function toggleResultCard(index) {
+    const card = document.querySelector(`.result-card[data-index="${index}"]`);
+    if (card) {
+        card.classList.toggle('expanded');
+    }
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -132,7 +234,7 @@ function renderGrowthProjection(rate) {
     };
 
     const unitsPerMonth = monthlyUnits[rate] || 10;
-    const months = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+    const months = ['Feb', 'Mar', 'Apr'];
     let projected = bankroll;
 
     growthGrid.innerHTML = months.map((month, i) => {
@@ -141,39 +243,12 @@ function renderGrowthProjection(rate) {
         if (i > 0) projected += gain;
         return `
             <div class="growth-month ${i === 0 ? 'current' : ''}">
-                <div class="month-label">${month} '26</div>
+                <div class="month-label">${month} 2026</div>
                 <div class="month-value">$${Math.round(i === 0 ? bankroll : projected).toLocaleString()}</div>
-                <div class="month-gain">${i === 0 ? 'Start' : '+$' + gain.toLocaleString()}</div>
+                <div class="month-gain">${i === 0 ? 'NOW' : '+$' + gain.toLocaleString()}</div>
             </div>
         `;
     }).join('');
-
-    // Update potential targets
-    const sixMonth = document.getElementById('sixMonthTarget');
-    const twelveMonth = document.getElementById('twelveMonthTarget');
-    const aggressive = document.getElementById('aggressiveTarget');
-
-    // Calculate 12-month projections
-    let proj6 = bankroll;
-    let proj12 = bankroll;
-    let projAgg = bankroll;
-
-    for (let i = 0; i < 12; i++) {
-        const unitVal = proj12 * 0.02;
-        proj12 += unitsPerMonth * unitVal;
-
-        const aggUnitVal = projAgg * 0.02;
-        projAgg += 20 * aggUnitVal;
-
-        if (i < 6) {
-            const unitVal6 = proj6 * 0.02;
-            proj6 += unitsPerMonth * unitVal6;
-        }
-    }
-
-    if (sixMonth) sixMonth.textContent = '$' + Math.round(proj6).toLocaleString();
-    if (twelveMonth) twelveMonth.textContent = '$' + Math.round(proj12).toLocaleString();
-    if (aggressive) aggressive.textContent = '$' + Math.round(projAgg).toLocaleString() + '+';
 }
 
 function updateUnitCalculator() {
@@ -566,10 +641,10 @@ function renderResultsGrid(history) {
     const grid = document.getElementById('resultsGrid');
     if (!grid) return;
 
-    grid.innerHTML = history.map(pick => renderResultCard(pick)).join('');
+    grid.innerHTML = history.map((pick, index) => renderResultCard(pick, index)).join('');
 }
 
-function renderResultCard(pick) {
+function renderResultCard(pick, index) {
     const isWin = pick.result === 'win';
     const isLoss = pick.result === 'loss';
     const isPush = pick.result === 'push';
@@ -591,18 +666,24 @@ function renderResultCard(pick) {
     if (pick.pl > 0) profitClass = 'positive';
     else if (pick.pl < 0) profitClass = 'negative';
 
+    // Calculate actual dollar amounts
+    const wagered = pick.units * 20;
+    const profitDollars = pick.pl * 20;
+
     return `
-        <div class="result-card ${pick.result}">
+        <div class="result-card ${pick.result}" data-index="${index}" onclick="toggleResultCard(${index})">
             <div class="result-card-header">
                 <div class="result-date">
                     ${pick.date}, 2026
                 </div>
                 <div class="result-sport">
                     ${getSportEmoji(pick.sport)} ${pick.sport}
+                    <span class="expand-indicator">▼</span>
                 </div>
             </div>
             <div class="scoreboard">
                 <div class="team-score ${team1IsWinner ? 'winner' : team2IsWinner ? 'loser' : ''} ${pick.picked === pick.team1 ? 'picked' : ''}">
+                    ${getTeamLogo(pick.team1, 35)}
                     <div class="team-abbr">${pick.team1 || ''}</div>
                     <div class="team-points">${pick.score1 ?? '-'}</div>
                 </div>
@@ -611,6 +692,7 @@ function renderResultCard(pick) {
                     <div class="score-divider-text">FINAL</div>
                 </div>
                 <div class="team-score ${team2IsWinner ? 'winner' : team1IsWinner ? 'loser' : ''} ${pick.picked === pick.team2 ? 'picked' : ''}">
+                    ${getTeamLogo(pick.team2, 35)}
                     <div class="team-abbr">${pick.team2 || ''}</div>
                     <div class="team-points">${pick.score2 ?? '-'}</div>
                 </div>
@@ -623,6 +705,33 @@ function renderResultCard(pick) {
                 <div class="result-pl">
                     <div class="result-units">${pick.units}u wagered</div>
                     <div class="result-profit ${profitClass}">${pick.pl >= 0 ? '+' : ''}${pick.pl.toFixed(2)}u</div>
+                </div>
+            </div>
+            <!-- Expandable Bet Slip -->
+            <div class="result-bet-slip">
+                <div class="bet-slip-inner">
+                    <div class="bet-slip-header">
+                        <div class="bet-slip-title">BET SLIP</div>
+                        <div class="bet-slip-status ${pick.result}">${pick.result.toUpperCase()}</div>
+                    </div>
+                    <div class="bet-slip-details">
+                        <div class="slip-detail">
+                            <div class="slip-detail-value">${formatOdds(pick.odds)}</div>
+                            <div class="slip-detail-label">Odds</div>
+                        </div>
+                        <div class="slip-detail">
+                            <div class="slip-detail-value risk">$${wagered}</div>
+                            <div class="slip-detail-label">Wagered</div>
+                        </div>
+                        <div class="slip-detail">
+                            <div class="slip-detail-value ${profitClass === 'positive' ? 'win' : ''}">${profitDollars >= 0 ? '+' : ''}$${Math.abs(profitDollars).toFixed(0)}</div>
+                            <div class="slip-detail-label">Profit/Loss</div>
+                        </div>
+                        <div class="slip-detail">
+                            <div class="slip-detail-value">${pick.units}u</div>
+                            <div class="slip-detail-label">Units</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -974,19 +1083,19 @@ function renderStraightBets() {
     if (!container) return;
 
     const bets = [
-        { id: 'straight-1', game: 'DEN @ DET', pick: 'Pistons -6', odds: -110, amount: 30, deadline: '4:00 PM', sport: 'NBA' },
-        { id: 'straight-2', game: 'OTT @ CAR', pick: 'Senators ML', odds: 145, amount: 20, deadline: '4:00 PM', sport: 'NHL' },
-        { id: 'straight-3', game: 'MIA @ ATL', pick: 'Heat -4.5', odds: -110, amount: 20, deadline: '4:30 PM', sport: 'NBA' },
-        { id: 'straight-4', game: 'BUF @ TB', pick: 'Sabres ML', odds: 195, amount: 20, deadline: '4:30 PM', sport: 'NHL' },
-        { id: 'straight-5', game: 'BOS @ DAL', pick: 'Mavericks +8', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NBA' },
-        { id: 'straight-6', game: 'DRAKE @ BEL', pick: 'Belmont -7.5', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NCAAB' },
-        { id: 'straight-7', game: 'TOR @ EDM', pick: 'UNDER 6.5', odds: -115, amount: 20, deadline: '6:00 PM', sport: 'NHL' },
-        { id: 'straight-8', game: 'CREI @ MARQ', pick: 'Marquette -5', odds: -110, amount: 20, deadline: '6:00 PM', sport: 'NCAAB' },
-        { id: 'straight-9', game: 'GONZ @ SMC', pick: "Saint Mary's +4.5", odds: -110, amount: 30, deadline: '7:00 PM', sport: 'NCAAB' },
-        { id: 'straight-10', game: 'PHI @ GSW', pick: '76ers +2.5', odds: -110, amount: 40, deadline: '7:00 PM', sport: 'NBA' },
+        { id: 'straight-1', game: 'DEN @ DET', pick: 'Pistons -6', odds: -110, amount: 30, deadline: '4:00 PM', sport: 'NBA', away: 'DEN', home: 'DET' },
+        { id: 'straight-2', game: 'OTT @ CAR', pick: 'Senators ML', odds: 145, amount: 20, deadline: '4:00 PM', sport: 'NHL', away: 'OTT', home: 'CAR' },
+        { id: 'straight-3', game: 'MIA @ ATL', pick: 'Heat -4.5', odds: -110, amount: 20, deadline: '4:30 PM', sport: 'NBA', away: 'MIA', home: 'ATL' },
+        { id: 'straight-4', game: 'BUF @ TB', pick: 'Sabres ML', odds: 195, amount: 20, deadline: '4:30 PM', sport: 'NHL', away: 'BUF', home: 'TB' },
+        { id: 'straight-5', game: 'BOS @ DAL', pick: 'Mavericks +8', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NBA', away: 'BOS', home: 'DAL' },
+        { id: 'straight-6', game: 'DRAKE @ BEL', pick: 'Belmont -7.5', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NCAAB', away: 'DRAKE', home: 'BEL' },
+        { id: 'straight-7', game: 'TOR @ EDM', pick: 'UNDER 6.5', odds: -115, amount: 20, deadline: '6:00 PM', sport: 'NHL', away: 'TOR', home: 'EDM' },
+        { id: 'straight-8', game: 'CREI @ MARQ', pick: 'Marquette -5', odds: -110, amount: 20, deadline: '6:00 PM', sport: 'NCAAB', away: 'CREI', home: 'MARQ' },
+        { id: 'straight-9', game: 'GONZ @ SMC', pick: "Saint Mary's +4.5", odds: -110, amount: 30, deadline: '7:00 PM', sport: 'NCAAB', away: 'GONZ', home: 'SMC' },
+        { id: 'straight-10', game: 'PHI @ GSW', pick: '76ers +2.5', odds: -110, amount: 40, deadline: '7:00 PM', sport: 'NBA', away: 'PHI', home: 'GSW' },
     ];
 
-    container.innerHTML = bets.map(bet => {
+    container.innerHTML = bets.map((bet, index) => {
         const potentialWin = calculateWin(bet.amount, bet.odds);
         const status = betStatus[bet.id];
         let statusClass = '';
@@ -1001,10 +1110,19 @@ function renderStraightBets() {
 
         return `
             <div class="bet-item ${statusClass}" data-id="${bet.id}">
+                <div class="bet-number">
+                    <div class="bet-number-value">${index + 1}</div>
+                    <div class="bet-number-label">BET</div>
+                </div>
+                <div class="bet-logos">
+                    ${getTeamLogo(bet.away, 28)}
+                    <span class="vs-text">@</span>
+                    ${getTeamLogo(bet.home, 28)}
+                </div>
                 <div class="bet-info">
-                    <div class="bet-sport-tag">${getSportEmoji(bet.sport)} ${bet.sport}</div>
-                    <div class="bet-game">${bet.game} · ${bet.deadline}</div>
+                    <div class="bet-sport-tag">${getSportEmoji(bet.sport)} ${bet.sport} · ${bet.deadline}</div>
                     <div class="bet-pick">${bet.pick}</div>
+                    <div class="bet-game">${bet.game}</div>
                 </div>
                 <div class="bet-odds">${formatOdds(bet.odds)}</div>
                 <div class="bet-stake">
@@ -1144,12 +1262,12 @@ function renderPropBets() {
     if (!container) return;
 
     const props = [
-        { id: 'prop-1', player: 'Tyrese Maxey', team: 'PHI 76ers', prop: 'Over 26.5 Points', odds: -115, amount: 30, game: 'PHI @ GSW' },
-        { id: 'prop-2', player: 'Joel Embiid', team: 'PHI 76ers', prop: 'Over 11.5 Rebounds', odds: -110, amount: 20, game: 'PHI @ GSW' },
-        { id: 'prop-3', player: 'Cade Cunningham', team: 'DET Pistons', prop: 'Over 7.5 Assists', odds: -120, amount: 20, game: 'DEN @ DET' },
-        { id: 'prop-4', player: 'Nikola Jokic', team: 'DEN Nuggets', prop: 'Triple Double YES', odds: 180, amount: 10, game: 'DEN @ DET' },
-        { id: 'prop-5', player: 'Jaylen Brown', team: 'BOS Celtics', prop: 'Over 28.5 Points', odds: -110, amount: 20, game: 'BOS @ DAL' },
-        { id: 'prop-6', player: 'Cooper Flagg', team: 'DAL Mavericks', prop: 'Over 18.5 Points', odds: -115, amount: 20, game: 'BOS @ DAL' },
+        { id: 'prop-1', player: 'Tyrese Maxey', team: 'PHI 76ers', teamAbbr: 'PHI', prop: 'Over 26.5 Points', odds: -115, amount: 30, game: 'PHI @ GSW' },
+        { id: 'prop-2', player: 'Joel Embiid', team: 'PHI 76ers', teamAbbr: 'PHI', prop: 'Over 11.5 Rebounds', odds: -110, amount: 20, game: 'PHI @ GSW' },
+        { id: 'prop-3', player: 'Cade Cunningham', team: 'DET Pistons', teamAbbr: 'DET', prop: 'Over 7.5 Assists', odds: -120, amount: 20, game: 'DEN @ DET' },
+        { id: 'prop-4', player: 'Nikola Jokic', team: 'DEN Nuggets', teamAbbr: 'DEN', prop: 'Triple Double YES', odds: 180, amount: 10, game: 'DEN @ DET' },
+        { id: 'prop-5', player: 'Jaylen Brown', team: 'BOS Celtics', teamAbbr: 'BOS', prop: 'Over 28.5 Points', odds: -110, amount: 20, game: 'BOS @ DAL' },
+        { id: 'prop-6', player: 'Cooper Flagg', team: 'DAL Mavericks', teamAbbr: 'DAL', prop: 'Over 18.5 Points', odds: -115, amount: 20, game: 'BOS @ DAL' },
     ];
 
     container.innerHTML = props.map(prop => {
@@ -1166,7 +1284,10 @@ function renderPropBets() {
         }
 
         return `
-            <div class="bet-item ${statusClass}" data-id="${prop.id}">
+            <div class="bet-item prop-item ${statusClass}" data-id="${prop.id}">
+                <div class="prop-logo">
+                    ${getTeamLogo(prop.teamAbbr, 40)}
+                </div>
                 <div class="bet-info">
                     <div class="bet-sport-tag">🏀 ${prop.team}</div>
                     <div class="bet-game">${prop.player} · ${prop.game}</div>
@@ -1429,11 +1550,13 @@ function renderNextGame(game) {
     container.innerHTML = `
         <div class="next-matchup">
             <div class="next-team">
+                ${getTeamLogo(game.away.abbr, 50)}
                 <div class="next-team-name">${game.away.abbr}</div>
                 <div class="next-team-record">${game.away.name} (${game.away.record})</div>
             </div>
             <div class="next-vs">@</div>
             <div class="next-team">
+                ${getTeamLogo(game.home.abbr, 50)}
                 <div class="next-team-name">${game.home.abbr}</div>
                 <div class="next-team-record">${game.home.name} (${game.home.record})</div>
             </div>
@@ -1492,11 +1615,13 @@ function renderGamesList(games) {
                 <div class="game-card-body">
                     <div class="game-matchup">
                         <div class="game-team">
+                            ${getTeamLogo(game.away.abbr, 45)}
                             <div class="game-team-abbr">${game.away.abbr}</div>
                             <div class="game-team-name">${game.away.name}</div>
                         </div>
                         <div class="game-vs">@</div>
                         <div class="game-team">
+                            ${getTeamLogo(game.home.abbr, 45)}
                             <div class="game-team-abbr">${game.home.abbr}</div>
                             <div class="game-team-name">${game.home.name}</div>
                         </div>
@@ -1521,3 +1646,5 @@ window.cycleBetStatus = cycleBetStatus;
 window.resetAllBets = resetAllBets;
 window.markAllPlaced = markAllPlaced;
 window.toggleAnalysisCard = toggleAnalysisCard;
+window.togglePlaysSection = togglePlaysSection;
+window.toggleResultCard = toggleResultCard;

@@ -3,33 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BOOKIE — Elite Sports Intelligence Engine</title>
+    <title>BOOKIE — Elite Sports Intelligence</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="bg-grid"></div>
 
-    <!-- HEADER -->
+    <!-- HEADER with Casino-Style Balance -->
     <header class="header">
         <div class="logo">
-            <div class="logo-icon">B</div>
-            <div>
+            <div class="logo-icon">
+                <span class="logo-b">B</span>
+            </div>
+            <div class="logo-text-wrap">
                 <div class="logo-text">BOOKIE</div>
-                <div class="logo-subtitle">Elite Sports Intelligence</div>
+                <div class="logo-subtitle">SPORTS INTELLIGENCE</div>
             </div>
         </div>
+
+        <!-- CENTER: Balance Display -->
+        <div class="balance-display">
+            <div class="balance-label">BALANCE</div>
+            <div class="balance-amount" id="headerBalance">$1,004</div>
+            <div class="balance-change positive" id="headerChange">+$4 today</div>
+        </div>
+
         <div class="header-stats">
             <div class="stat-box">
                 <div class="stat-value" id="headerWinRate">50%</div>
                 <div class="stat-label">Win Rate</div>
             </div>
             <div class="stat-box">
-                <div class="stat-value" id="headerPL">+0.07u</div>
-                <div class="stat-label">Season P/L</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-value" id="headerTotal">8</div>
-                <div class="stat-label">Total Picks</div>
+                <div class="stat-value" id="headerRecord">4-4</div>
+                <div class="stat-label">Record</div>
             </div>
             <div class="stat-box">
                 <div class="stat-value" id="headerStreak">4W</div>
@@ -38,49 +44,81 @@
         </div>
     </header>
 
-    <!-- NAVIGATION -->
+    <!-- NAVIGATION with Emojis, Centered -->
     <nav class="nav" id="mainNav">
-        <a class="nav-item" data-page="bets" data-theme="theme-bets">BETS</a>
-        <a class="nav-item" data-page="watch" data-theme="theme-watch">WATCH</a>
-        <a class="nav-item active" data-page="history" data-theme="theme-history">TRACK RECORD</a>
-        <a class="nav-item" data-page="daily" data-theme="">DAILY CARD</a>
-        <a class="nav-item" data-page="bankroll" data-theme="theme-bankroll">BANKROLL</a>
+        <a class="nav-item" data-page="bets" data-theme="theme-bets">
+            <span class="nav-icon">🎯</span>
+            <span class="nav-text">BETS</span>
+        </a>
+        <a class="nav-item" data-page="watch" data-theme="theme-watch">
+            <span class="nav-icon">📺</span>
+            <span class="nav-text">WATCH</span>
+        </a>
+        <a class="nav-item active" data-page="history" data-theme="theme-history">
+            <span class="nav-icon">📈</span>
+            <span class="nav-text">TRACK RECORD</span>
+        </a>
+        <a class="nav-item" data-page="daily" data-theme="">
+            <span class="nav-icon">📊</span>
+            <span class="nav-text">DAILY CARD</span>
+        </a>
+        <a class="nav-item" data-page="bankroll" data-theme="theme-bankroll">
+            <span class="nav-icon">💰</span>
+            <span class="nav-text">BANKROLL</span>
+        </a>
     </nav>
 
     <main class="main">
         <!-- ═══════════════════════════════════════════════════════════════
-             BETS PAGE - Clean Action Items
+             BETS PAGE
              ═══════════════════════════════════════════════════════════════ -->
         <div class="page-section" id="page-bets">
-            <div class="bets-header">
-                <div class="bets-title">PLACE YOUR BETS</div>
-                <div class="bets-subtitle">February 3, 2026</div>
-                <div class="bets-deadline">
-                    <span class="deadline-icon">⏰</span>
-                    <span>First game: <strong>4:00 PM PST</strong></span>
+            <!-- Clean Header -->
+            <div class="bets-hero">
+                <div class="bets-hero-icon">
+                    <span class="hero-b">B</span>
+                </div>
+                <div class="bets-hero-text">
+                    <div class="bets-hero-title">PLACE YOUR BETS</div>
+                    <div class="bets-hero-date">February 3, 2026</div>
+                </div>
+                <div class="bets-hero-countdown">
+                    <div class="countdown-label">FIRST GAME</div>
+                    <div class="countdown-time">4:00 PM PST</div>
                 </div>
             </div>
 
-            <!-- Total Summary -->
+            <!-- Summary Cards -->
             <div class="bets-summary">
                 <div class="summary-card">
+                    <div class="summary-icon">📝</div>
+                    <div class="summary-value" id="totalBets">19</div>
+                    <div class="summary-label">Total Bets</div>
+                </div>
+                <div class="summary-card risk">
+                    <div class="summary-icon">💸</div>
                     <div class="summary-value" id="totalRisk">$415</div>
                     <div class="summary-label">Total Risk</div>
                 </div>
-                <div class="summary-card">
-                    <div class="summary-value green" id="potentialWin">$850+</div>
+                <div class="summary-card win">
+                    <div class="summary-icon">🏆</div>
+                    <div class="summary-value" id="potentialWin">$850+</div>
                     <div class="summary-label">Potential Win</div>
                 </div>
-                <div class="summary-card">
+                <div class="summary-card progress">
+                    <div class="summary-icon">✅</div>
                     <div class="summary-value" id="betsPlaced">0/19</div>
-                    <div class="summary-label">Bets Placed</div>
+                    <div class="summary-label">Placed</div>
                 </div>
             </div>
 
             <!-- Straight Bets -->
             <div class="bets-section">
                 <div class="bets-section-header">
-                    <h3>STRAIGHT BETS</h3>
+                    <div class="section-title-wrap">
+                        <span class="section-icon">🎲</span>
+                        <h3>STRAIGHT BETS</h3>
+                    </div>
                     <span class="section-total">10 bets · $240 risk</span>
                 </div>
                 <div class="bets-list" id="straightBetsList"></div>
@@ -89,7 +127,10 @@
             <!-- Parlays -->
             <div class="bets-section">
                 <div class="bets-section-header">
-                    <h3>PARLAYS</h3>
+                    <div class="section-title-wrap">
+                        <span class="section-icon">🎰</span>
+                        <h3>PARLAYS</h3>
+                    </div>
                     <span class="section-total">3 parlays · $55 risk</span>
                 </div>
                 <div class="parlays-vertical" id="parlayBetsList"></div>
@@ -98,7 +139,10 @@
             <!-- Player Props -->
             <div class="bets-section">
                 <div class="bets-section-header">
-                    <h3>PLAYER PROPS</h3>
+                    <div class="section-title-wrap">
+                        <span class="section-icon">⭐</span>
+                        <h3>PLAYER PROPS</h3>
+                    </div>
                     <span class="section-total">6 props · $120 risk</span>
                 </div>
                 <div class="bets-list" id="propBetsList"></div>
@@ -112,24 +156,20 @@
         </div>
 
         <!-- ═══════════════════════════════════════════════════════════════
-             WATCH PAGE - Game Schedule
+             WATCH PAGE
              ═══════════════════════════════════════════════════════════════ -->
         <div class="page-section" id="page-watch">
             <div class="watch-header">
-                <div class="watch-title">GAME SCHEDULE</div>
+                <div class="watch-title">📺 GAME SCHEDULE</div>
                 <div class="watch-subtitle">February 3, 2026 — All Times PST</div>
             </div>
 
-            <!-- Current/Next Game Highlight -->
             <div class="next-game-card" id="nextGameCard">
                 <div class="next-label">UP NEXT</div>
                 <div class="next-game-info" id="nextGameInfo"></div>
             </div>
 
-            <!-- Timeline -->
             <div class="watch-timeline" id="watchTimeline"></div>
-
-            <!-- All Games List -->
             <div class="watch-games" id="watchGamesList"></div>
         </div>
 
@@ -137,39 +177,56 @@
              DAILY CARD PAGE
              ═══════════════════════════════════════════════════════════════ -->
         <div class="page-section" id="page-daily">
-            <!-- MAX PLAYS -->
-            <div class="plays-section" style="margin-bottom: 25px;">
-                <div class="plays-header max">
-                    <div class="plays-title">MAX PLAYS — 5% Bankroll</div>
-                    <span class="section-badge" style="background: linear-gradient(135deg, #ffd700, #ffaa00);">HIGHEST CONVICTION</span>
+            <!-- MAX PLAYS - Collapsible -->
+            <div class="plays-section collapsible" id="maxPlaysSection">
+                <div class="plays-header max" onclick="togglePlaysSection('maxPlaysSection')">
+                    <div class="plays-title">
+                        <span class="plays-icon">🔥</span>
+                        MAX PLAYS — 5% Bankroll
+                    </div>
+                    <div class="plays-header-right">
+                        <span class="section-badge gold">HIGHEST CONVICTION</span>
+                        <span class="expand-arrow">▼</span>
+                    </div>
                 </div>
-                <div class="plays-list" id="maxPlaysList"></div>
+                <div class="plays-content">
+                    <div class="plays-list" id="maxPlaysList"></div>
+                </div>
             </div>
 
-            <!-- TODAY'S PICKS -->
-            <div class="plays-section" style="margin-bottom: 25px;">
-                <div class="plays-header daily">
-                    <div class="plays-title">TODAY'S PLAYS — February 3, 2026</div>
-                    <span class="section-badge">10 PICKS</span>
+            <!-- TODAY'S PICKS - Collapsible -->
+            <div class="plays-section collapsible expanded" id="todaysPlaysSection">
+                <div class="plays-header daily" onclick="togglePlaysSection('todaysPlaysSection')">
+                    <div class="plays-title">
+                        <span class="plays-icon">📊</span>
+                        TODAY'S PLAYS — February 3, 2026
+                    </div>
+                    <div class="plays-header-right">
+                        <span class="section-badge">10 PICKS</span>
+                        <span class="expand-arrow">▼</span>
+                    </div>
                 </div>
-                <div class="plays-list" id="todaysPicksList"></div>
+                <div class="plays-content">
+                    <div class="plays-list" id="todaysPicksList"></div>
+                </div>
             </div>
 
-            <!-- WEEKLY PICKS -->
-            <div class="plays-section" style="margin-bottom: 25px;">
-                <div class="plays-header weekly">
-                    <div class="plays-title">THIS WEEK — Super Bowl & UFC</div>
-                    <span class="section-badge" style="background: linear-gradient(135deg, #9c27b0, #e040fb);">9 PICKS</span>
+            <!-- WEEKLY PICKS - Collapsible -->
+            <div class="plays-section collapsible" id="weeklyPlaysSection">
+                <div class="plays-header weekly" onclick="togglePlaysSection('weeklyPlaysSection')">
+                    <div class="plays-title">
+                        <span class="plays-icon">📅</span>
+                        THIS WEEK — Super Bowl & UFC
+                    </div>
+                    <div class="plays-header-right">
+                        <span class="section-badge purple">9 PICKS</span>
+                        <span class="expand-arrow">▼</span>
+                    </div>
                 </div>
-                <div class="plays-list" id="weeklyPicksList"></div>
+                <div class="plays-content">
+                    <div class="plays-list" id="weeklyPicksList"></div>
+                </div>
             </div>
-
-            <!-- DETAILED PICK CARDS with dropdowns -->
-            <div class="section-header">
-                <h2 class="section-title"><span class="icon">🎯</span> Detailed Analysis</h2>
-                <span class="section-badge">CLICK TO EXPAND</span>
-            </div>
-            <div class="analysis-cards" id="pickCardsGrid"></div>
 
             <!-- PARLAY GENERATOR -->
             <div class="section-header">
@@ -193,13 +250,13 @@
 
             <!-- PLAYER PROPS -->
             <div class="section-header">
-                <h2 class="section-title"><span class="icon">🎯</span> Player Props</h2>
+                <h2 class="section-title"><span class="icon">⭐</span> Player Props</h2>
             </div>
             <div class="props-grid" id="playerPropsGrid"></div>
         </div>
 
         <!-- ═══════════════════════════════════════════════════════════════
-             TRACK RECORD / HISTORY PAGE
+             TRACK RECORD PAGE
              ═══════════════════════════════════════════════════════════════ -->
         <div class="page-section active" id="page-history">
             <div class="section-header">
@@ -230,22 +287,20 @@
                 </div>
             </div>
 
-            <!-- Filter tabs -->
             <div class="history-filters" id="historyFilters">
                 <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="NBA">NBA</button>
-                <button class="filter-btn" data-filter="NFL">NFL</button>
-                <button class="filter-btn" data-filter="NHL">NHL</button>
-                <button class="filter-btn" data-filter="NCAAB">NCAAB</button>
-                <button class="filter-btn" data-filter="UFC">UFC</button>
+                <button class="filter-btn" data-filter="NBA">🏀 NBA</button>
+                <button class="filter-btn" data-filter="NFL">🏈 NFL</button>
+                <button class="filter-btn" data-filter="NHL">🏒 NHL</button>
+                <button class="filter-btn" data-filter="NCAAB">🏀 NCAAB</button>
+                <button class="filter-btn" data-filter="UFC">🥊 UFC</button>
             </div>
 
-            <!-- Results Cards Grid -->
             <div class="results-grid" id="resultsGrid"></div>
         </div>
 
         <!-- ═══════════════════════════════════════════════════════════════
-             BANKROLL PAGE - Clean & Focused
+             BANKROLL PAGE
              ═══════════════════════════════════════════════════════════════ -->
         <div class="page-section" id="page-bankroll">
             <div class="section-header">
@@ -253,17 +308,21 @@
                 <span class="section-badge">$1,000 START</span>
             </div>
 
-            <!-- Bankroll Hero -->
             <div class="bankroll-hero">
-                <div class="bankroll-label">CURRENT BANKROLL</div>
-                <div class="bankroll-amount" id="currentBankroll">$1,004</div>
+                <div class="bankroll-icon">
+                    <span class="hero-b">B</span>
+                </div>
+                <div class="bankroll-main">
+                    <div class="bankroll-label">CURRENT BANKROLL</div>
+                    <div class="bankroll-amount" id="currentBankroll">$1,004</div>
+                </div>
                 <div class="bankroll-stats">
                     <div class="bankroll-stat">
                         <div class="bankroll-stat-value" id="startingBankroll">$1,000</div>
                         <div class="bankroll-stat-label">Starting (Feb 2)</div>
                     </div>
                     <div class="bankroll-stat">
-                        <div class="bankroll-stat-value" id="totalProfit">+$4</div>
+                        <div class="bankroll-stat-value green" id="totalProfit">+$4</div>
                         <div class="bankroll-stat-label">Profit</div>
                     </div>
                     <div class="bankroll-stat">
@@ -273,46 +332,33 @@
                 </div>
             </div>
 
-            <!-- Unit System - Clean -->
             <div class="unit-system-clean">
-                <h3>UNIT BREAKDOWN</h3>
+                <h3>📊 UNIT BREAKDOWN</h3>
                 <p class="unit-formula">1 Unit = 2% of Bankroll = <strong>$20</strong></p>
                 <div class="unit-breakdown" id="unitBreakdown"></div>
             </div>
 
-            <!-- Aggressive Growth Projection -->
             <div class="growth-projection">
                 <div class="growth-header">
-                    <div class="growth-title">12-Month Growth Projection</div>
+                    <div class="growth-title">📈 3-Month Growth Projection</div>
                     <div class="growth-tabs">
-                        <button class="growth-tab" data-rate="conservative">Conservative (5u/mo)</button>
-                        <button class="growth-tab active" data-rate="moderate">Moderate (10u/mo)</button>
-                        <button class="growth-tab" data-rate="aggressive">Aggressive (20u/mo)</button>
+                        <button class="growth-tab" data-rate="conservative">5u/mo</button>
+                        <button class="growth-tab active" data-rate="moderate">10u/mo</button>
+                        <button class="growth-tab" data-rate="aggressive">20u/mo</button>
                     </div>
                 </div>
                 <div class="growth-months" id="growthProjection"></div>
-                <div class="growth-potential" id="growthPotential">
-                    <div class="potential-card">
-                        <div class="potential-label">6-Month Target</div>
-                        <div class="potential-value" id="sixMonthTarget">$2,200</div>
-                    </div>
-                    <div class="potential-card">
-                        <div class="potential-label">12-Month Target</div>
-                        <div class="potential-value" id="twelveMonthTarget">$4,800</div>
-                    </div>
-                    <div class="potential-card highlight">
-                        <div class="potential-label">Aggressive 12-Month</div>
-                        <div class="potential-value" id="aggressiveTarget">$12,000+</div>
-                    </div>
-                </div>
             </div>
         </div>
     </main>
 
     <footer class="footer">
+        <div class="footer-logo">
+            <span class="footer-b">B</span>
+            <span>BOOKIE</span>
+        </div>
         <div class="disclaimer">
-            <strong>BOOKIE DISCLAIMER:</strong> All analysis is for informational and entertainment purposes only.
-            Past performance does not guarantee future results. Never risk more than you can afford to lose.
+            All analysis is for informational and entertainment purposes only. Never risk more than you can afford to lose.
         </div>
     </footer>
 
