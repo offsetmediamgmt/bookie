@@ -703,6 +703,250 @@ body {
     margin-top: 6px;
 }
 
+/* History Filters */
+.history-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.filter-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+}
+
+.filter-btn.active {
+    background: var(--gradient-primary);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Results Grid */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+}
+
+/* Result Card */
+.result-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.result-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.result-card.win {
+    border-color: rgba(0, 230, 118, 0.3);
+}
+
+.result-card.loss {
+    border-color: rgba(255, 71, 87, 0.3);
+}
+
+.result-card.push {
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+/* Result Card Header */
+.result-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    background: var(--bg-card-hover);
+    border-bottom: 1px solid var(--border);
+}
+
+.result-date {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.result-sport {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Scoreboard */
+.scoreboard {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.team-score {
+    flex: 1;
+    text-align: center;
+}
+
+.team-score.picked {
+    position: relative;
+}
+
+.team-score.picked::after {
+    content: 'PICK';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    font-weight: 800;
+    color: var(--accent-primary);
+    letter-spacing: 1px;
+    background: rgba(0, 102, 255, 0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.team-abbr {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+}
+
+.team-points {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.team-score.winner .team-points {
+    color: var(--accent-green);
+}
+
+.team-score.loser .team-points {
+    color: var(--text-muted);
+}
+
+.score-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.score-divider-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+/* Result Indicator Circle */
+.result-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+}
+
+.result-circle.win {
+    background: linear-gradient(135deg, var(--accent-green), #69f0ae);
+    color: #000;
+    box-shadow: 0 0 30px rgba(0, 230, 118, 0.4);
+}
+
+.result-circle.loss {
+    background: linear-gradient(135deg, var(--accent-red), #ff6b6b);
+    color: #fff;
+    box-shadow: 0 0 30px rgba(255, 71, 87, 0.4);
+}
+
+.result-circle.push {
+    background: linear-gradient(135deg, var(--accent-gold), #ffaa00);
+    color: #000;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+}
+
+/* Result Card Footer */
+.result-card-footer {
+    padding: 14px 18px;
+    background: var(--bg-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+}
+
+.result-pick {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.result-odds {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.result-pl {
+    text-align: right;
+}
+
+.result-units {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.result-profit {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.result-profit.positive {
+    color: var(--accent-green);
+}
+
+.result-profit.negative {
+    color: var(--accent-red);
+}
+
+.result-profit.neutral {
+    color: var(--accent-gold);
+}
+
+/* Old table styles - keeping for bet logger */
 .history-table {
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -1036,6 +1280,14 @@ body {
     .history-stats { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .history-stat-card { padding: 15px; }
     .history-stat-value { font-size: 28px; }
+    .history-filters { gap: 8px; }
+    .filter-btn { padding: 8px 14px; font-size: 10px; }
+    .results-grid { grid-template-columns: 1fr; gap: 15px; }
+    .scoreboard { padding: 15px; }
+    .team-points { font-size: 28px; }
+    .result-circle { width: 40px; height: 40px; font-size: 16px; }
+    .result-card-footer { padding: 12px 15px; flex-direction: column; gap: 10px; align-items: flex-start; }
+    .result-pl { text-align: left; width: 100%; display: flex; justify-content: space-between; align-items: center; }
     .history-table-header { display: none; }
     .history-row { grid-template-columns: 1fr 1fr; gap: 8px; padding: 15px; }
     .history-row > div:nth-child(2) { grid-column: 1 / -1; font-weight: 600; }

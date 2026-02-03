@@ -272,6 +272,8 @@ function renderParlays() {
 // ═══════════════════════════════════════════════════════════════
 // HISTORY / TRACK RECORD
 // ═══════════════════════════════════════════════════════════════
+let currentFilter = 'all';
+
 function renderHistory() {
     const stats = calculateStats();
 
@@ -282,20 +284,98 @@ function renderHistory() {
     document.getElementById('historyUnits')?.textContent && (document.getElementById('historyUnits').textContent = (stats.netUnits >= 0 ? '+' : '') + stats.netUnits + 'u');
     document.getElementById('historyROI')?.textContent && (document.getElementById('historyROI').textContent = ((parseFloat(stats.netUnits) / stats.total) * 100).toFixed(1) + '%');
 
-    // Render history table
-    const tableBody = document.getElementById('historyTableBody');
-    if (tableBody) {
-        tableBody.innerHTML = BOOKIE_DATA.history.map(pick => `
-            <div class="history-row">
-                <div>${pick.date}</div>
-                <div>${getSportEmoji(pick.sport)} ${pick.pick}</div>
-                <div>${formatOdds(pick.odds)}</div>
-                <div><span class="result-badge ${pick.result}">${pick.result.toUpperCase()}</span></div>
-                <div>${pick.units}u</div>
-                <div class="units-change ${pick.pl >= 0 ? 'positive' : 'negative'}">${pick.pl >= 0 ? '+' : ''}${pick.pl.toFixed(2)}u</div>
+    // Initialize filter buttons
+    initHistoryFilters();
+
+    // Render results grid
+    renderResultsGrid(BOOKIE_DATA.history);
+}
+
+function initHistoryFilters() {
+    const filterContainer = document.getElementById('historyFilters');
+    if (!filterContainer) return;
+
+    filterContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('filter-btn')) {
+            // Update active state
+            filterContainer.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+
+            // Get filter value and render
+            currentFilter = e.target.dataset.filter;
+            const filteredHistory = currentFilter === 'all'
+                ? BOOKIE_DATA.history
+                : BOOKIE_DATA.history.filter(pick => pick.sport === currentFilter);
+            renderResultsGrid(filteredHistory);
+        }
+    });
+}
+
+function renderResultsGrid(history) {
+    const grid = document.getElementById('resultsGrid');
+    if (!grid) return;
+
+    grid.innerHTML = history.map(pick => renderResultCard(pick)).join('');
+}
+
+function renderResultCard(pick) {
+    const isWin = pick.result === 'win';
+    const isLoss = pick.result === 'loss';
+    const isPush = pick.result === 'push';
+
+    // Determine winner for score highlighting
+    const score1 = typeof pick.score1 === 'number' ? pick.score1 : null;
+    const score2 = typeof pick.score2 === 'number' ? pick.score2 : null;
+    const team1IsWinner = score1 !== null && score2 !== null && score1 > score2;
+    const team2IsWinner = score1 !== null && score2 !== null && score2 > score1;
+
+    // Circle icon
+    let circleIcon = '';
+    if (isWin) circleIcon = 'W';
+    else if (isLoss) circleIcon = 'L';
+    else if (isPush) circleIcon = 'P';
+
+    // Profit display
+    let profitClass = 'neutral';
+    if (pick.pl > 0) profitClass = 'positive';
+    else if (pick.pl < 0) profitClass = 'negative';
+
+    return `
+        <div class="result-card ${pick.result}">
+            <div class="result-card-header">
+                <div class="result-date">
+                    ${pick.date}, 2026
+                </div>
+                <div class="result-sport">
+                    ${getSportEmoji(pick.sport)} ${pick.sport}
+                </div>
             </div>
-        `).join('');
-    }
+            <div class="scoreboard">
+                <div class="team-score ${team1IsWinner ? 'winner' : team2IsWinner ? 'loser' : ''} ${pick.picked === pick.team1 ? 'picked' : ''}">
+                    <div class="team-abbr">${pick.team1 || ''}</div>
+                    <div class="team-points">${pick.score1 ?? '-'}</div>
+                </div>
+                <div class="score-divider">
+                    <div class="result-circle ${pick.result}">${circleIcon}</div>
+                    <div class="score-divider-text">FINAL</div>
+                </div>
+                <div class="team-score ${team2IsWinner ? 'winner' : team1IsWinner ? 'loser' : ''} ${pick.picked === pick.team2 ? 'picked' : ''}">
+                    <div class="team-abbr">${pick.team2 || ''}</div>
+                    <div class="team-points">${pick.score2 ?? '-'}</div>
+                </div>
+            </div>
+            <div class="result-card-footer">
+                <div class="result-pick-info">
+                    <div class="result-pick">${pick.pick}</div>
+                    <div class="result-odds">${formatOdds(pick.odds)} | ${pick.units}u</div>
+                </div>
+                <div class="result-pl">
+                    <div class="result-units">${pick.units}u wagered</div>
+                    <div class="result-profit ${profitClass}">${pick.pl >= 0 ? '+' : ''}${pick.pl.toFixed(2)}u</div>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 // ═══════════════════════════════════════════════════════════════

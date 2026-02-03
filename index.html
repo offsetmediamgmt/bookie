@@ -250,17 +250,18 @@
                 </div>
             </div>
 
-            <div class="history-table">
-                <div class="history-table-header">
-                    <div>Date</div>
-                    <div>Pick</div>
-                    <div>Odds</div>
-                    <div>Result</div>
-                    <div>Units</div>
-                    <div>P/L</div>
-                </div>
-                <div id="historyTableBody"></div>
+            <!-- Filter tabs -->
+            <div class="history-filters" id="historyFilters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="NBA">NBA</button>
+                <button class="filter-btn" data-filter="NFL">NFL</button>
+                <button class="filter-btn" data-filter="NHL">NHL</button>
+                <button class="filter-btn" data-filter="UFC">UFC</button>
+                <button class="filter-btn" data-filter="NCAAB">NCAAB</button>
             </div>
+
+            <!-- Results Cards Grid -->
+            <div class="results-grid" id="resultsGrid"></div>
         </div>
 
         <!-- ═══════════════════════════════════════════════════════════════
