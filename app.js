@@ -792,6 +792,8 @@ function getSportEmoji(sport) {
         'NHL': '🏒',
         'UFC': '🥊',
         'MLB': '⚾',
+        'NCAAB': '🏀',
+        'NCAAW': '🏀',
         'Soccer': '⚽',
         'EPL': '⚽',
         'Tennis': '🎾',
@@ -834,11 +836,17 @@ function renderStraightBets() {
     if (!container) return;
 
     const bets = [
-        { id: 'straight-1', game: 'DEN @ DET', pick: 'Pistons -6', odds: -110, amount: 30, deadline: '4:00 PM PST' },
-        { id: 'straight-2', game: 'OTT @ CAR', pick: 'Senators ML', odds: 145, amount: 20, deadline: '4:00 PM PST' },
-        { id: 'straight-3', game: 'BUF @ TB', pick: 'Sabres ML', odds: 195, amount: 20, deadline: '4:30 PM PST' },
-        { id: 'straight-4', game: 'BOS @ DAL', pick: 'Mavericks +8', odds: -110, amount: 20, deadline: '5:00 PM PST' },
-        { id: 'straight-5', game: 'PHI @ GSW', pick: '76ers +2.5', odds: -110, amount: 40, deadline: '7:00 PM PST' },
+        // NBA (4)
+        { id: 'straight-1', game: 'DEN @ DET', pick: 'Pistons -6', odds: -110, amount: 30, deadline: '4:00 PM PST', sport: 'NBA' },
+        { id: 'straight-2', game: 'OTT @ CAR', pick: 'Senators ML', odds: 145, amount: 20, deadline: '4:00 PM PST', sport: 'NHL' },
+        { id: 'straight-3', game: 'MIA @ ATL', pick: 'Heat -4.5', odds: -110, amount: 20, deadline: '4:30 PM PST', sport: 'NBA' },
+        { id: 'straight-4', game: 'BUF @ TB', pick: 'Sabres ML', odds: 195, amount: 20, deadline: '4:30 PM PST', sport: 'NHL' },
+        { id: 'straight-5', game: 'BOS @ DAL', pick: 'Mavericks +8', odds: -110, amount: 20, deadline: '5:00 PM PST', sport: 'NBA' },
+        { id: 'straight-6', game: 'DRAKE @ BEL', pick: 'Belmont -7.5', odds: -110, amount: 20, deadline: '5:00 PM PST', sport: 'NCAAB' },
+        { id: 'straight-7', game: 'TOR @ EDM', pick: 'UNDER 6.5', odds: -115, amount: 20, deadline: '6:00 PM PST', sport: 'NHL' },
+        { id: 'straight-8', game: 'CREI @ MARQ', pick: 'Marquette -5', odds: -110, amount: 20, deadline: '6:00 PM PST', sport: 'NCAAB' },
+        { id: 'straight-9', game: 'GONZ @ SMC', pick: "Saint Mary's +4.5", odds: -110, amount: 30, deadline: '7:00 PM PST', sport: 'NCAAB' },
+        { id: 'straight-10', game: 'PHI @ GSW', pick: '76ers +2.5', odds: -110, amount: 40, deadline: '7:00 PM PST', sport: 'NBA' },
     ];
 
     container.innerHTML = bets.map(bet => renderBetItem(bet)).join('');
@@ -849,9 +857,9 @@ function renderParlayBets() {
     if (!container) return;
 
     const parlays = [
-        { id: 'parlay-1', name: 'Safe Parlay', legs: 'PHI +2.5 / DET -6 / BOS ML', odds: '+260', amount: 20, toWin: 72 },
-        { id: 'parlay-2', name: 'Value Parlay', legs: 'PHI +2.5 / DAL +8 / OTT ML', odds: '+580', amount: 15, toWin: 102 },
-        { id: 'parlay-3', name: 'Longshot', legs: 'BUF ML / OTT ML / PHI ML / DAL +8', odds: '+1850', amount: 10, toWin: 195 },
+        { id: 'parlay-1', name: '🔒 Chalky Parlay', legs: 'PHI +2.5 / DET -6 / MIA -4.5 / MARQ -5', odds: '+285', amount: 25, toWin: 96 },
+        { id: 'parlay-2', name: '💰 Value Parlay', legs: 'PHI +2.5 / SMC +4.5 / OTT ML / UNDER 6.5', odds: '+650', amount: 20, toWin: 150 },
+        { id: 'parlay-3', name: '🎰 Moon Shot', legs: 'BUF ML / OTT ML / PHI ML / DAL +8 / BEL -7.5', odds: '+2800', amount: 10, toWin: 290 },
     ];
 
     container.innerHTML = parlays.map(parlay => `
@@ -878,10 +886,12 @@ function renderPropBets() {
     if (!container) return;
 
     const props = [
-        { id: 'prop-1', player: 'Tyrese Maxey', prop: 'Over 26.5 Points', odds: -115, amount: 20 },
-        { id: 'prop-2', player: 'Joel Embiid', prop: 'Over 11.5 Rebounds', odds: -110, amount: 20 },
-        { id: 'prop-3', player: 'Cade Cunningham', prop: 'Over 7.5 Assists', odds: -120, amount: 20 },
-        { id: 'prop-4', player: 'Nikola Jokic', prop: 'Triple Double YES', odds: 180, amount: 10 },
+        { id: 'prop-1', player: 'Tyrese Maxey', prop: 'Over 26.5 Points', odds: -115, amount: 30, game: 'PHI @ GSW' },
+        { id: 'prop-2', player: 'Joel Embiid', prop: 'Over 11.5 Rebounds', odds: -110, amount: 20, game: 'PHI @ GSW' },
+        { id: 'prop-3', player: 'Cade Cunningham', prop: 'Over 7.5 Assists', odds: -120, amount: 20, game: 'DEN @ DET' },
+        { id: 'prop-4', player: 'Nikola Jokic', prop: 'Triple Double YES', odds: 180, amount: 10, game: 'DEN @ DET' },
+        { id: 'prop-5', player: 'Jaylen Brown', prop: 'Over 28.5 Points', odds: -110, amount: 20, game: 'BOS @ DAL' },
+        { id: 'prop-6', player: 'Cooper Flagg', prop: 'Over 18.5 Points', odds: -115, amount: 20, game: 'BOS @ DAL' },
     ];
 
     container.innerHTML = props.map(prop => `
@@ -892,7 +902,7 @@ function renderPropBets() {
             </div>
             <div class="bet-odds">${formatOdds(prop.odds)}</div>
             <div class="bet-amount">$${prop.amount}</div>
-            <div class="bet-deadline">PHI @ GSW</div>
+            <div class="bet-deadline">${prop.game}</div>
             <div class="bet-action">
                 <button class="place-btn ${betStatus[prop.id] ? 'placed' : ''}" onclick="toggleBetPlaced('${prop.id}')">
                     ${betStatus[prop.id] ? 'Placed' : 'Place'}
@@ -934,13 +944,18 @@ function toggleBetPlaced(betId) {
 }
 
 function updateBetCounts() {
-    const total = 12; // Total bets
+    const total = 19; // 10 straights + 3 parlays + 6 props
     const placed = Object.values(betStatus).filter(v => v).length;
     const el = document.getElementById('betsPlaced');
     if (el) {
         el.textContent = `${placed}/${total}`;
         el.style.color = placed === total ? 'var(--accent-green)' : 'var(--accent-primary)';
     }
+
+    // Update total risk display
+    const totalRisk = 240 + 55 + 120; // straights + parlays + props = $415
+    const riskEl = document.getElementById('totalRisk');
+    if (riskEl) riskEl.textContent = '$' + totalRisk;
 }
 
 function resetAllBets() {
@@ -954,8 +969,9 @@ function resetAllBets() {
 function markAllPlaced() {
     const allIds = [
         'straight-1', 'straight-2', 'straight-3', 'straight-4', 'straight-5',
+        'straight-6', 'straight-7', 'straight-8', 'straight-9', 'straight-10',
         'parlay-1', 'parlay-2', 'parlay-3',
-        'prop-1', 'prop-2', 'prop-3', 'prop-4'
+        'prop-1', 'prop-2', 'prop-3', 'prop-4', 'prop-5', 'prop-6'
     ];
     allIds.forEach(id => betStatus[id] = true);
     saveBetStatus();
@@ -1002,6 +1018,20 @@ function renderWatchPage() {
             time: '4:30 PM',
             timePST: '4:30 PM PST',
             timeET: '7:30 PM ET',
+            sport: 'NBA',
+            away: { abbr: 'MIA', name: 'Heat', record: '27-24' },
+            home: { abbr: 'ATL', name: 'Hawks', record: '24-27' },
+            channel: 'League Pass',
+            picks: [
+                { pick: 'Heat -4.5', odds: '-110', amount: 20 }
+            ],
+            status: 'upcoming'
+        },
+        {
+            id: 4,
+            time: '4:30 PM',
+            timePST: '4:30 PM PST',
+            timeET: '7:30 PM ET',
             sport: 'NHL',
             away: { abbr: 'BUF', name: 'Sabres', record: '32-18-5' },
             home: { abbr: 'TB', name: 'Lightning', record: '35-14-4' },
@@ -1012,7 +1042,7 @@ function renderWatchPage() {
             status: 'upcoming'
         },
         {
-            id: 4,
+            id: 5,
             time: '5:00 PM',
             timePST: '5:00 PM PST',
             timeET: '8:00 PM ET',
@@ -1021,12 +1051,70 @@ function renderWatchPage() {
             home: { abbr: 'DAL', name: 'Mavericks', record: '19-30' },
             channel: 'TNT',
             picks: [
-                { pick: 'Mavericks +8', odds: '-110', amount: 20 }
+                { pick: 'Mavericks +8', odds: '-110', amount: 20 },
+                { pick: 'Jaylen Brown O28.5', odds: '-110', amount: 20 },
+                { pick: 'Cooper Flagg O18.5', odds: '-115', amount: 20 }
             ],
             status: 'upcoming'
         },
         {
-            id: 5,
+            id: 6,
+            time: '5:00 PM',
+            timePST: '5:00 PM PST',
+            timeET: '8:00 PM ET',
+            sport: 'NCAAB',
+            away: { abbr: 'DRAKE', name: 'Drake', record: '12-10' },
+            home: { abbr: 'BEL', name: 'Belmont', record: '19-3' },
+            channel: 'ESPN+',
+            picks: [
+                { pick: 'Belmont -7.5', odds: '-110', amount: 20 }
+            ],
+            status: 'upcoming'
+        },
+        {
+            id: 7,
+            time: '6:00 PM',
+            timePST: '6:00 PM PST',
+            timeET: '9:00 PM ET',
+            sport: 'NHL',
+            away: { abbr: 'TOR', name: 'Maple Leafs', record: '32-17-4' },
+            home: { abbr: 'EDM', name: 'Oilers', record: '30-18-5' },
+            channel: 'ESPN',
+            picks: [
+                { pick: 'UNDER 6.5', odds: '-115', amount: 20 }
+            ],
+            status: 'upcoming'
+        },
+        {
+            id: 8,
+            time: '6:00 PM',
+            timePST: '6:00 PM PST',
+            timeET: '9:00 PM ET',
+            sport: 'NCAAB',
+            away: { abbr: 'CREI', name: 'Creighton', record: '16-8' },
+            home: { abbr: 'MARQ', name: 'Marquette', record: '20-4' },
+            channel: 'FS1',
+            picks: [
+                { pick: 'Marquette -5', odds: '-110', amount: 20 }
+            ],
+            status: 'upcoming'
+        },
+        {
+            id: 9,
+            time: '7:00 PM',
+            timePST: '7:00 PM PST',
+            timeET: '10:00 PM ET',
+            sport: 'NCAAB',
+            away: { abbr: 'GONZ', name: 'Gonzaga', record: '19-5' },
+            home: { abbr: 'SMC', name: "Saint Mary's", record: '21-3' },
+            channel: 'ESPN2',
+            picks: [
+                { pick: "Saint Mary's +4.5", odds: '-110', amount: 30 }
+            ],
+            status: 'upcoming'
+        },
+        {
+            id: 10,
             time: '7:00 PM',
             timePST: '7:00 PM PST',
             timeET: '10:00 PM ET',
@@ -1036,7 +1124,7 @@ function renderWatchPage() {
             channel: 'NBA TV',
             picks: [
                 { pick: '76ers +2.5', odds: '-110', amount: 40 },
-                { pick: 'Maxey O26.5 pts', odds: '-115', amount: 20 },
+                { pick: 'Maxey O26.5 pts', odds: '-115', amount: 30 },
                 { pick: 'Embiid O11.5 reb', odds: '-110', amount: 20 }
             ],
             status: 'upcoming'

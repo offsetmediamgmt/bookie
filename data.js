@@ -57,9 +57,10 @@ const BOOKIE_DATA = {
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // TODAY'S PICKS - February 3, 2026
+    // TODAY'S PICKS - February 3, 2026 (FULL SLATE)
     // ═══════════════════════════════════════════════════════════════
     todaysPicks: [
+        // NBA PICKS
         {
             id: 1,
             sport: "NBA",
@@ -75,8 +76,7 @@ const BOOKIE_DATA = {
                 "STEPH CURRY OUT (knee) — massive",
                 "Jimmy Butler season-ending injury hurt GSW",
                 "76ers on 4-game win streak, beat LAC by 15",
-                "Maxey/Embiid vs depleted Warriors",
-                "PHI already beat GSW earlier this season"
+                "Maxey/Embiid vs depleted Warriors"
             ],
             risk: "Road game at Chase Center"
         },
@@ -94,8 +94,8 @@ const BOOKIE_DATA = {
             factors: [
                 "Pistons 36-12, best record in East",
                 "Detroit 7-1 ATS last 8 February games",
-                "Pistons 20-5 at home with elite D (109.7 PPG allowed)",
-                "Nuggets 0-5 SU last 5 games in Detroit"
+                "Pistons 20-5 at home with elite D",
+                "Nuggets 0-5 SU last 5 in Detroit"
             ],
             risk: "Jokic can always go off"
         },
@@ -113,13 +113,33 @@ const BOOKIE_DATA = {
             factors: [
                 "Mavs 7-3 ATS last 10 games",
                 "8 points is too many for home team",
-                "Cooper Flagg averaging 19.8 PPG rookie year",
+                "Cooper Flagg averaging 19.8 PPG",
                 "Home dog value at AAC"
             ],
             risk: "Celtics can blow out anyone"
         },
         {
             id: 4,
+            sport: "NBA",
+            matchup: "Heat @ Hawks",
+            time: "7:30 PM ET",
+            pick: "Miami Heat -4.5",
+            odds: -110,
+            units: 1,
+            conviction: 3,
+            type: "daily",
+            result: "PENDING",
+            factors: [
+                "Heat 27-24, Hawks 24-27",
+                "Miami 29-21-1 ATS this season",
+                "Heat 10-9 ATS when favored by 4.5+",
+                "Butler replacement stepping up"
+            ],
+            risk: "Trae Young revenge game"
+        },
+        // NHL PICKS
+        {
+            id: 5,
             sport: "NHL",
             matchup: "Sabres @ Lightning",
             time: "7:30 PM ET",
@@ -130,15 +150,15 @@ const BOOKIE_DATA = {
             type: "daily",
             result: "PENDING",
             factors: [
-                "VALUE PLAY — Dimers model shows 3.3% edge",
+                "VALUE PLAY — 3.3% model edge",
                 "Sabres 32-18-5, solid road team",
                 "Buffalo 5th best offense (3.4 GPG)",
-                "Good underdog price at +195"
+                "Good underdog price"
             ],
-            risk: "Tampa at home is tough"
+            risk: "Tampa at home"
         },
         {
-            id: 5,
+            id: 6,
             sport: "NHL",
             matchup: "Senators @ Hurricanes",
             time: "7:00 PM ET",
@@ -151,57 +171,193 @@ const BOOKIE_DATA = {
             factors: [
                 "Senators on 4-game win streak",
                 "Outscored opponents 19-6 in last 4",
-                "Giroux coming off game-winning goal",
+                "Giroux coming off GWG",
                 "Riding the hot hand"
             ],
             risk: "Carolina tough at home"
+        },
+        {
+            id: 7,
+            sport: "NHL",
+            matchup: "Maple Leafs @ Oilers",
+            time: "9:00 PM ET",
+            pick: "UNDER 6.5",
+            odds: -115,
+            units: 1,
+            conviction: 3,
+            type: "total",
+            result: "PENDING",
+            factors: [
+                "Both teams tightening up before Olympic break",
+                "Sharp money on Under",
+                "Woll/Skinner both playing well",
+                "Low-scoring recent meetings"
+            ],
+            risk: "McDavid/Matthews can explode"
+        },
+        // NCAAB PICKS
+        {
+            id: 8,
+            sport: "NCAAB",
+            matchup: "Drake @ Belmont",
+            time: "8:00 PM ET",
+            pick: "Belmont -7.5",
+            odds: -110,
+            units: 1,
+            conviction: 3,
+            type: "daily",
+            result: "PENDING",
+            factors: [
+                "Belmont 19-3 at home",
+                "Drake 12-10, struggling on road",
+                "Belmont 8-2 ATS last 10",
+                "Home court advantage huge"
+            ],
+            risk: "Drake can shoot lights out"
+        },
+        {
+            id: 9,
+            sport: "NCAAB",
+            matchup: "Gonzaga @ Saint Mary's",
+            time: "10:00 PM ET",
+            pick: "Saint Mary's +4.5",
+            odds: -110,
+            units: 1.5,
+            conviction: 4,
+            type: "daily",
+            result: "PENDING",
+            factors: [
+                "Best rivalry on West Coast",
+                "Saint Mary's 11-1 at home",
+                "Gaels 7-3 ATS vs ranked teams",
+                "McKneely Gym is LOUD"
+            ],
+            risk: "Gonzaga on another level"
+        },
+        {
+            id: 10,
+            sport: "NCAAB",
+            matchup: "Creighton @ Marquette",
+            time: "9:00 PM ET",
+            pick: "Marquette -5",
+            odds: -110,
+            units: 1,
+            conviction: 3,
+            type: "daily",
+            result: "PENDING",
+            factors: [
+                "Marquette ranked #8 in nation",
+                "Home court at Fiserv Forum",
+                "Creighton struggles on road",
+                "Big East showdown"
+            ],
+            risk: "Creighton has upset potential"
         }
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // WEEKLY PICKS - February 2-8, 2026
+    // WEEKLY PICKS - February 3-8, 2026 (SUPER BOWL WEEK)
     // ═══════════════════════════════════════════════════════════════
     weeklyPicks: [
+        // SUPER BOWL LX - FEBRUARY 8
         {
             id: 101,
             sport: "NFL",
             matchup: "Patriots vs Seahawks",
             time: "Feb 8, 6:30 PM ET",
-            venue: "Super Bowl LX — Levi's Stadium",
+            venue: "SUPER BOWL LX — Levi's Stadium",
             pick: "New England Patriots +4.5",
             odds: -110,
-            units: 3,
+            units: 2.5,
             conviction: 4,
             type: "max",
             factors: [
                 "Underdogs 5-0 ATS in last 5 Super Bowls",
-                "Mike Vrabel: 3x SB champ as player, elite coach",
-                "Drake Maye Year 2 leap is real — 4,000 yds, 35 TDs",
-                "Sharp money on Patriots, public on Seahawks"
+                "Mike Vrabel: 3x SB champ as player",
+                "Drake Maye Year 2 — 4,000 yds, 35 TDs",
+                "Sharp money on Pats, public on Seattle"
             ],
-            risk: "Seahawks getting 80% of public action"
+            risk: "Seahawks getting 70% of bets"
         },
         {
             id: 102,
-            sport: "UFC",
-            matchup: "Bautista vs Oliveira",
-            time: "Feb 7, 9:00 PM ET",
-            venue: "UFC Fight Night 266",
-            pick: "Mario Bautista ML",
-            odds: 135,
+            sport: "NFL",
+            matchup: "Patriots vs Seahawks",
+            time: "Feb 8, 6:30 PM ET",
+            venue: "SUPER BOWL LX — Total",
+            pick: "UNDER 45.5",
+            odds: -108,
             units: 1.5,
-            conviction: 3,
+            conviction: 4,
             type: "weekly",
             factors: [
-                "Bautista 16-3, only loss to Umar Nurmagomedov",
-                "Beat Jose Aldo and Patchy Mix — elite wins",
-                "Oliveira 23-3 but level of competition lower",
-                "Value at +135 for proven elite fighter"
+                "Both teams have elite defenses",
+                "Line dropped from 46.5 opener",
+                "Sharp money hammering Under",
+                "Big game = tight game"
             ],
-            risk: "Oliveira has submission threat"
+            risk: "Both QBs can air it out"
         },
         {
             id: 103,
+            sport: "NFL",
+            matchup: "Patriots vs Seahawks",
+            time: "Feb 8, 6:30 PM ET",
+            venue: "SUPER BOWL LX — Prop",
+            pick: "Kenneth Walker III UNDER 73.5 rush yds",
+            odds: -115,
+            units: 1,
+            conviction: 4,
+            type: "prop",
+            factors: [
+                "95% of bets on Under at BetMGM",
+                "Line dropped from 78.5 opener",
+                "Patriots elite run defense",
+                "Most-bet prop of Super Bowl"
+            ],
+            risk: "Walker could break one"
+        },
+        {
+            id: 104,
+            sport: "NFL",
+            matchup: "Patriots vs Seahawks",
+            time: "Feb 8, 6:30 PM ET",
+            venue: "SUPER BOWL LX — Prop",
+            pick: "Drake Maye OVER 32.5 rush yds",
+            odds: -115,
+            units: 1,
+            conviction: 3,
+            type: "prop",
+            factors: [
+                "Maye is mobile, scrambles well",
+                "Seattle D susceptible to QB runs",
+                "32.5 is low for dual-threat QB",
+                "Should hit this easily"
+            ],
+            risk: "Could stay in pocket"
+        },
+        {
+            id: 105,
+            sport: "NFL",
+            matchup: "Patriots vs Seahawks",
+            time: "Feb 8, 6:30 PM ET",
+            venue: "SUPER BOWL LX — Prop",
+            pick: "Kayshon Boutte Anytime TD",
+            odds: 310,
+            units: 0.5,
+            conviction: 2,
+            type: "prop",
+            factors: [
+                "Boutte had 6 TDs in regular season",
+                "+310 is great value",
+                "Red zone threat",
+                "Low risk, high reward"
+            ],
+            risk: "WR3 on depth chart"
+        },
+        // UFC FIGHT NIGHT 266 - FEBRUARY 7
+        {
+            id: 106,
             sport: "UFC",
             matchup: "Albazi vs Horiguchi",
             time: "Feb 7, 9:00 PM ET",
@@ -212,50 +368,71 @@ const BOOKIE_DATA = {
             conviction: 5,
             type: "max",
             factors: [
-                "Horiguchi 35-5, former Bellator/RIZIN double champ",
-                "Just submitted Ulanbekov — first ever to finish him",
-                "Albazi sat out ALL of 2025 — massive ring rust",
-                "Albazi had heart surgery, conditioning concerns"
+                "Horiguchi 35-5, former double champ",
+                "Albazi sat out ALL of 2025",
+                "Albazi had heart surgery",
+                "Horiguchi just finished Ulanbekov"
             ],
-            risk: "Heavy juice at -180, consider parlay"
+            risk: "Heavy juice"
         },
         {
-            id: 104,
+            id: 107,
+            sport: "UFC",
+            matchup: "Bautista vs Oliveira",
+            time: "Feb 7, 9:00 PM ET",
+            venue: "UFC Fight Night 266 — Main Event",
+            pick: "Mario Bautista ML",
+            odds: 135,
+            units: 1.5,
+            conviction: 3,
+            type: "weekly",
+            factors: [
+                "Bautista 16-3, elite wins",
+                "Beat Aldo and Patchy Mix",
+                "+135 is value",
+                "Better all-around fighter"
+            ],
+            risk: "Oliveira submission threat"
+        },
+        // NCAAW - BIG GAMES
+        {
+            id: 108,
+            sport: "NCAAW",
+            matchup: "UConn @ DePaul",
+            time: "Feb 4, 8:00 PM ET",
+            venue: "Big East Women's",
+            pick: "UConn -24.5",
+            odds: -110,
+            units: 1,
+            conviction: 3,
+            type: "weekly",
+            factors: [
+                "UConn 38-game win streak",
+                "Sarah Strong dominating",
+                "DePaul overmatched",
+                "Huskies cover big spreads"
+            ],
+            risk: "Huge spread"
+        },
+        // NBA SATURDAY
+        {
+            id: 109,
             sport: "NBA",
             matchup: "Lakers vs Warriors",
             time: "Feb 7, 8:30 PM ET",
             venue: "ABC Saturday Night",
             pick: "Los Angeles Lakers -3",
             odds: -110,
-            units: 2,
-            conviction: 4,
-            type: "weekly",
-            factors: [
-                "Luka/LeBron duo on fire — Luka 5 of 6 games 30+ pts",
-                "Warriors inconsistent, Steph can't do it alone",
-                "Lakers 29-19 vs Warriors falling",
-                "National TV game — stars show up"
-            ],
-            risk: "Warriors always dangerous at home"
-        },
-        {
-            id: 105,
-            sport: "Soccer",
-            matchup: "Liverpool vs Man City",
-            time: "Feb 8, 11:30 AM ET",
-            venue: "EPL Matchweek 25",
-            pick: "Liverpool ML",
-            odds: -125,
             units: 1.5,
             conviction: 4,
             type: "weekly",
             factors: [
-                "Liverpool defending champs, Arsenal 6 pts ahead in title race",
-                "Man City struggling under Guardiola rebuild",
-                "Liverpool at Anfield — fortress",
-                "Must-win for Liverpool's title hopes"
+                "Luka/LeBron duo on fire",
+                "Warriors depleted without Curry",
+                "National TV game",
+                "Lakers rolling"
             ],
-            risk: "City always dangerous in big games"
+            risk: "Curry might return"
         }
     ],
 
@@ -298,41 +475,44 @@ const BOOKIE_DATA = {
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // PARLAYS - February 3, 2026
+    // PARLAYS - February 3, 2026 (AGGRESSIVE)
     // ═══════════════════════════════════════════════════════════════
     parlays: {
         safe: {
-            name: "🔒 SAFE PARLAY",
-            odds: "+260",
-            wager: 20,
-            payout: 72,
+            name: "🔒 CHALKY PARLAY",
+            odds: "+285",
+            wager: 25,
+            payout: 96,
             legs: [
                 { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
                 { pick: "Pistons -6", odds: -110, game: "DEN @ DET" },
-                { pick: "Celtics ML", odds: -350, game: "BOS @ DAL" }
+                { pick: "Heat -4.5", odds: -110, game: "MIA @ ATL" },
+                { pick: "Marquette -5", odds: -110, game: "CREI @ MARQ" }
             ]
         },
         value: {
             name: "💰 VALUE PARLAY",
-            odds: "+580",
-            wager: 15,
-            payout: 102,
+            odds: "+650",
+            wager: 20,
+            payout: 150,
             legs: [
                 { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
-                { pick: "Mavericks +8", odds: -110, game: "BOS @ DAL" },
-                { pick: "Senators ML", odds: 145, game: "OTT @ CAR" }
+                { pick: "Saint Mary's +4.5", odds: -110, game: "GONZ @ SMC" },
+                { pick: "Senators ML", odds: 145, game: "OTT @ CAR" },
+                { pick: "Under 6.5", odds: -115, game: "TOR @ EDM" }
             ]
         },
         risky: {
-            name: "🎰 LONGSHOT PARLAY",
-            odds: "+1850",
+            name: "🎰 MOON SHOT",
+            odds: "+2800",
             wager: 10,
-            payout: 195,
+            payout: 290,
             legs: [
                 { pick: "Sabres ML", odds: 195, game: "BUF @ TB" },
                 { pick: "Senators ML", odds: 145, game: "OTT @ CAR" },
                 { pick: "76ers ML", odds: 115, game: "PHI @ GSW" },
-                { pick: "Mavericks +8", odds: -110, game: "BOS @ DAL" }
+                { pick: "Mavericks +8", odds: -110, game: "BOS @ DAL" },
+                { pick: "Belmont -7.5", odds: -110, game: "DRAKE @ BEL" }
             ]
         }
     },
@@ -347,9 +527,9 @@ const BOOKIE_DATA = {
             game: "76ers @ Warriors",
             prop: "Over 26.5 Points",
             odds: -115,
-            units: 1,
+            units: 1.5,
             conviction: 4,
-            reasoning: "Dropped 29 last night, Curry OUT means less defensive attention, been averaging 28+ last 5 games"
+            reasoning: "Dropped 29 last night, Curry OUT, averaging 28+ last 5 games"
         },
         {
             player: "Joel Embiid",
@@ -359,7 +539,7 @@ const BOOKIE_DATA = {
             odds: -110,
             units: 1,
             conviction: 3,
-            reasoning: "GSW weak interior without Lively, Embiid should feast on boards"
+            reasoning: "GSW weak interior, Embiid should feast"
         },
         {
             player: "Cade Cunningham",
@@ -369,7 +549,7 @@ const BOOKIE_DATA = {
             odds: -120,
             units: 1,
             conviction: 3,
-            reasoning: "Averaging 9.2 assists at home, Pistons move the ball well"
+            reasoning: "Averaging 9.2 assists at home, Pistons move ball well"
         },
         {
             player: "Nikola Jokic",
@@ -379,7 +559,27 @@ const BOOKIE_DATA = {
             odds: 180,
             units: 0.5,
             conviction: 2,
-            reasoning: "Jokic has 8 triple doubles this season, always a threat"
+            reasoning: "8 triple doubles this season, always a threat"
+        },
+        {
+            player: "Jaylen Brown",
+            team: "BOS",
+            game: "Celtics @ Mavericks",
+            prop: "Over 28.5 Points",
+            odds: -110,
+            units: 1,
+            conviction: 3,
+            reasoning: "Averaging 29.4 PPG, no Tatum = more usage"
+        },
+        {
+            player: "Cooper Flagg",
+            team: "DAL",
+            game: "Celtics @ Mavericks",
+            prop: "Over 18.5 Points",
+            odds: -115,
+            units: 1,
+            conviction: 3,
+            reasoning: "Rookie of Year candidate, home game showcase"
         }
     ],
 
