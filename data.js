@@ -9,7 +9,7 @@ const BOOKIE_DATA = {
     // ═══════════════════════════════════════════════════════════════
     bankroll: {
         starting: 1000,
-        current: 1000,
+        current: 1004,
         unitPercent: 2, // 1 unit = $20 (2% of $1000)
         maxPlayPercent: 5, // MAX plays = $50 (5%)
     },

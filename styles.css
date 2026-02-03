@@ -34,6 +34,7 @@
 .theme-dj { --accent-primary: #ffd700; --accent-secondary: #ffaa00; --accent-glow: rgba(255, 215, 0, 0.3); --gradient-primary: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%); }
 .theme-bets { --accent-primary: #00e676; --accent-secondary: #69f0ae; --accent-glow: rgba(0, 230, 118, 0.3); --gradient-primary: linear-gradient(135deg, #00e676 0%, #69f0ae 100%); }
 .theme-watch { --accent-primary: #ff6b35; --accent-secondary: #ff8c5a; --accent-glow: rgba(255, 107, 53, 0.3); --gradient-primary: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 100%); }
+.theme-daily { --accent-primary: #0066ff; --accent-secondary: #00aaff; --accent-glow: rgba(0, 102, 255, 0.3); --gradient-primary: linear-gradient(135deg, #0066ff 0%, #00aaff 100%); }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -88,6 +89,33 @@ body {
     display: flex; align-items: center; justify-content: center;
     position: relative;
     box-shadow: 0 0 25px var(--accent-glow), inset 0 0 20px rgba(255,255,255,0.1);
+    transition: background 0.3s ease;
+}
+
+/* Theme-specific logo colors */
+.theme-bets .logo-icon {
+    background: linear-gradient(135deg, var(--accent-green) 0%, #00c853 50%, var(--accent-green) 100%);
+    box-shadow: 0 0 25px rgba(0, 230, 118, 0.3), inset 0 0 20px rgba(255,255,255,0.1);
+}
+
+.theme-watch .logo-icon {
+    background: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 50%, #ff6b35 100%);
+    box-shadow: 0 0 25px rgba(255, 107, 53, 0.3), inset 0 0 20px rgba(255,255,255,0.1);
+}
+
+.theme-history .logo-icon {
+    background: linear-gradient(135deg, #9c27b0 0%, #e040fb 50%, #9c27b0 100%);
+    box-shadow: 0 0 25px rgba(156, 39, 176, 0.3), inset 0 0 20px rgba(255,255,255,0.1);
+}
+
+.theme-bankroll .logo-icon {
+    background: linear-gradient(135deg, var(--accent-green) 0%, #69f0ae 50%, var(--accent-green) 100%);
+    box-shadow: 0 0 25px rgba(0, 230, 118, 0.3), inset 0 0 20px rgba(255,255,255,0.1);
+}
+
+.theme-daily .logo-icon {
+    background: linear-gradient(135deg, #0066ff 0%, #00aaff 50%, #0066ff 100%);
+    box-shadow: 0 0 25px rgba(0, 102, 255, 0.3), inset 0 0 20px rgba(255,255,255,0.1);
 }
 
 .logo-b, .hero-b, .footer-b {
@@ -183,6 +211,10 @@ body {
 
 .theme-bankroll .balance-display {
     background: linear-gradient(135deg, var(--accent-green) 0%, #69f0ae 100%);
+}
+
+.theme-daily .balance-display {
+    background: linear-gradient(135deg, #0066ff 0%, #00aaff 100%);
 }
 
 /* Hide on mobile */
@@ -1790,15 +1822,15 @@ body {
     padding: 0;
 }
 
-/* Clean Bet Item */
+/* Clean Bet Item - Card Style like Watch */
 .bet-item {
-    display: grid;
-    grid-template-columns: 50px 80px 2fr 70px 90px 90px 60px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 18px 24px;
+    padding: 20px 24px;
     border-bottom: 1px solid var(--border);
     transition: all 0.3s;
-    gap: 12px;
+    gap: 15px;
 }
 
 .bet-item:last-child {
@@ -1817,39 +1849,76 @@ body {
     background: rgba(255, 71, 87, 0.08);
 }
 
-.bet-info {
+/* Bet Header Row */
+.bet-header {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
 }
 
 .bet-sport-tag {
-    display: inline-block;
-    font-size: 10px;
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
     font-weight: 700;
     color: var(--accent-primary);
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 2px;
 }
 
-.bet-game {
-    font-size: 12px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+/* Bet Matchup - Centered like Watch */
+.bet-matchup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    width: 100%;
 }
 
-.bet-pick {
+.bet-team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+}
+
+.bet-team-abbr {
     font-size: 18px;
     font-weight: 800;
+    margin-top: 6px;
+    color: var(--text-secondary);
 }
 
-.bet-odds {
+.bet-vs {
     font-size: 16px;
-    color: var(--text-secondary);
+    color: var(--text-muted);
     font-weight: 700;
+    padding: 8px 14px;
+    background: var(--bg-dark);
+    border-radius: 8px;
+}
+
+/* Bet Pick Display */
+.bet-pick-display {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-primary);
     text-align: center;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, var(--accent-glow), transparent);
+    border: 1px solid var(--accent-primary);
+    border-radius: 12px;
+}
+
+/* Bet Amounts Row */
+.bet-amounts {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
 }
 
 .bet-stake {
@@ -1868,6 +1937,15 @@ body {
     text-transform: uppercase;
 }
 
+.bet-odds-display {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    background: var(--bg-dark);
+    border-radius: 8px;
+}
+
 .bet-win {
     text-align: center;
 }
@@ -1882,12 +1960,6 @@ body {
     font-size: 10px;
     color: var(--text-muted);
     text-transform: uppercase;
-}
-
-.bet-deadline {
-    font-size: 12px;
-    color: var(--text-muted);
-    text-align: center;
 }
 
 /* Big Status Button */
@@ -1977,13 +2049,22 @@ body {
 .parlay-leg-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 14px 20px;
     border-bottom: 1px solid var(--border);
+    gap: 12px;
 }
 
 .parlay-leg-item:last-child {
     border-bottom: none;
+}
+
+.leg-logo {
+    flex-shrink: 0;
+}
+
+.leg-info-wrap {
+    flex: 1;
+    min-width: 0;
 }
 
 .leg-team-full {
@@ -2001,6 +2082,7 @@ body {
     font-size: 14px;
     font-weight: 600;
     color: var(--text-secondary);
+    flex-shrink: 0;
 }
 
 .parlay-card-footer {
@@ -2145,23 +2227,39 @@ body {
     .bets-section-header { padding: 14px 16px; }
     .bets-section-header h3 { font-size: 13px; }
 
+    /* Bet item - Mobile centered layout */
     .bet-item {
-        grid-template-columns: 45px 70px 1fr auto;
-        gap: 10px;
-        padding: 14px 16px;
+        flex-direction: column;
+        align-items: center;
+        padding: 16px;
+        gap: 12px;
     }
-    .bet-number { width: 40px; height: 40px; border-radius: 10px; }
-    .bet-number-value { font-size: 16px; }
-    .bet-number-label { font-size: 7px; }
-    .bet-logos { gap: 4px; }
-    .bet-logos .vs-text { font-size: 9px; }
-    .bet-info { grid-column: span 2; }
-    .bet-sport-tag { font-size: 9px; }
-    .bet-pick { font-size: 15px; }
-    .bet-game { font-size: 11px; }
-    .bet-odds { display: none; }
-    .bet-stake, .bet-win { display: none; }
-    .bet-status-btn { width: 45px; height: 45px; font-size: 18px; }
+    .bet-header {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        gap: 10px;
+    }
+    .bet-number { width: 36px; height: 36px; border-radius: 10px; }
+    .bet-number-value { font-size: 14px; }
+    .bet-number-label { font-size: 6px; }
+    .bet-sport-tag { font-size: 10px; flex: 1; text-align: center; }
+    .bet-status-btn { width: 40px; height: 40px; font-size: 16px; }
+
+    .bet-matchup { gap: 15px; }
+    .bet-team { min-width: 70px; }
+    .bet-team .team-logo { width: 40px !important; height: 40px !important; }
+    .bet-team-abbr { font-size: 14px; margin-top: 4px; }
+    .bet-vs { font-size: 14px; padding: 6px 10px; }
+
+    .bet-pick-display { font-size: 16px; padding: 10px 16px; }
+
+    .bet-amounts { gap: 20px; }
+    .bet-amount { font-size: 16px; }
+    .bet-amount-label { font-size: 8px; }
+    .bet-odds-display { font-size: 14px; }
+    .bet-win-amount { font-size: 16px; }
+    .bet-win-label { font-size: 8px; }
 
     /* Plays sections */
     .plays-section { border-radius: 16px; margin-bottom: 15px; }

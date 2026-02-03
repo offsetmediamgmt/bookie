@@ -75,32 +75,80 @@ function getTeamLogoUrl(abbr) {
 // Extract team abbreviations from matchup string like "76ers @ Warriors"
 function extractTeams(matchup) {
     const teamMap = {
-        '76ers': 'PHI', 'Warriors': 'GSW', 'Pistons': 'DET', 'Nuggets': 'DEN',
-        'Celtics': 'BOS', 'Mavericks': 'DAL', 'Heat': 'MIA', 'Hawks': 'ATL',
-        'Lakers': 'LAL', 'Clippers': 'LAC', 'Rockets': 'HOU', 'Pacers': 'IND',
-        'Thunder': 'OKC', 'Spurs': 'SAS', 'Suns': 'PHX', 'Raptors': 'TOR',
-        'Knicks': 'NYK', 'Nets': 'BKN', 'Cavaliers': 'CLE',
-        'Senators': 'OTT', 'Hurricanes': 'CAR', 'Sabres': 'BUF', 'Lightning': 'TB',
-        'Maple Leafs': 'TOR', 'Oilers': 'EDM', 'Flames': 'CGY', 'Penguins': 'PIT', 'Jets': 'WPG',
-        'Patriots': 'NE', 'Seahawks': 'SEA',
-        'Gonzaga': 'GONZ', "Saint Mary's": 'SMC', 'Marquette': 'MARQ', 'Creighton': 'CREI',
-        'Belmont': 'BEL', 'Drake': 'DRAKE', 'Kansas': 'KU', 'Texas Tech': 'TTU',
-        'UNC': 'UNC', 'Syracuse': 'SYR', 'UConn': 'UCONN', 'DePaul': 'DEPAUL'
+        // NBA
+        '76ers': 'PHI', 'Philadelphia': 'PHI', 'PHI': 'PHI',
+        'Warriors': 'GSW', 'Golden State': 'GSW', 'GSW': 'GSW',
+        'Pistons': 'DET', 'Detroit': 'DET', 'DET': 'DET',
+        'Nuggets': 'DEN', 'Denver': 'DEN', 'DEN': 'DEN',
+        'Celtics': 'BOS', 'Boston': 'BOS', 'BOS': 'BOS',
+        'Mavericks': 'DAL', 'Dallas': 'DAL', 'DAL': 'DAL',
+        'Heat': 'MIA', 'Miami': 'MIA', 'MIA': 'MIA',
+        'Hawks': 'ATL', 'Atlanta': 'ATL', 'ATL': 'ATL',
+        'Lakers': 'LAL', 'Los Angeles Lakers': 'LAL', 'LAL': 'LAL',
+        'Clippers': 'LAC', 'LAC': 'LAC',
+        'Rockets': 'HOU', 'Houston': 'HOU', 'HOU': 'HOU',
+        'Pacers': 'IND', 'Indiana': 'IND', 'IND': 'IND',
+        'Thunder': 'OKC', 'Oklahoma City': 'OKC', 'OKC': 'OKC',
+        'Spurs': 'SAS', 'San Antonio': 'SAS', 'SAS': 'SAS',
+        'Suns': 'PHX', 'Phoenix': 'PHX', 'PHX': 'PHX',
+        'Raptors': 'TOR', 'Toronto': 'TOR',
+        'Knicks': 'NYK', 'New York': 'NYK', 'NYK': 'NYK',
+        'Nets': 'BKN', 'Brooklyn': 'BKN', 'BKN': 'BKN',
+        'Cavaliers': 'CLE', 'Cleveland': 'CLE', 'CLE': 'CLE',
+        // NHL
+        'Senators': 'OTT', 'Ottawa': 'OTT', 'OTT': 'OTT',
+        'Hurricanes': 'CAR', 'Carolina': 'CAR', 'CAR': 'CAR',
+        'Sabres': 'BUF', 'Buffalo': 'BUF', 'BUF': 'BUF',
+        'Lightning': 'TB', 'Tampa Bay': 'TB', 'Tampa': 'TB', 'TB': 'TB',
+        'Maple Leafs': 'TOR', 'TOR': 'TOR',
+        'Oilers': 'EDM', 'Edmonton': 'EDM', 'EDM': 'EDM',
+        'Flames': 'CGY', 'Calgary': 'CGY', 'CGY': 'CGY',
+        'Penguins': 'PIT', 'Pittsburgh': 'PIT', 'PIT': 'PIT',
+        'Jets': 'WPG', 'Winnipeg': 'WPG', 'WPG': 'WPG',
+        // NFL
+        'Patriots': 'NE', 'New England': 'NE', 'NE': 'NE',
+        'Seahawks': 'SEA', 'Seattle': 'SEA', 'SEA': 'SEA',
+        // NCAAB
+        'Gonzaga': 'GONZ', 'GONZ': 'GONZ',
+        "Saint Mary's": 'SMC', 'Saint Marys': 'SMC', 'SMC': 'SMC', 'St. Marys': 'SMC',
+        'Marquette': 'MARQ', 'MARQ': 'MARQ',
+        'Creighton': 'CREI', 'CREI': 'CREI',
+        'Belmont': 'BEL', 'BEL': 'BEL',
+        'Drake': 'DRAKE', 'DRAKE': 'DRAKE',
+        'Kansas': 'KU', 'KU': 'KU',
+        'Texas Tech': 'TTU', 'TTU': 'TTU',
+        'UNC': 'UNC', 'North Carolina': 'UNC',
+        'Syracuse': 'SYR', 'SYR': 'SYR',
+        'UConn': 'UCONN', 'Connecticut': 'UCONN', 'UCONN': 'UCONN',
+        'DePaul': 'DEPAUL', 'DEPAUL': 'DEPAUL',
+        // UFC
+        'Albazi': 'UFC', 'Horiguchi': 'UFC', 'Bautista': 'UFC', 'Oliveira': 'UFC'
     };
 
     // Try to extract from "Team1 @ Team2" or "Team1 vs Team2" format
-    const parts = matchup.split(/\s*[@vs]\s*/i);
+    const parts = matchup.split(/\s*[@vs]+\s*/i);
     let away = '', home = '';
 
     if (parts.length >= 2) {
-        // Find team abbreviations
+        // Find team abbreviations - check each word/phrase
         for (const [name, abbr] of Object.entries(teamMap)) {
-            if (parts[0].includes(name)) away = abbr;
-            if (parts[1].includes(name)) home = abbr;
+            if (parts[0].toLowerCase().includes(name.toLowerCase())) away = abbr;
+            if (parts[1].toLowerCase().includes(name.toLowerCase())) home = abbr;
         }
     }
 
     return { away, home };
+}
+
+// Get logo from game string like "PHI @ GSW"
+function getLogosFromGame(game) {
+    const parts = game.split(/\s*[@vs]+\s*/i);
+    if (parts.length >= 2) {
+        const away = parts[0].trim().toUpperCase();
+        const home = parts[1].trim().toUpperCase();
+        return { away, home };
+    }
+    return { away: '', home: '' };
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -441,11 +489,11 @@ function renderParlaysGrid() {
                 </div>
                 <div class="parlay-legs-vertical">
                     ${p.legs.map(leg => {
-                        const teams = extractTeams(leg.game);
+                        const teams = getLogosFromGame(leg.game);
                         return `
                         <div class="parlay-leg-item">
-                            <div class="leg-logo">${getTeamLogo(teams.away || teams.home, 28)}</div>
-                            <div style="flex: 1;">
+                            <div class="leg-logo">${getTeamLogo(teams.away, 32) || getTeamLogo(teams.home, 32)}</div>
+                            <div class="leg-info-wrap">
                                 <div class="leg-team-full">${leg.pick}</div>
                                 <div class="leg-pick-detail">${leg.game}</div>
                             </div>
@@ -1158,32 +1206,39 @@ function renderStraightBets() {
 
         return `
             <div class="bet-item ${statusClass}" data-id="${bet.id}">
-                <div class="bet-number">
-                    <div class="bet-number-value">${index + 1}</div>
-                    <div class="bet-number-label">BET</div>
-                </div>
-                <div class="bet-logos">
-                    ${getTeamLogo(bet.away, 36)}
-                    <span class="vs-text">@</span>
-                    ${getTeamLogo(bet.home, 36)}
-                </div>
-                <div class="bet-info">
+                <div class="bet-header">
+                    <div class="bet-number">
+                        <div class="bet-number-value">${index + 1}</div>
+                        <div class="bet-number-label">BET</div>
+                    </div>
                     <div class="bet-sport-tag">${getSportEmoji(bet.sport)} ${bet.sport} · ${bet.deadline}</div>
-                    <div class="bet-pick">${bet.pick}</div>
-                    <div class="bet-game">${bet.game}</div>
+                    <button class="bet-status-btn ${statusClass}" onclick="cycleBetStatus('${bet.id}')">
+                        ${statusIcon}
+                    </button>
                 </div>
-                <div class="bet-odds">${formatOdds(bet.odds)}</div>
-                <div class="bet-stake">
-                    <div class="bet-amount">$${bet.amount}</div>
-                    <div class="bet-amount-label">Risk</div>
+                <div class="bet-matchup">
+                    <div class="bet-team">
+                        ${getTeamLogo(bet.away, 50)}
+                        <div class="bet-team-abbr">${bet.away}</div>
+                    </div>
+                    <div class="bet-vs">@</div>
+                    <div class="bet-team">
+                        ${getTeamLogo(bet.home, 50)}
+                        <div class="bet-team-abbr">${bet.home}</div>
+                    </div>
                 </div>
-                <div class="bet-win">
-                    <div class="bet-win-amount">$${potentialWin}</div>
-                    <div class="bet-win-label">To Win</div>
+                <div class="bet-pick-display">${bet.pick}</div>
+                <div class="bet-amounts">
+                    <div class="bet-stake">
+                        <div class="bet-amount">$${bet.amount}</div>
+                        <div class="bet-amount-label">Risk</div>
+                    </div>
+                    <div class="bet-odds-display">${formatOdds(bet.odds)}</div>
+                    <div class="bet-win">
+                        <div class="bet-win-amount">$${potentialWin}</div>
+                        <div class="bet-win-label">To Win</div>
+                    </div>
                 </div>
-                <button class="bet-status-btn ${statusClass}" onclick="cycleBetStatus('${bet.id}')">
-                    ${statusIcon}
-                </button>
             </div>
         `;
     }).join('');
