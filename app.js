@@ -10,10 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
     initBankroll();
     initCalculators();
+    renderBetsPage();
     renderDailyCard();
     renderHistory();
     renderPlayerProps();
     updateHeaderStats();
+    loadBetStatus();
 });
 
 // ═══════════════════════════════════════════════════════════════
@@ -802,8 +804,168 @@ function formatOdds(odds) {
     return odds.toString();
 }
 
+// ═══════════════════════════════════════════════════════════════
+// BETS PAGE - Action Tracker
+// ═══════════════════════════════════════════════════════════════
+let betStatus = {};
+
+function loadBetStatus() {
+    const saved = localStorage.getItem('bookieBetStatus');
+    if (saved) {
+        betStatus = JSON.parse(saved);
+    }
+    updateBetCounts();
+}
+
+function saveBetStatus() {
+    localStorage.setItem('bookieBetStatus', JSON.stringify(betStatus));
+}
+
+function renderBetsPage() {
+    renderStraightBets();
+    renderParlayBets();
+    renderPropBets();
+    updateBetCounts();
+}
+
+function renderStraightBets() {
+    const container = document.getElementById('straightBetsList');
+    if (!container) return;
+
+    const bets = [
+        { id: 'straight-1', game: 'DEN @ DET', pick: 'Pistons -6', odds: -110, amount: 30, deadline: '4:00 PM PST' },
+        { id: 'straight-2', game: 'OTT @ CAR', pick: 'Senators ML', odds: 145, amount: 20, deadline: '4:00 PM PST' },
+        { id: 'straight-3', game: 'BUF @ TB', pick: 'Sabres ML', odds: 195, amount: 20, deadline: '4:30 PM PST' },
+        { id: 'straight-4', game: 'BOS @ DAL', pick: 'Mavericks +8', odds: -110, amount: 20, deadline: '5:00 PM PST' },
+        { id: 'straight-5', game: 'PHI @ GSW', pick: '76ers +2.5', odds: -110, amount: 40, deadline: '7:00 PM PST' },
+    ];
+
+    container.innerHTML = bets.map(bet => renderBetItem(bet)).join('');
+}
+
+function renderParlayBets() {
+    const container = document.getElementById('parlayBetsList');
+    if (!container) return;
+
+    const parlays = [
+        { id: 'parlay-1', name: 'Safe Parlay', legs: 'PHI +2.5 / DET -6 / BOS ML', odds: '+260', amount: 20, toWin: 72 },
+        { id: 'parlay-2', name: 'Value Parlay', legs: 'PHI +2.5 / DAL +8 / OTT ML', odds: '+580', amount: 15, toWin: 102 },
+        { id: 'parlay-3', name: 'Longshot', legs: 'BUF ML / OTT ML / PHI ML / DAL +8', odds: '+1850', amount: 10, toWin: 195 },
+    ];
+
+    container.innerHTML = parlays.map(parlay => `
+        <div class="bet-item parlay ${betStatus[parlay.id] ? 'placed' : ''}" data-id="${parlay.id}">
+            <div class="bet-info">
+                <div class="bet-game">${parlay.name}</div>
+                <div class="bet-pick">${parlay.odds}</div>
+                <div class="parlay-legs-list">${parlay.legs}</div>
+            </div>
+            <div class="bet-odds">To Win</div>
+            <div class="bet-amount">$${parlay.toWin}</div>
+            <div class="bet-amount" style="color: var(--accent-red);">$${parlay.amount}</div>
+            <div class="bet-action">
+                <button class="place-btn ${betStatus[parlay.id] ? 'placed' : ''}" onclick="toggleBetPlaced('${parlay.id}')">
+                    ${betStatus[parlay.id] ? 'Placed' : 'Place'}
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderPropBets() {
+    const container = document.getElementById('propBetsList');
+    if (!container) return;
+
+    const props = [
+        { id: 'prop-1', player: 'Tyrese Maxey', prop: 'Over 26.5 Points', odds: -115, amount: 20 },
+        { id: 'prop-2', player: 'Joel Embiid', prop: 'Over 11.5 Rebounds', odds: -110, amount: 20 },
+        { id: 'prop-3', player: 'Cade Cunningham', prop: 'Over 7.5 Assists', odds: -120, amount: 20 },
+        { id: 'prop-4', player: 'Nikola Jokic', prop: 'Triple Double YES', odds: 180, amount: 10 },
+    ];
+
+    container.innerHTML = props.map(prop => `
+        <div class="bet-item ${betStatus[prop.id] ? 'placed' : ''}" data-id="${prop.id}">
+            <div class="bet-info">
+                <div class="bet-game">${prop.player}</div>
+                <div class="bet-pick">${prop.prop}</div>
+            </div>
+            <div class="bet-odds">${formatOdds(prop.odds)}</div>
+            <div class="bet-amount">$${prop.amount}</div>
+            <div class="bet-deadline">PHI @ GSW</div>
+            <div class="bet-action">
+                <button class="place-btn ${betStatus[prop.id] ? 'placed' : ''}" onclick="toggleBetPlaced('${prop.id}')">
+                    ${betStatus[prop.id] ? 'Placed' : 'Place'}
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderBetItem(bet) {
+    const isPlaced = betStatus[bet.id];
+    return `
+        <div class="bet-item ${isPlaced ? 'placed' : ''}" data-id="${bet.id}">
+            <div class="bet-info">
+                <div class="bet-game">${bet.game}</div>
+                <div class="bet-pick">${bet.pick}</div>
+            </div>
+            <div class="bet-odds">${formatOdds(bet.odds)}</div>
+            <div class="bet-amount">$${bet.amount}</div>
+            <div class="bet-deadline">${bet.deadline}</div>
+            <div class="bet-action">
+                <button class="place-btn ${isPlaced ? 'placed' : ''}" onclick="toggleBetPlaced('${bet.id}')">
+                    ${isPlaced ? 'Placed' : 'Place'}
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function toggleBetPlaced(betId) {
+    betStatus[betId] = !betStatus[betId];
+    saveBetStatus();
+    renderBetsPage();
+
+    // Auto-log to history if placed
+    if (betStatus[betId]) {
+        console.log(`Bet placed: ${betId}`);
+    }
+}
+
+function updateBetCounts() {
+    const total = 12; // Total bets
+    const placed = Object.values(betStatus).filter(v => v).length;
+    const el = document.getElementById('betsPlaced');
+    if (el) {
+        el.textContent = `${placed}/${total}`;
+        el.style.color = placed === total ? 'var(--accent-green)' : 'var(--accent-primary)';
+    }
+}
+
+function resetAllBets() {
+    if (confirm('Reset all bets to not placed?')) {
+        betStatus = {};
+        saveBetStatus();
+        renderBetsPage();
+    }
+}
+
+function markAllPlaced() {
+    const allIds = [
+        'straight-1', 'straight-2', 'straight-3', 'straight-4', 'straight-5',
+        'parlay-1', 'parlay-2', 'parlay-3',
+        'prop-1', 'prop-2', 'prop-3', 'prop-4'
+    ];
+    allIds.forEach(id => betStatus[id] = true);
+    saveBetStatus();
+    renderBetsPage();
+}
+
 // Make functions globally available
 window.logBet = logBet;
 window.settleBet = settleBet;
 window.addDJPick = addDJPick;
 window.settleDJPick = settleDJPick;
+window.toggleBetPlaced = toggleBetPlaced;
+window.resetAllBets = resetAllBets;
+window.markAllPlaced = markAllPlaced;

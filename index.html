@@ -44,13 +44,82 @@
          NAVIGATION
          ═══════════════════════════════════════════════════════════════ -->
     <nav class="nav" id="mainNav">
+        <a class="nav-item" data-page="bets" data-theme="theme-bets">🎯 Bets</a>
         <a class="nav-item active" data-page="history" data-theme="theme-history">📈 Track Record</a>
         <a class="nav-item" data-page="daily" data-theme="">📊 Daily Card</a>
         <a class="nav-item" data-page="bankroll" data-theme="theme-bankroll">💰 Bankroll</a>
-        <a class="nav-item" data-page="dj" data-theme="theme-dj">👑 DJ's Picks</a>
     </nav>
 
     <main class="main">
+        <!-- ═══════════════════════════════════════════════════════════════
+             BETS PAGE - Action Items
+             ═══════════════════════════════════════════════════════════════ -->
+        <div class="page-section" id="page-bets">
+            <div class="bets-header">
+                <div class="bets-title">🎯 PLACE YOUR BETS</div>
+                <div class="bets-subtitle">February 3, 2026</div>
+                <div class="bets-deadline">
+                    <span class="deadline-icon">⏰</span>
+                    <span>First game: <strong>4:00 PM PST</strong> (OTT @ CAR)</span>
+                </div>
+            </div>
+
+            <!-- Total Summary -->
+            <div class="bets-summary">
+                <div class="summary-card">
+                    <div class="summary-value" id="totalRisk">$245</div>
+                    <div class="summary-label">Total Risk</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value" id="potentialWin">$580</div>
+                    <div class="summary-label">Potential Win</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value" id="betsPlaced">0/12</div>
+                    <div class="summary-label">Bets Placed</div>
+                </div>
+                <div class="summary-card action">
+                    <a href="https://stake.com/sports" target="_blank" class="stake-btn">
+                        <span>Open Stake</span>
+                        <span class="stake-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Straight Bets -->
+            <div class="bets-section">
+                <div class="bets-section-header">
+                    <h3>📊 STRAIGHT BETS</h3>
+                    <span class="section-total">$130 risk</span>
+                </div>
+                <div class="bets-list" id="straightBetsList"></div>
+            </div>
+
+            <!-- Parlays -->
+            <div class="bets-section">
+                <div class="bets-section-header">
+                    <h3>🎰 PARLAYS</h3>
+                    <span class="section-total">$45 risk</span>
+                </div>
+                <div class="bets-list" id="parlayBetsList"></div>
+            </div>
+
+            <!-- Player Props -->
+            <div class="bets-section">
+                <div class="bets-section-header">
+                    <h3>🎯 PLAYER PROPS</h3>
+                    <span class="section-total">$70 risk</span>
+                </div>
+                <div class="bets-list" id="propBetsList"></div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <button class="action-btn reset" onclick="resetAllBets()">Reset All</button>
+                <button class="action-btn success" onclick="markAllPlaced()">Mark All Placed</button>
+            </div>
+        </div>
+
         <!-- ═══════════════════════════════════════════════════════════════
              DAILY CARD PAGE
              ═══════════════════════════════════════════════════════════════ -->
