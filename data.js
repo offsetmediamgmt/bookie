@@ -38,6 +38,18 @@ const BOOKIE_DATA = {
     // ═══════════════════════════════════════════════════════════════
     history: [
         // February 2026 picks (most recent first)
+        { date: "Feb 2", sport: "NHL", pick: "Senators ML", odds: -118, units: 1, result: "win", pl: 0.85,
+          team1: "OTT", score1: 3, team2: "PIT", score2: 2, picked: "OTT" },
+        { date: "Feb 2", sport: "NHL", pick: "Flames +1.5", odds: -260, units: 1, result: "loss", pl: -1.00,
+          team1: "TOR", score1: 4, team2: "CGY", score2: 2, picked: "CGY" },
+        { date: "Feb 2", sport: "NHL", pick: "Stars -1.5", odds: 165, units: 1, result: "loss", pl: -1.00,
+          team1: "DAL", score1: 4, team2: "WPG", score2: 3, picked: "DAL" },
+        { date: "Feb 2", sport: "NBA", pick: "76ers +2.5", odds: -110, units: 1.5, result: "win", pl: 1.36,
+          team1: "PHI", score1: 128, team2: "LAC", score2: 113, picked: "PHI" },
+        { date: "Feb 2", sport: "NCAAB", pick: "OVER 154.5", odds: -110, units: 1, result: "loss", pl: -1.00,
+          team1: "KU", score1: 64, team2: "TTU", score2: 61, picked: "OVER" },
+        { date: "Feb 2", sport: "NCAAB", pick: "Kansas +4.5", odds: -105, units: 1, result: "win", pl: 0.95,
+          team1: "KU", score1: 64, team2: "TTU", score2: 61, picked: "KU" },
         { date: "Feb 2", sport: "NBA", pick: "Pacers +6.5", odds: -110, units: 1, result: "win", pl: 0.91,
           team1: "HOU", score1: 118, team2: "IND", score2: 114, picked: "IND" },
         { date: "Feb 2", sport: "NCAAB", pick: "UNC -11.5", odds: -110, units: 1, result: "loss", pl: -1.00,
@@ -178,14 +190,15 @@ const BOOKIE_DATA = {
             units: 1,
             conviction: 3,
             type: "daily",
-            result: "PENDING",
+            result: "WIN",
+            final: "Kansas 64-61 (won outright!)",
             factors: [
                 "TTU only covers 38.5% as 4.5+ favorite",
                 "Kansas has depth, 4 players projected 13+ pts",
-                "TTU coming off loss to UCF",
-                "Sharp money on TTU but public on Kansas"
+                "Peterson hit back-to-back clutch 3s in final 1:20",
+                "KU overcame 9-pt deficit with 6 min left"
             ],
-            risk: "Texas Tech 11-0 at home"
+            risk: null
         },
         {
             id: 4,
@@ -197,14 +210,15 @@ const BOOKIE_DATA = {
             units: 1.5,
             conviction: 4,
             type: "daily",
-            result: "PENDING",
+            result: "WIN",
+            final: "PHI 128-113 (won by 15!)",
             factors: [
                 "Clippers 1-6 on back-to-backs this season",
                 "James Harden OUT (personal reasons)",
-                "PHI 14-6 ATS last 20 vs LAC",
-                "PHI 5-2 ATS last 7 road games"
+                "Maxey dropped 29 pts with 7 threes",
+                "Barlow had 26 pts & 16 rebounds"
             ],
-            risk: "Embiid ankle questionable"
+            risk: null
         },
         {
             id: 5,
@@ -216,13 +230,14 @@ const BOOKIE_DATA = {
             units: 1,
             conviction: 3,
             type: "total",
-            result: "PENDING",
+            result: "LOSS",
+            final: "125 total (64+61) - UNDER",
             factors: [
                 "OVER hit 5 of 7 head-to-head meetings",
-                "OVER hit 4 of last 5 Kansas games",
-                "Both teams can score"
+                "Defense dominated late",
+                "Both teams went cold down stretch"
             ],
-            risk: null
+            risk: "Low-scoring game"
         },
         {
             id: 6,
@@ -234,14 +249,15 @@ const BOOKIE_DATA = {
             units: 1,
             conviction: 4,
             type: "daily",
-            result: "PENDING",
+            result: "LOSS",
+            final: "DAL 4-3 OT (won by 1)",
             factors: [
                 "Stars at home — American Airlines Center",
-                "3rd best goal differential in NHL (+30)",
-                "10th best offense (3.3 goals/game)",
-                "5th best defense (2.7 goals against)"
+                "Harley OT winner",
+                "Needed 2+ to cover puck line",
+                "Stanley tied it with 1:43 left"
             ],
-            risk: null
+            risk: "OT game"
         },
         {
             id: 7,
@@ -253,13 +269,15 @@ const BOOKIE_DATA = {
             units: 1,
             conviction: 3,
             type: "daily",
-            result: "PENDING",
+            result: "LOSS",
+            final: "TOR 4-2 (Calgary lost by 2)",
             factors: [
                 "Home underdog value",
-                "Projection: Flames 4 - Leafs 3",
-                "Calgary playing well at home"
+                "Nylander scored 35 sec in",
+                "Toronto 8 straight vs Calgary",
+                "Flames struggling - lost 6 of 7"
             ],
-            risk: "Heavy favorite in Leafs"
+            risk: "Leafs too hot"
         },
         {
             id: 8,
@@ -271,13 +289,15 @@ const BOOKIE_DATA = {
             units: 1,
             conviction: 3,
             type: "daily",
-            result: "PENDING",
+            result: "WIN",
+            final: "OTT 3-2 (Giroux game-winner)",
             factors: [
-                "Home favorite",
-                "Penguins struggling on road",
-                "Ottawa slight edge at home"
+                "Home favorite delivered",
+                "Giroux scored with 5:08 left",
+                "Ended Pens 6-game win streak",
+                "Ottawa outshot PIT 31-16"
             ],
-            risk: "Crosby factor"
+            risk: null
         }
     ],
 
