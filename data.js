@@ -68,7 +68,7 @@ const BOOKIE_DATA = {
             home: "GSW",
             time: "10:00 PM ET",
             pick: "76ers +2.5",
-            odds: -110,
+            odds: -102,
             units: 2,
             conviction: 4,
             factors: [
@@ -84,8 +84,8 @@ const BOOKIE_DATA = {
             away: "DEN",
             home: "DET",
             time: "7:00 PM ET",
-            pick: "Pistons -6",
-            odds: -110,
+            pick: "Pistons -6.5",
+            odds: 113,
             units: 1.5,
             conviction: 3,
             factors: [
@@ -101,13 +101,13 @@ const BOOKIE_DATA = {
             away: "BOS",
             home: "DAL",
             time: "8:00 PM ET",
-            pick: "Mavericks +8",
-            odds: -110,
+            pick: "Mavericks +8.5",
+            odds: -137,
             units: 1,
             conviction: 3,
             factors: [
                 "Mavs 7-3 ATS last 10 games",
-                "8 points is too many for home team",
+                "8.5 points is too many for home team",
                 "Cooper Flagg averaging 19.8 PPG",
                 "Home dog value at AAC"
             ]
@@ -119,7 +119,7 @@ const BOOKIE_DATA = {
             home: "ATL",
             time: "7:30 PM ET",
             pick: "Heat -4.5",
-            odds: -110,
+            odds: 138,
             units: 1,
             conviction: 3,
             factors: [
@@ -137,7 +137,7 @@ const BOOKIE_DATA = {
             home: "TB",
             time: "7:30 PM ET",
             pick: "Sabres ML",
-            odds: 195,
+            odds: 160,
             units: 1,
             conviction: 2,
             factors: [
@@ -154,7 +154,7 @@ const BOOKIE_DATA = {
             home: "CAR",
             time: "7:00 PM ET",
             pick: "Senators ML",
-            odds: 145,
+            odds: 148,
             units: 1,
             conviction: 2,
             factors: [
@@ -169,9 +169,9 @@ const BOOKIE_DATA = {
             sport: "NHL",
             away: "TOR",
             home: "EDM",
-            time: "9:00 PM ET",
+            time: "8:30 PM ET",
             pick: "UNDER 6.5",
-            odds: -115,
+            odds: 120,
             units: 1,
             conviction: 3,
             factors: [
@@ -187,9 +187,9 @@ const BOOKIE_DATA = {
             sport: "NCAAB",
             away: "DRAKE",
             home: "BEL",
-            time: "8:00 PM ET",
-            pick: "Belmont -7.5",
-            odds: -110,
+            time: "9:00 PM ET",
+            pick: "Belmont -8.5",
+            odds: -143,
             units: 1,
             conviction: 3,
             factors: [
@@ -206,7 +206,7 @@ const BOOKIE_DATA = {
             home: "SMU",
             time: "9:00 PM ET",
             pick: "SMU +2.5",
-            odds: -110,
+            odds: -133,
             units: 1,
             conviction: 3,
             factors: [
@@ -223,7 +223,7 @@ const BOOKIE_DATA = {
             home: "UCLA",
             time: "9:30 PM ET",
             pick: "UCLA -12.5",
-            odds: -110,
+            odds: -138,
             units: 1.5,
             conviction: 4,
             factors: [
@@ -453,39 +453,39 @@ const BOOKIE_DATA = {
     parlays: {
         safe: {
             name: "🔒 CHALKY PARLAY",
-            odds: "+285",
+            odds: "+1657",
             wager: 25,
-            payout: 96,
+            payout: 446,
             legs: [
-                { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
-                { pick: "Pistons -6", odds: -110, game: "DEN @ DET" },
-                { pick: "Heat -4.5", odds: -110, game: "MIA @ ATL" },
-                { pick: "SMU +2.5", odds: -110, game: "NCST @ SMU" }
+                { pick: "Pistons -6.5", odds: 113, game: "DEN @ DET" },
+                { pick: "Heat -4.5", odds: 138, game: "MIA @ ATL" },
+                { pick: "SMU +2.5", odds: -133, game: "NCST @ SMU" },
+                { pick: "76ers +2.5", odds: -102, game: "PHI @ GSW" }
             ]
         },
         value: {
             name: "💰 VALUE PARLAY",
-            odds: "+650",
+            odds: "+1831",
             wager: 20,
-            payout: 150,
+            payout: 392,
             legs: [
-                { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
-                { pick: "UCLA -12.5", odds: -110, game: "RUT @ UCLA" },
-                { pick: "Senators ML", odds: 145, game: "OTT @ CAR" },
-                { pick: "Under 6.5", odds: -115, game: "TOR @ EDM" }
+                { pick: "Senators ML", odds: 148, game: "OTT @ CAR" },
+                { pick: "Under 6.5", odds: 120, game: "TOR @ EDM" },
+                { pick: "UCLA -12.5", odds: -138, game: "RUT @ UCLA" },
+                { pick: "76ers +2.5", odds: -102, game: "PHI @ GSW" }
             ]
         },
         risky: {
             name: "🎰 MOON SHOT",
-            odds: "+2800",
+            odds: "+4306",
             wager: 10,
-            payout: 290,
+            payout: 448,
             legs: [
-                { pick: "Sabres ML", odds: 195, game: "BUF @ TB" },
-                { pick: "Senators ML", odds: 145, game: "OTT @ CAR" },
-                { pick: "76ers ML", odds: 115, game: "PHI @ GSW" },
-                { pick: "Mavericks +8", odds: -110, game: "BOS @ DAL" },
-                { pick: "Belmont -7.5", odds: -110, game: "DRAKE @ BEL" }
+                { pick: "Senators ML", odds: 148, game: "OTT @ CAR" },
+                { pick: "Sabres ML", odds: 160, game: "BUF @ TB" },
+                { pick: "Mavericks +8.5", odds: -137, game: "BOS @ DAL" },
+                { pick: "Belmont -8.5", odds: -143, game: "DRAKE @ BEL" },
+                { pick: "76ers ML", odds: 131, game: "PHI @ GSW" }
             ]
         }
     },
@@ -499,7 +499,7 @@ const BOOKIE_DATA = {
             team: "PHI",
             game: "76ers @ Warriors",
             prop: "Over 26.5 Points",
-            odds: -115,
+            odds: -185,
             units: 1.5,
             conviction: 4,
             reasoning: "Dropped 29 last night, Curry OUT, averaging 28+ last 5 games"
@@ -508,8 +508,8 @@ const BOOKIE_DATA = {
             player: "Cade Cunningham",
             team: "DET",
             game: "Nuggets @ Pistons",
-            prop: "Over 7.5 Assists",
-            odds: -120,
+            prop: "Over 8.5 Assists",
+            odds: -257,
             units: 1,
             conviction: 3,
             reasoning: "Averaging 9.2 assists at home, Pistons move ball well"
@@ -519,7 +519,7 @@ const BOOKIE_DATA = {
             team: "DEN",
             game: "Nuggets @ Pistons",
             prop: "Over 9.5 Assists",
-            odds: -120,
+            odds: 131,
             units: 1,
             conviction: 3,
             reasoning: "Averaging 10.2 APG, Pistons give up 27 APG to opponents"
@@ -529,7 +529,7 @@ const BOOKIE_DATA = {
             team: "BOS",
             game: "Celtics @ Mavericks",
             prop: "Over 28.5 Points",
-            odds: -110,
+            odds: -145,
             units: 1,
             conviction: 3,
             reasoning: "Averaging 29.4 PPG, no Tatum = more usage"
@@ -539,7 +539,7 @@ const BOOKIE_DATA = {
             team: "DAL",
             game: "Celtics @ Mavericks",
             prop: "Over 18.5 Points",
-            odds: -115,
+            odds: -250,
             units: 1,
             conviction: 3,
             reasoning: "Rookie of Year candidate, home game showcase"

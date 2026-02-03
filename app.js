@@ -1256,16 +1256,16 @@ function renderStraightBets() {
     if (!container) return;
 
     const bets = [
-        { id: 'straight-1', game: 'DEN @ DET', pick: 'Pistons -6', odds: -110, amount: 30, deadline: '4:00 PM', sport: 'NBA', away: 'DEN', home: 'DET' },
-        { id: 'straight-2', game: 'OTT @ CAR', pick: 'Senators ML', odds: 145, amount: 20, deadline: '4:00 PM', sport: 'NHL', away: 'OTT', home: 'CAR' },
-        { id: 'straight-3', game: 'MIA @ ATL', pick: 'Heat -4.5', odds: -110, amount: 20, deadline: '4:30 PM', sport: 'NBA', away: 'MIA', home: 'ATL' },
-        { id: 'straight-4', game: 'BUF @ TB', pick: 'Sabres ML', odds: 195, amount: 20, deadline: '4:30 PM', sport: 'NHL', away: 'BUF', home: 'TB' },
-        { id: 'straight-5', game: 'BOS @ DAL', pick: 'Mavericks +8', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NBA', away: 'BOS', home: 'DAL' },
-        { id: 'straight-6', game: 'DRAKE @ BEL', pick: 'Belmont -7.5', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NCAAB', away: 'DRAKE', home: 'BEL' },
-        { id: 'straight-7', game: 'TOR @ EDM', pick: 'UNDER 6.5', odds: -115, amount: 20, deadline: '6:00 PM', sport: 'NHL', away: 'TOR', home: 'EDM' },
-        { id: 'straight-8', game: 'NCST @ SMU', pick: 'SMU +2.5', odds: -110, amount: 20, deadline: '6:00 PM', sport: 'NCAAB', away: 'NCST', home: 'SMU' },
-        { id: 'straight-9', game: 'RUT @ UCLA', pick: 'UCLA -12.5', odds: -110, amount: 30, deadline: '6:30 PM', sport: 'NCAAB', away: 'RUT', home: 'UCLA' },
-        { id: 'straight-10', game: 'PHI @ GSW', pick: '76ers +2.5', odds: -110, amount: 40, deadline: '7:00 PM', sport: 'NBA', away: 'PHI', home: 'GSW' },
+        { id: 'straight-1', game: 'DEN @ DET', pick: 'Pistons -6.5', odds: 113, amount: 31, deadline: '4:00 PM', sport: 'NBA', away: 'DEN', home: 'DET' },
+        { id: 'straight-2', game: 'OTT @ CAR', pick: 'Senators ML', odds: 148, amount: 21, deadline: '4:00 PM', sport: 'NHL', away: 'OTT', home: 'CAR' },
+        { id: 'straight-3', game: 'MIA @ ATL', pick: 'Heat -4.5', odds: 138, amount: 21, deadline: '4:30 PM', sport: 'NBA', away: 'MIA', home: 'ATL' },
+        { id: 'straight-4', game: 'BUF @ TB', pick: 'Sabres ML', odds: 160, amount: 21, deadline: '4:30 PM', sport: 'NHL', away: 'BUF', home: 'TB' },
+        { id: 'straight-5', game: 'BOS @ DAL', pick: 'Mavericks +8.5', odds: -137, amount: 21, deadline: '5:00 PM', sport: 'NBA', away: 'BOS', home: 'DAL' },
+        { id: 'straight-6', game: 'DRAKE @ BEL', pick: 'Belmont -8.5', odds: -143, amount: 21, deadline: '6:00 PM', sport: 'NCAAB', away: 'DRAKE', home: 'BEL' },
+        { id: 'straight-7', game: 'TOR @ EDM', pick: 'UNDER 6.5', odds: 120, amount: 21, deadline: '5:30 PM', sport: 'NHL', away: 'TOR', home: 'EDM' },
+        { id: 'straight-8', game: 'NCST @ SMU', pick: 'SMU +2.5', odds: -133, amount: 21, deadline: '6:00 PM', sport: 'NCAAB', away: 'NCST', home: 'SMU' },
+        { id: 'straight-9', game: 'RUT @ UCLA', pick: 'UCLA -12.5', odds: -138, amount: 31, deadline: '6:30 PM', sport: 'NCAAB', away: 'RUT', home: 'UCLA' },
+        { id: 'straight-10', game: 'PHI @ GSW', pick: '76ers +2.5', odds: -102, amount: 41, deadline: '7:00 PM', sport: 'NBA', away: 'PHI', home: 'GSW' },
     ];
 
     container.innerHTML = bets.map((bet, index) => {
@@ -1333,43 +1333,43 @@ function renderParlayBets() {
             id: 'parlay-1',
             name: 'CHALKY PARLAY',
             emoji: '🔒',
-            odds: '+285',
+            odds: '+1657',
             amount: 25,
-            toWin: 96,
+            toWin: 446,
             legs: [
-                { pick: '76ers +2.5', away: 'PHI', home: 'GSW' },
-                { pick: 'Pistons -6', away: 'DEN', home: 'DET' },
+                { pick: 'Pistons -6.5', away: 'DEN', home: 'DET' },
                 { pick: 'Heat -4.5', away: 'MIA', home: 'ATL' },
-                { pick: 'SMU +2.5', away: 'NCST', home: 'SMU' }
+                { pick: 'SMU +2.5', away: 'NCST', home: 'SMU' },
+                { pick: '76ers +2.5', away: 'PHI', home: 'GSW' }
             ]
         },
         {
             id: 'parlay-2',
             name: 'VALUE PARLAY',
             emoji: '💰',
-            odds: '+650',
+            odds: '+1831',
             amount: 20,
-            toWin: 150,
+            toWin: 392,
             legs: [
-                { pick: '76ers +2.5', away: 'PHI', home: 'GSW' },
-                { pick: 'UCLA -12.5', away: 'RUT', home: 'UCLA' },
                 { pick: 'Senators ML', away: 'OTT', home: 'CAR' },
-                { pick: 'UNDER 6.5', away: 'TOR', home: 'EDM' }
+                { pick: 'UNDER 6.5', away: 'TOR', home: 'EDM' },
+                { pick: 'UCLA -12.5', away: 'RUT', home: 'UCLA' },
+                { pick: '76ers +2.5', away: 'PHI', home: 'GSW' }
             ]
         },
         {
             id: 'parlay-3',
             name: 'MOON SHOT',
             emoji: '🚀',
-            odds: '+2800',
+            odds: '+4306',
             amount: 10,
-            toWin: 290,
+            toWin: 448,
             legs: [
-                { pick: 'Sabres ML', away: 'BUF', home: 'TB' },
                 { pick: 'Senators ML', away: 'OTT', home: 'CAR' },
-                { pick: '76ers ML', away: 'PHI', home: 'GSW' },
-                { pick: 'Mavericks +8', away: 'BOS', home: 'DAL' },
-                { pick: 'Belmont -7.5', away: 'DRAKE', home: 'BEL' }
+                { pick: 'Sabres ML', away: 'BUF', home: 'TB' },
+                { pick: 'Mavericks +8.5', away: 'BOS', home: 'DAL' },
+                { pick: 'Belmont -8.5', away: 'DRAKE', home: 'BEL' },
+                { pick: '76ers ML', away: 'PHI', home: 'GSW' }
             ]
         }
     ];
@@ -1420,11 +1420,11 @@ function renderPropBets() {
     if (!container) return;
 
     const props = [
-        { id: 'prop-1', player: 'Tyrese Maxey', teamAbbr: 'PHI', prop: 'Over 26.5 Points', odds: -115, amount: 30, game: 'PHI @ GSW' },
-        { id: 'prop-3', player: 'Cade Cunningham', teamAbbr: 'DET', prop: 'Over 7.5 Assists', odds: -120, amount: 20, game: 'DEN @ DET' },
-        { id: 'prop-4', player: 'Nikola Jokic', teamAbbr: 'DEN', prop: 'Over 9.5 Assists', odds: -120, amount: 20, game: 'DEN @ DET' },
-        { id: 'prop-5', player: 'Jaylen Brown', teamAbbr: 'BOS', prop: 'Over 28.5 Points', odds: -110, amount: 20, game: 'BOS @ DAL' },
-        { id: 'prop-6', player: 'Cooper Flagg', teamAbbr: 'DAL', prop: 'Over 18.5 Points', odds: -115, amount: 20, game: 'BOS @ DAL' },
+        { id: 'prop-1', player: 'Tyrese Maxey', teamAbbr: 'PHI', prop: 'Over 26.5 Points', odds: -185, amount: 31, game: 'PHI @ GSW' },
+        { id: 'prop-3', player: 'Cade Cunningham', teamAbbr: 'DET', prop: 'Over 8.5 Assists', odds: -257, amount: 21, game: 'DEN @ DET' },
+        { id: 'prop-4', player: 'Nikola Jokic', teamAbbr: 'DEN', prop: 'Over 9.5 Assists', odds: 131, amount: 21, game: 'DEN @ DET' },
+        { id: 'prop-5', player: 'Jaylen Brown', teamAbbr: 'BOS', prop: 'Over 28.5 Points', odds: -145, amount: 21, game: 'BOS @ DAL' },
+        { id: 'prop-6', player: 'Cooper Flagg', teamAbbr: 'DAL', prop: 'Over 18.5 Points', odds: -250, amount: 21, game: 'BOS @ DAL' },
     ];
 
     container.innerHTML = props.map(prop => {
