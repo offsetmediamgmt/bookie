@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initBankroll();
     initCalculators();
     renderBetsPage();
+    renderWatchPage();
     renderDailyCard();
     renderHistory();
     renderPlayerProps();
@@ -959,6 +960,186 @@ function markAllPlaced() {
     allIds.forEach(id => betStatus[id] = true);
     saveBetStatus();
     renderBetsPage();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// WATCH PAGE - Game Schedule
+// ═══════════════════════════════════════════════════════════════
+function renderWatchPage() {
+    const games = [
+        {
+            id: 1,
+            time: '4:00 PM',
+            timePST: '4:00 PM PST',
+            timeET: '7:00 PM ET',
+            sport: 'NHL',
+            away: { abbr: 'OTT', name: 'Senators', record: '27-21-7' },
+            home: { abbr: 'CAR', name: 'Hurricanes', record: '34-15-4' },
+            channel: 'ESPN+',
+            picks: [
+                { pick: 'Senators ML', odds: '+145', amount: 20 }
+            ],
+            status: 'upcoming'
+        },
+        {
+            id: 2,
+            time: '4:00 PM',
+            timePST: '4:00 PM PST',
+            timeET: '7:00 PM ET',
+            sport: 'NBA',
+            away: { abbr: 'DEN', name: 'Nuggets', record: '33-17' },
+            home: { abbr: 'DET', name: 'Pistons', record: '36-12' },
+            channel: 'League Pass',
+            picks: [
+                { pick: 'Pistons -6', odds: '-110', amount: 30 },
+                { pick: 'Cade O7.5 ast', odds: '-120', amount: 20 },
+                { pick: 'Jokic Triple Dub', odds: '+180', amount: 10 }
+            ],
+            status: 'upcoming'
+        },
+        {
+            id: 3,
+            time: '4:30 PM',
+            timePST: '4:30 PM PST',
+            timeET: '7:30 PM ET',
+            sport: 'NHL',
+            away: { abbr: 'BUF', name: 'Sabres', record: '32-18-5' },
+            home: { abbr: 'TB', name: 'Lightning', record: '35-14-4' },
+            channel: 'ESPN+',
+            picks: [
+                { pick: 'Sabres ML', odds: '+195', amount: 20 }
+            ],
+            status: 'upcoming'
+        },
+        {
+            id: 4,
+            time: '5:00 PM',
+            timePST: '5:00 PM PST',
+            timeET: '8:00 PM ET',
+            sport: 'NBA',
+            away: { abbr: 'BOS', name: 'Celtics', record: '31-18' },
+            home: { abbr: 'DAL', name: 'Mavericks', record: '19-30' },
+            channel: 'TNT',
+            picks: [
+                { pick: 'Mavericks +8', odds: '-110', amount: 20 }
+            ],
+            status: 'upcoming'
+        },
+        {
+            id: 5,
+            time: '7:00 PM',
+            timePST: '7:00 PM PST',
+            timeET: '10:00 PM ET',
+            sport: 'NBA',
+            away: { abbr: 'PHI', name: '76ers', record: '28-21' },
+            home: { abbr: 'GSW', name: 'Warriors', record: '27-23' },
+            channel: 'NBA TV',
+            picks: [
+                { pick: '76ers +2.5', odds: '-110', amount: 40 },
+                { pick: 'Maxey O26.5 pts', odds: '-115', amount: 20 },
+                { pick: 'Embiid O11.5 reb', odds: '-110', amount: 20 }
+            ],
+            status: 'upcoming'
+        }
+    ];
+
+    renderNextGame(games[0]);
+    renderTimeline(games);
+    renderGamesList(games);
+}
+
+function renderNextGame(game) {
+    const container = document.getElementById('nextGameInfo');
+    if (!container) return;
+
+    const totalAmount = game.picks.reduce((sum, p) => sum + p.amount, 0);
+
+    container.innerHTML = `
+        <div class="next-matchup">
+            <div class="next-team">
+                <div class="next-team-name">${game.away.abbr}</div>
+                <div class="next-team-record">${game.away.name} (${game.away.record})</div>
+            </div>
+            <div class="next-vs">@</div>
+            <div class="next-team">
+                <div class="next-team-name">${game.home.abbr}</div>
+                <div class="next-team-record">${game.home.name} (${game.home.record})</div>
+            </div>
+        </div>
+        <div class="next-details">
+            <div class="next-time">${game.timePST}</div>
+            <div class="next-channel">${game.channel} • ${game.sport}</div>
+        </div>
+        <div class="next-picks">
+            ${game.picks.map(p => `
+                <div class="next-pick-tag">
+                    <span class="pick-label">${p.pick}</span> ${p.odds} • $${p.amount}
+                </div>
+            `).join('')}
+            <div class="next-pick-tag" style="background: var(--accent-green); color: #000; border: none;">
+                Total: $${totalAmount}
+            </div>
+        </div>
+    `;
+}
+
+function renderTimeline(games) {
+    const container = document.getElementById('watchTimeline');
+    if (!container) return;
+
+    const uniqueTimes = [...new Set(games.map(g => g.time))];
+
+    container.innerHTML = uniqueTimes.map((time, i) => {
+        const gamesAtTime = games.filter(g => g.time === time);
+        const gameLabels = gamesAtTime.map(g => `${g.away.abbr}@${g.home.abbr}`).join(', ');
+        return `
+            <div class="timeline-item ${i === 0 ? 'active' : ''}">
+                <div class="timeline-time">${time}</div>
+                <div class="timeline-dot"></div>
+                <div class="timeline-game">${gameLabels}</div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderGamesList(games) {
+    const container = document.getElementById('watchGamesList');
+    if (!container) return;
+
+    container.innerHTML = games.map(game => {
+        const totalAmount = game.picks.reduce((sum, p) => sum + p.amount, 0);
+        return `
+            <div class="watch-game-card ${game.status}">
+                <div class="game-card-header">
+                    <div class="game-time-block">
+                        <div class="game-time">${game.timePST}</div>
+                        <div class="game-status ${game.status}">${game.status === 'live' ? 'LIVE' : game.timeET}</div>
+                    </div>
+                    <div class="game-sport">${getSportEmoji(game.sport)} ${game.sport} • ${game.channel}</div>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-matchup">
+                        <div class="game-team">
+                            <div class="game-team-abbr">${game.away.abbr}</div>
+                            <div class="game-team-name">${game.away.name}</div>
+                        </div>
+                        <div class="game-vs">@</div>
+                        <div class="game-team">
+                            <div class="game-team-abbr">${game.home.abbr}</div>
+                            <div class="game-team-name">${game.home.name}</div>
+                        </div>
+                    </div>
+                    <div class="game-picks">
+                        ${game.picks.map(p => `
+                            <div class="game-pick-item">
+                                ${p.pick} (${p.odds}) <span class="amount">$${p.amount}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
 }
 
 // Make functions globally available

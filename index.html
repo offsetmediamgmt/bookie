@@ -45,6 +45,7 @@
          ═══════════════════════════════════════════════════════════════ -->
     <nav class="nav" id="mainNav">
         <a class="nav-item" data-page="bets" data-theme="theme-bets">🎯 Bets</a>
+        <a class="nav-item" data-page="watch" data-theme="theme-watch">📺 Watch</a>
         <a class="nav-item active" data-page="history" data-theme="theme-history">📈 Track Record</a>
         <a class="nav-item" data-page="daily" data-theme="">📊 Daily Card</a>
         <a class="nav-item" data-page="bankroll" data-theme="theme-bankroll">💰 Bankroll</a>
@@ -118,6 +119,28 @@
                 <button class="action-btn reset" onclick="resetAllBets()">Reset All</button>
                 <button class="action-btn success" onclick="markAllPlaced()">Mark All Placed</button>
             </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             WATCH PAGE - Game Schedule
+             ═══════════════════════════════════════════════════════════════ -->
+        <div class="page-section" id="page-watch">
+            <div class="watch-header">
+                <div class="watch-title">📺 GAME SCHEDULE</div>
+                <div class="watch-subtitle">February 3, 2026 — Your Bets in Order</div>
+            </div>
+
+            <!-- Current/Next Game Highlight -->
+            <div class="next-game-card" id="nextGameCard">
+                <div class="next-label">UP NEXT</div>
+                <div class="next-game-info" id="nextGameInfo"></div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="watch-timeline" id="watchTimeline"></div>
+
+            <!-- All Games List -->
+            <div class="watch-games" id="watchGamesList"></div>
         </div>
 
         <!-- ═══════════════════════════════════════════════════════════════
