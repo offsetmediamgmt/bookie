@@ -1489,7 +1489,7 @@ function toggleAnalysisCard(index) {
 }
 
 function updateBetCounts() {
-    const total = 19; // 10 straights + 3 parlays + 6 props
+    const total = 18; // 10 straights + 3 parlays + 5 props
     const placed = Object.values(betStatus).filter(v => v === 'placed').length;
     const missed = Object.values(betStatus).filter(v => v === 'missed').length;
     const el = document.getElementById('betsPlaced');
@@ -1505,13 +1505,13 @@ function updateBetCounts() {
     }
 
     // Update total risk display
-    const totalRisk = 240 + 55 + 120; // straights + parlays + props = $415
+    const totalRisk = 250 + 55 + 115; // straights + parlays + props = $420
     const riskEl = document.getElementById('totalRisk');
     if (riskEl) riskEl.textContent = '$' + totalRisk;
 
     // Update potential win
     const potentialEl = document.getElementById('potentialWin');
-    if (potentialEl) potentialEl.textContent = '$850+';
+    if (potentialEl) potentialEl.textContent = '$1,200+';
 }
 
 function resetAllBets() {
@@ -1527,7 +1527,7 @@ function markAllPlaced() {
         'straight-1', 'straight-2', 'straight-3', 'straight-4', 'straight-5',
         'straight-6', 'straight-7', 'straight-8', 'straight-9', 'straight-10',
         'parlay-1', 'parlay-2', 'parlay-3',
-        'prop-1', 'prop-2', 'prop-3', 'prop-4', 'prop-5', 'prop-6'
+        'prop-1', 'prop-3', 'prop-4', 'prop-5', 'prop-6'
     ];
     allIds.forEach(id => betStatus[id] = 'placed');
     saveBetStatus();
