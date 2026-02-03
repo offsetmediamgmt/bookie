@@ -202,35 +202,35 @@ const BOOKIE_DATA = {
         {
             id: 9,
             sport: "NCAAB",
-            away: "AUB",
-            home: "MSST",
+            away: "NCST",
+            home: "SMU",
             time: "9:00 PM ET",
-            pick: "Auburn -5.5",
+            pick: "SMU -4.5",
             odds: -110,
-            units: 1.5,
-            conviction: 4,
+            units: 1,
+            conviction: 3,
             factors: [
-                "Auburn 21-3, ranked #2 in nation",
-                "Tigers 10-1 on the road this season",
-                "Miss State 8-6 at home, struggling",
-                "Auburn 7-2 ATS as road favorite"
+                "SMU 17-7, strong at home (10-2)",
+                "NC State 12-12, struggling on road",
+                "SMU 7-3 ATS as home favorite",
+                "Mustangs defense top 30 nationally"
             ]
         },
         {
             id: 10,
             sport: "NCAAB",
-            away: "TEXAS",
-            home: "TCU",
-            time: "9:00 PM ET",
-            pick: "TCU +3.5",
+            away: "RUT",
+            home: "UCLA",
+            time: "9:30 PM ET",
+            pick: "UCLA -6.5",
             odds: -110,
-            units: 1,
-            conviction: 3,
+            units: 1.5,
+            conviction: 4,
             factors: [
-                "TCU 9-4 at home this season",
-                "Horned Frogs 6-3 ATS as home dog",
-                "Texas struggling on road (5-6)",
-                "Big 12 home court advantage"
+                "UCLA 16-8, dominant at Pauley (11-2)",
+                "Rutgers 13-11, poor road record (3-7)",
+                "Bruins 8-2 ATS at home this year",
+                "Big Ten West Coast trip tough for Rutgers"
             ]
         }
     ],
@@ -460,7 +460,7 @@ const BOOKIE_DATA = {
                 { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
                 { pick: "Pistons -6", odds: -110, game: "DEN @ DET" },
                 { pick: "Heat -4.5", odds: -110, game: "MIA @ ATL" },
-                { pick: "TCU +3.5", odds: -110, game: "TEXAS @ TCU" }
+                { pick: "SMU -4.5", odds: -110, game: "NCST @ SMU" }
             ]
         },
         value: {
@@ -470,7 +470,7 @@ const BOOKIE_DATA = {
             payout: 150,
             legs: [
                 { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
-                { pick: "Auburn -5.5", odds: -110, game: "AUB @ MSST" },
+                { pick: "UCLA -6.5", odds: -110, game: "RUT @ UCLA" },
                 { pick: "Senators ML", odds: 145, game: "OTT @ CAR" },
                 { pick: "Under 6.5", odds: -115, game: "TOR @ EDM" }
             ]
@@ -505,14 +505,14 @@ const BOOKIE_DATA = {
             reasoning: "Dropped 29 last night, Curry OUT, averaging 28+ last 5 games"
         },
         {
-            player: "Paul George",
-            team: "PHI",
-            game: "76ers @ Warriors",
-            prop: "Over 22.5 Points",
+            player: "Trae Young",
+            team: "ATL",
+            game: "Heat @ Hawks",
+            prop: "Over 24.5 Points",
             odds: -115,
             units: 1,
             conviction: 3,
-            reasoning: "PG13 averaging 24+ in last 5, Warriors defense struggling"
+            reasoning: "Trae averaging 26+ PPG, Heat allow 4th most PPG to opposing PGs"
         },
         {
             player: "Cade Cunningham",

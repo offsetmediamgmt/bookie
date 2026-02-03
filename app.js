@@ -58,10 +58,10 @@ const TEAM_LOGOS = {
     'DUKE': 'https://a.espncdn.com/i/teamlogos/ncaa/500/150.png',
     'UK': 'https://a.espncdn.com/i/teamlogos/ncaa/500/96.png',
     'TENN': 'https://a.espncdn.com/i/teamlogos/ncaa/500/2633.png',
-    'TEXAS': 'https://a.espncdn.com/i/teamlogos/ncaa/500/251.png',
-    'TCU': 'https://a.espncdn.com/i/teamlogos/ncaa/500/2628.png',
-    'AUB': 'https://a.espncdn.com/i/teamlogos/ncaa/500/2.png',
-    'MSST': 'https://a.espncdn.com/i/teamlogos/ncaa/500/344.png',
+    'NCST': 'https://a.espncdn.com/i/teamlogos/ncaa/500/152.png',
+    'SMU': 'https://a.espncdn.com/i/teamlogos/ncaa/500/2567.png',
+    'RUT': 'https://a.espncdn.com/i/teamlogos/ncaa/500/164.png',
+    'UCLA': 'https://a.espncdn.com/i/teamlogos/ncaa/500/26.png',
 
     // UFC (generic)
     'UFC': 'https://a.espncdn.com/i/teamlogos/leagues/500/ufc.png'
@@ -131,10 +131,10 @@ function extractTeams(matchup) {
         'Duke': 'DUKE', 'DUKE': 'DUKE', 'Blue Devils': 'DUKE',
         'Kentucky': 'UK', 'UK': 'UK', 'Wildcats': 'UK',
         'Tennessee': 'TENN', 'TENN': 'TENN', 'Volunteers': 'TENN', 'Vols': 'TENN',
-        'Texas': 'TEXAS', 'TEXAS': 'TEXAS', 'Longhorns': 'TEXAS',
-        'TCU': 'TCU', 'Horned Frogs': 'TCU',
-        'Auburn': 'AUB', 'AUB': 'AUB', 'Tigers': 'AUB',
-        'Mississippi State': 'MSST', 'MSST': 'MSST', 'Bulldogs': 'MSST', 'Miss State': 'MSST',
+        'NC State': 'NCST', 'NCST': 'NCST', 'Wolfpack': 'NCST', 'North Carolina State': 'NCST',
+        'SMU': 'SMU', 'Mustangs': 'SMU', 'Southern Methodist': 'SMU',
+        'Rutgers': 'RUT', 'RUT': 'RUT', 'Scarlet Knights': 'RUT',
+        'UCLA': 'UCLA', 'Bruins': 'UCLA', 'Miss State': 'MSST',
         // UFC
         'Albazi': 'UFC', 'Horiguchi': 'UFC', 'Bautista': 'UFC', 'Oliveira': 'UFC'
     };
@@ -1263,8 +1263,8 @@ function renderStraightBets() {
         { id: 'straight-5', game: 'BOS @ DAL', pick: 'Mavericks +8', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NBA', away: 'BOS', home: 'DAL' },
         { id: 'straight-6', game: 'DRAKE @ BEL', pick: 'Belmont -7.5', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NCAAB', away: 'DRAKE', home: 'BEL' },
         { id: 'straight-7', game: 'TOR @ EDM', pick: 'UNDER 6.5', odds: -115, amount: 20, deadline: '6:00 PM', sport: 'NHL', away: 'TOR', home: 'EDM' },
-        { id: 'straight-8', game: 'TEXAS @ TCU', pick: 'TCU +3.5', odds: -110, amount: 20, deadline: '6:00 PM', sport: 'NCAAB', away: 'TEXAS', home: 'TCU' },
-        { id: 'straight-9', game: 'AUB @ MSST', pick: 'Auburn -5.5', odds: -110, amount: 30, deadline: '6:00 PM', sport: 'NCAAB', away: 'AUB', home: 'MSST' },
+        { id: 'straight-8', game: 'NCST @ SMU', pick: 'SMU -4.5', odds: -110, amount: 20, deadline: '6:00 PM', sport: 'NCAAB', away: 'NCST', home: 'SMU' },
+        { id: 'straight-9', game: 'RUT @ UCLA', pick: 'UCLA -6.5', odds: -110, amount: 30, deadline: '6:30 PM', sport: 'NCAAB', away: 'RUT', home: 'UCLA' },
         { id: 'straight-10', game: 'PHI @ GSW', pick: '76ers +2.5', odds: -110, amount: 40, deadline: '7:00 PM', sport: 'NBA', away: 'PHI', home: 'GSW' },
     ];
 
@@ -1340,7 +1340,7 @@ function renderParlayBets() {
                 { pick: '76ers +2.5', away: 'PHI', home: 'GSW' },
                 { pick: 'Pistons -6', away: 'DEN', home: 'DET' },
                 { pick: 'Heat -4.5', away: 'MIA', home: 'ATL' },
-                { pick: 'TCU +3.5', away: 'TEXAS', home: 'TCU' }
+                { pick: 'SMU -4.5', away: 'NCST', home: 'SMU' }
             ]
         },
         {
@@ -1352,7 +1352,7 @@ function renderParlayBets() {
             toWin: 150,
             legs: [
                 { pick: '76ers +2.5', away: 'PHI', home: 'GSW' },
-                { pick: 'Auburn -5.5', away: 'AUB', home: 'MSST' },
+                { pick: 'UCLA -6.5', away: 'RUT', home: 'UCLA' },
                 { pick: 'Senators ML', away: 'OTT', home: 'CAR' },
                 { pick: 'UNDER 6.5', away: 'TOR', home: 'EDM' }
             ]
@@ -1421,7 +1421,7 @@ function renderPropBets() {
 
     const props = [
         { id: 'prop-1', player: 'Tyrese Maxey', teamAbbr: 'PHI', prop: 'Over 26.5 Points', odds: -115, amount: 30, game: 'PHI @ GSW' },
-        { id: 'prop-2', player: 'Paul George', teamAbbr: 'PHI', prop: 'Over 22.5 Points', odds: -115, amount: 20, game: 'PHI @ GSW' },
+        { id: 'prop-2', player: 'Trae Young', teamAbbr: 'ATL', prop: 'Over 24.5 Points', odds: -115, amount: 20, game: 'MIA @ ATL' },
         { id: 'prop-3', player: 'Cade Cunningham', teamAbbr: 'DET', prop: 'Over 7.5 Assists', odds: -120, amount: 20, game: 'DEN @ DET' },
         { id: 'prop-4', player: 'Nikola Jokic', teamAbbr: 'DEN', prop: 'Over 9.5 Assists', odds: -120, amount: 20, game: 'DEN @ DET' },
         { id: 'prop-5', player: 'Jaylen Brown', teamAbbr: 'BOS', prop: 'Over 28.5 Points', odds: -110, amount: 20, game: 'BOS @ DAL' },
@@ -1648,25 +1648,25 @@ function renderWatchPage() {
             timePST: '6:00 PM PST',
             timeET: '9:00 PM ET',
             sport: 'NCAAB',
-            away: { abbr: 'TEXAS', name: 'Texas', record: '16-8' },
-            home: { abbr: 'TCU', name: 'TCU', record: '14-10' },
+            away: { abbr: 'NCST', name: 'NC State', record: '12-12' },
+            home: { abbr: 'SMU', name: 'SMU', record: '17-7' },
             channel: 'ESPN2',
             picks: [
-                { pick: 'TCU +3.5', odds: '-110', amount: 20 }
+                { pick: 'SMU -4.5', odds: '-110', amount: 20 }
             ],
             status: 'upcoming'
         },
         {
             id: 9,
-            time: '6:00 PM',
-            timePST: '6:00 PM PST',
-            timeET: '9:00 PM ET',
+            time: '6:30 PM',
+            timePST: '6:30 PM PST',
+            timeET: '9:30 PM ET',
             sport: 'NCAAB',
-            away: { abbr: 'AUB', name: 'Auburn', record: '21-3' },
-            home: { abbr: 'MSST', name: 'Mississippi State', record: '15-9' },
-            channel: 'SEC Network',
+            away: { abbr: 'RUT', name: 'Rutgers', record: '13-11' },
+            home: { abbr: 'UCLA', name: 'UCLA', record: '16-8' },
+            channel: 'BTN',
             picks: [
-                { pick: 'Auburn -5.5', odds: '-110', amount: 30 }
+                { pick: 'UCLA -6.5', odds: '-110', amount: 30 }
             ],
             status: 'upcoming'
         },
