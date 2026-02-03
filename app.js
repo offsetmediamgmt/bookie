@@ -55,6 +55,9 @@ const TEAM_LOGOS = {
     'SYR': 'https://a.espncdn.com/i/teamlogos/ncaa/500/183.png',
     'UCONN': 'https://a.espncdn.com/i/teamlogos/ncaa/500/41.png',
     'DEPAUL': 'https://a.espncdn.com/i/teamlogos/ncaa/500/305.png',
+    'DUKE': 'https://a.espncdn.com/i/teamlogos/ncaa/500/150.png',
+    'UK': 'https://a.espncdn.com/i/teamlogos/ncaa/500/96.png',
+    'TENN': 'https://a.espncdn.com/i/teamlogos/ncaa/500/2633.png',
 
     // UFC (generic)
     'UFC': 'https://a.espncdn.com/i/teamlogos/leagues/500/ufc.png'
@@ -121,6 +124,9 @@ function extractTeams(matchup) {
         'Syracuse': 'SYR', 'SYR': 'SYR', 'Orange': 'SYR',
         'UConn': 'UCONN', 'Connecticut': 'UCONN', 'UCONN': 'UCONN', 'Huskies': 'UCONN',
         'DePaul': 'DEPAUL', 'DEPAUL': 'DEPAUL', 'Blue Demons': 'DEPAUL',
+        'Duke': 'DUKE', 'DUKE': 'DUKE', 'Blue Devils': 'DUKE',
+        'Kentucky': 'UK', 'UK': 'UK', 'Wildcats': 'UK',
+        'Tennessee': 'TENN', 'TENN': 'TENN', 'Volunteers': 'TENN', 'Vols': 'TENN',
         // UFC
         'Albazi': 'UFC', 'Horiguchi': 'UFC', 'Bautista': 'UFC', 'Oliveira': 'UFC'
     };
@@ -1249,8 +1255,8 @@ function renderStraightBets() {
         { id: 'straight-5', game: 'BOS @ DAL', pick: 'Mavericks +8', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NBA', away: 'BOS', home: 'DAL' },
         { id: 'straight-6', game: 'DRAKE @ BEL', pick: 'Belmont -7.5', odds: -110, amount: 20, deadline: '5:00 PM', sport: 'NCAAB', away: 'DRAKE', home: 'BEL' },
         { id: 'straight-7', game: 'TOR @ EDM', pick: 'UNDER 6.5', odds: -115, amount: 20, deadline: '6:00 PM', sport: 'NHL', away: 'TOR', home: 'EDM' },
-        { id: 'straight-8', game: 'CREI @ MARQ', pick: 'Marquette -5', odds: -110, amount: 20, deadline: '6:00 PM', sport: 'NCAAB', away: 'CREI', home: 'MARQ' },
-        { id: 'straight-9', game: 'GONZ @ SMC', pick: "Saint Mary's +4.5", odds: -110, amount: 30, deadline: '7:00 PM', sport: 'NCAAB', away: 'GONZ', home: 'SMC' },
+        { id: 'straight-8', game: 'UK @ TENN', pick: 'Tennessee +2', odds: -110, amount: 20, deadline: 'Feb 4, 4:00 PM', sport: 'NCAAB', away: 'UK', home: 'TENN' },
+        { id: 'straight-9', game: 'DUKE @ UNC', pick: 'UNC -3', odds: -110, amount: 30, deadline: 'Feb 4, 6:00 PM', sport: 'NCAAB', away: 'DUKE', home: 'UNC' },
         { id: 'straight-10', game: 'PHI @ GSW', pick: '76ers +2.5', odds: -110, amount: 40, deadline: '7:00 PM', sport: 'NBA', away: 'PHI', home: 'GSW' },
     ];
 
@@ -1326,7 +1332,7 @@ function renderParlayBets() {
                 { pick: '76ers +2.5', away: 'PHI', home: 'GSW' },
                 { pick: 'Pistons -6', away: 'DEN', home: 'DET' },
                 { pick: 'Heat -4.5', away: 'MIA', home: 'ATL' },
-                { pick: 'Marquette -5', away: 'CREI', home: 'MARQ' }
+                { pick: 'Tennessee +2', away: 'UK', home: 'TENN' }
             ]
         },
         {
@@ -1338,7 +1344,7 @@ function renderParlayBets() {
             toWin: 150,
             legs: [
                 { pick: '76ers +2.5', away: 'PHI', home: 'GSW' },
-                { pick: "Saint Mary's +4.5", away: 'GONZ', home: 'SMC' },
+                { pick: 'UNC -3', away: 'DUKE', home: 'UNC' },
                 { pick: 'Senators ML', away: 'OTT', home: 'CAR' },
                 { pick: 'UNDER 6.5', away: 'TOR', home: 'EDM' }
             ]
@@ -1630,29 +1636,29 @@ function renderWatchPage() {
         },
         {
             id: 8,
-            time: '6:00 PM',
-            timePST: '6:00 PM PST',
-            timeET: '9:00 PM ET',
+            time: 'Feb 4, 4:00 PM',
+            timePST: 'Feb 4, 4:00 PM PST',
+            timeET: 'Feb 4, 7:00 PM ET',
             sport: 'NCAAB',
-            away: { abbr: 'CREI', name: 'Creighton', record: '16-8' },
-            home: { abbr: 'MARQ', name: 'Marquette', record: '20-4' },
-            channel: 'FS1',
+            away: { abbr: 'UK', name: 'Kentucky', record: '18-6' },
+            home: { abbr: 'TENN', name: 'Tennessee', record: '19-5' },
+            channel: 'ESPN',
             picks: [
-                { pick: 'Marquette -5', odds: '-110', amount: 20 }
+                { pick: 'Tennessee +2', odds: '-110', amount: 20 }
             ],
             status: 'upcoming'
         },
         {
             id: 9,
-            time: '7:00 PM',
-            timePST: '7:00 PM PST',
-            timeET: '10:00 PM ET',
+            time: 'Feb 4, 6:00 PM',
+            timePST: 'Feb 4, 6:00 PM PST',
+            timeET: 'Feb 4, 9:00 PM ET',
             sport: 'NCAAB',
-            away: { abbr: 'GONZ', name: 'Gonzaga', record: '19-5' },
-            home: { abbr: 'SMC', name: "Saint Mary's", record: '21-3' },
-            channel: 'ESPN2',
+            away: { abbr: 'DUKE', name: 'Duke', record: '20-4' },
+            home: { abbr: 'UNC', name: 'North Carolina', record: '17-7' },
+            channel: 'ESPN',
             picks: [
-                { pick: "Saint Mary's +4.5", odds: '-110', amount: 30 }
+                { pick: 'UNC -3', odds: '-110', amount: 30 }
             ],
             status: 'upcoming'
         },

@@ -202,35 +202,35 @@ const BOOKIE_DATA = {
         {
             id: 9,
             sport: "NCAAB",
-            away: "GONZ",
-            home: "SMC",
-            time: "10:00 PM ET",
-            pick: "Saint Mary's +4.5",
+            away: "DUKE",
+            home: "UNC",
+            time: "Feb 4, 9:00 PM ET",
+            pick: "UNC -3",
             odds: -110,
             units: 1.5,
             conviction: 4,
             factors: [
-                "Best rivalry on West Coast",
-                "Saint Mary's 11-1 at home",
-                "Gaels 7-3 ATS vs ranked teams",
-                "McKneely Gym is LOUD"
+                "Greatest rivalry in college basketball",
+                "UNC 12-2 at home this season",
+                "Tar Heels 8-3 ATS vs ranked teams",
+                "Dean Dome is electric for Duke games"
             ]
         },
         {
             id: 10,
             sport: "NCAAB",
-            away: "CREI",
-            home: "MARQ",
-            time: "9:00 PM ET",
-            pick: "Marquette -5",
+            away: "UK",
+            home: "TENN",
+            time: "Feb 4, 7:00 PM ET",
+            pick: "Tennessee +2",
             odds: -110,
             units: 1,
             conviction: 3,
             factors: [
-                "Marquette ranked #8 in nation",
-                "Home court at Fiserv Forum",
-                "Creighton struggles on road",
-                "Big East showdown"
+                "Tennessee 19-5, ranked #6 in nation",
+                "Home court at Thompson-Boling Arena",
+                "Vols 15-3 at home this season",
+                "SEC showdown, revenge game"
             ]
         }
     ],
@@ -460,7 +460,7 @@ const BOOKIE_DATA = {
                 { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
                 { pick: "Pistons -6", odds: -110, game: "DEN @ DET" },
                 { pick: "Heat -4.5", odds: -110, game: "MIA @ ATL" },
-                { pick: "Marquette -5", odds: -110, game: "CREI @ MARQ" }
+                { pick: "Tennessee +2", odds: -110, game: "UK @ TENN" }
             ]
         },
         value: {
@@ -470,7 +470,7 @@ const BOOKIE_DATA = {
             payout: 150,
             legs: [
                 { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
-                { pick: "Saint Mary's +4.5", odds: -110, game: "GONZ @ SMC" },
+                { pick: "UNC -3", odds: -110, game: "DUKE @ UNC" },
                 { pick: "Senators ML", odds: 145, game: "OTT @ CAR" },
                 { pick: "Under 6.5", odds: -115, game: "TOR @ EDM" }
             ]
