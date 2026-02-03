@@ -168,6 +168,28 @@ body {
     text-transform: uppercase; letter-spacing: 1px; margin-top: 2px;
 }
 
+/* Theme-specific header colors */
+.theme-bets .balance-display {
+    background: linear-gradient(135deg, var(--accent-green) 0%, #00c853 100%);
+}
+
+.theme-watch .balance-display {
+    background: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 100%);
+}
+
+.theme-history .balance-display {
+    background: linear-gradient(135deg, #9c27b0 0%, #e040fb 100%);
+}
+
+.theme-bankroll .balance-display {
+    background: linear-gradient(135deg, var(--accent-green) 0%, #69f0ae 100%);
+}
+
+/* Hide on mobile */
+@media (max-width: 768px) {
+    .hide-mobile { display: none !important; }
+}
+
 /* ═══════════════════════════════════════════════════════════════
    NAVIGATION - Centered with Emojis
    ═══════════════════════════════════════════════════════════════ */
@@ -502,13 +524,14 @@ body {
 .plays-list { padding: 0; }
 
 .play-item {
-    display: flex;
+    display: grid;
+    grid-template-columns: 45px 90px 1fr auto;
     align-items: center;
     padding: 18px 24px;
     border-bottom: 1px solid var(--border);
     transition: all 0.3s;
     cursor: pointer;
-    gap: 5px;
+    gap: 12px;
 }
 
 .play-item:hover {
@@ -527,7 +550,6 @@ body {
     justify-content: center;
     font-size: 16px;
     font-weight: 800;
-    margin-right: 12px;
     border: 2px solid var(--border);
     flex-shrink: 0;
 }
@@ -535,20 +557,6 @@ body {
 .play-rank.gold { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; border: none; box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); }
 .play-rank.silver { background: linear-gradient(135deg, #e0e0e0, #a0a0a0); color: #000; border: none; }
 .play-rank.bronze { background: linear-gradient(135deg, #cd7f32, #8b4513); color: #fff; border: none; }
-
-.play-info { flex: 1; }
-
-.play-matchup { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
-
-.play-pick { font-size: 13px; color: var(--accent-primary); font-weight: 600; }
-
-.play-meta {
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
-}
 
 .play-units {
     background: var(--accent-primary);
@@ -2162,14 +2170,19 @@ body {
     .plays-icon { font-size: 16px; }
     .section-badge { font-size: 10px; padding: 4px 10px; }
 
-    .play-item { padding: 12px 16px; gap: 8px; }
-    .play-rank { width: 32px; height: 32px; font-size: 13px; margin-right: 8px; }
-    .play-logos { gap: 4px; margin-right: 10px; }
-    .play-info { flex: 1; }
-    .play-matchup { font-size: 13px; }
-    .play-pick { font-size: 12px; }
-    .play-meta { flex-direction: column; align-items: flex-end; gap: 4px; }
-    .play-units { font-size: 10px; padding: 3px 8px; }
+    .play-item {
+        grid-template-columns: 35px 70px 1fr auto;
+        padding: 14px 16px;
+        gap: 10px;
+    }
+    .play-rank { width: 32px; height: 32px; font-size: 12px; }
+    .play-logos { gap: 3px; }
+    .play-logos .team-logo { width: 28px !important; height: 28px !important; }
+    .play-logos .vs-text { font-size: 9px; }
+    .play-matchup { font-size: 12px; }
+    .play-pick { font-size: 11px; }
+    .play-meta { gap: 3px; }
+    .play-units { font-size: 9px; padding: 3px 8px; }
 
     /* Parlays */
     .parlay-card { border-radius: 14px; }
@@ -2186,12 +2199,16 @@ body {
     /* Watch page */
     .next-game-card { padding: 20px; border-radius: 18px; }
     .next-label { font-size: 9px; padding: 5px 12px; }
-    .next-matchup { gap: 15px; }
-    .next-team-name { font-size: 20px; }
-    .next-team-record { font-size: 11px; }
-    .next-time { font-size: 22px; }
-    .next-picks { gap: 10px; }
-    .next-pick-tag { font-size: 12px; padding: 6px 12px; }
+    .next-matchup { gap: 15px; justify-content: center; }
+    .next-team { min-width: 80px; }
+    .next-team .team-logo { width: 45px !important; height: 45px !important; }
+    .next-team-name { font-size: 18px; }
+    .next-team-record { font-size: 10px; }
+    .next-vs { font-size: 14px; }
+    .next-details { text-align: center; width: 100%; margin-top: 15px; }
+    .next-time { font-size: 20px; }
+    .next-picks { gap: 8px; justify-content: center; }
+    .next-pick-tag { font-size: 11px; padding: 6px 12px; }
 
     .watch-timeline { padding: 15px; overflow-x: auto; gap: 10px; border-radius: 14px; }
     .timeline-item { min-width: 70px; }
@@ -2199,16 +2216,19 @@ body {
     .timeline-game { font-size: 9px; }
 
     .watch-game-card { border-radius: 16px; }
-    .game-card-header { padding: 14px 16px; }
-    .game-time { font-size: 16px; }
-    .game-card-body { padding: 16px; gap: 15px; }
-    .game-matchup { gap: 20px; }
-    .game-team { min-width: 80px; }
-    .game-team-abbr { font-size: 20px; }
-    .game-team-name { font-size: 10px; }
-    .game-vs { padding: 6px 12px; font-size: 14px; }
-    .game-picks { gap: 6px; }
-    .game-pick-item { font-size: 12px; padding: 6px 12px; }
+    .game-card-header { padding: 14px 16px; text-align: center; }
+    .game-time-block { justify-content: center; width: 100%; }
+    .game-time { font-size: 18px; }
+    .game-sport { margin-top: 8px; }
+    .game-card-body { padding: 20px 16px; gap: 18px; }
+    .game-matchup { gap: 15px; justify-content: center; }
+    .game-team { min-width: 90px; flex: none; }
+    .game-team .team-logo { width: 45px !important; height: 45px !important; }
+    .game-team-abbr { font-size: 20px; margin-top: 8px; }
+    .game-team-name { font-size: 11px; }
+    .game-vs { padding: 8px 14px; font-size: 14px; }
+    .game-picks { gap: 8px; justify-content: center; flex-wrap: wrap; }
+    .game-pick-item { font-size: 11px; padding: 8px 14px; }
 
     /* Track Record */
     .history-stats { grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
@@ -2403,16 +2423,17 @@ body {
 
 .next-game-info {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
     gap: 20px;
 }
 
 .next-matchup {
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
+    gap: 25px;
+    width: 100%;
 }
 
 .next-team {
@@ -2420,6 +2441,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
+    max-width: 150px;
 }
 
 .next-team-name {
@@ -2436,6 +2459,10 @@ body {
     font-size: 18px;
     color: var(--text-muted);
     font-weight: 700;
+    padding: 8px 15px;
+    background: var(--bg-dark);
+    border-radius: 8px;
+    flex-shrink: 0;
 }
 
 .next-details {
@@ -2623,24 +2650,26 @@ body {
 .game-card-body {
     padding: 25px 30px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    gap: 20px;
 }
 
 .game-matchup {
     display: flex;
     align-items: center;
-    gap: 40px;
     justify-content: center;
-    flex: 1;
+    gap: 30px;
+    width: 100%;
 }
 
 .game-team {
     text-align: center;
-    min-width: 120px;
+    min-width: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
 }
 
 .game-team-abbr {
@@ -2659,9 +2688,18 @@ body {
     font-size: 16px;
     color: var(--text-muted);
     font-weight: 700;
-    padding: 8px 15px;
+    padding: 10px 18px;
     background: var(--bg-dark);
-    border-radius: 8px;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.game-picks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
 }
 
 .game-picks {
@@ -3030,14 +3068,42 @@ body {
 .play-logos {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
-    margin-right: 15px;
 }
 
 .play-logos .vs-text {
     font-size: 10px;
     color: var(--text-muted);
     font-weight: 600;
+}
+
+.play-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+.play-matchup {
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.play-pick {
+    font-size: 13px;
+    color: var(--accent-primary);
+    font-weight: 600;
+}
+
+.play-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
 }
 
 /* Parlay leg logos */
