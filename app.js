@@ -76,51 +76,51 @@ function getTeamLogoUrl(abbr) {
 function extractTeams(matchup) {
     const teamMap = {
         // NBA
-        '76ers': 'PHI', 'Philadelphia': 'PHI', 'PHI': 'PHI',
-        'Warriors': 'GSW', 'Golden State': 'GSW', 'GSW': 'GSW',
+        '76ers': 'PHI', 'Philadelphia': 'PHI', 'PHI': 'PHI', 'Sixers': 'PHI',
+        'Warriors': 'GSW', 'Golden State': 'GSW', 'GSW': 'GSW', 'GS': 'GSW',
         'Pistons': 'DET', 'Detroit': 'DET', 'DET': 'DET',
         'Nuggets': 'DEN', 'Denver': 'DEN', 'DEN': 'DEN',
         'Celtics': 'BOS', 'Boston': 'BOS', 'BOS': 'BOS',
-        'Mavericks': 'DAL', 'Dallas': 'DAL', 'DAL': 'DAL',
+        'Mavericks': 'DAL', 'Dallas': 'DAL', 'DAL': 'DAL', 'Mavs': 'DAL',
         'Heat': 'MIA', 'Miami': 'MIA', 'MIA': 'MIA',
         'Hawks': 'ATL', 'Atlanta': 'ATL', 'ATL': 'ATL',
-        'Lakers': 'LAL', 'Los Angeles Lakers': 'LAL', 'LAL': 'LAL',
-        'Clippers': 'LAC', 'LAC': 'LAC',
+        'Lakers': 'LAL', 'Los Angeles Lakers': 'LAL', 'LAL': 'LAL', 'LA Lakers': 'LAL',
+        'Clippers': 'LAC', 'LAC': 'LAC', 'LA Clippers': 'LAC',
         'Rockets': 'HOU', 'Houston': 'HOU', 'HOU': 'HOU',
         'Pacers': 'IND', 'Indiana': 'IND', 'IND': 'IND',
         'Thunder': 'OKC', 'Oklahoma City': 'OKC', 'OKC': 'OKC',
-        'Spurs': 'SAS', 'San Antonio': 'SAS', 'SAS': 'SAS',
+        'Spurs': 'SAS', 'San Antonio': 'SAS', 'SAS': 'SAS', 'SA': 'SAS',
         'Suns': 'PHX', 'Phoenix': 'PHX', 'PHX': 'PHX',
-        'Raptors': 'TOR', 'Toronto': 'TOR',
-        'Knicks': 'NYK', 'New York': 'NYK', 'NYK': 'NYK',
+        'Raptors': 'TOR', 'Toronto Raptors': 'TOR',
+        'Knicks': 'NYK', 'New York Knicks': 'NYK', 'NYK': 'NYK', 'NY': 'NYK',
         'Nets': 'BKN', 'Brooklyn': 'BKN', 'BKN': 'BKN',
-        'Cavaliers': 'CLE', 'Cleveland': 'CLE', 'CLE': 'CLE',
+        'Cavaliers': 'CLE', 'Cleveland': 'CLE', 'CLE': 'CLE', 'Cavs': 'CLE',
         // NHL
         'Senators': 'OTT', 'Ottawa': 'OTT', 'OTT': 'OTT',
         'Hurricanes': 'CAR', 'Carolina': 'CAR', 'CAR': 'CAR',
         'Sabres': 'BUF', 'Buffalo': 'BUF', 'BUF': 'BUF',
-        'Lightning': 'TB', 'Tampa Bay': 'TB', 'Tampa': 'TB', 'TB': 'TB',
-        'Maple Leafs': 'TOR', 'TOR': 'TOR',
+        'Lightning': 'TB', 'Tampa Bay': 'TB', 'Tampa': 'TB', 'TB': 'TB', 'TBL': 'TB',
+        'Maple Leafs': 'TOR', 'Toronto Maple Leafs': 'TOR', 'TOR': 'TOR', 'Leafs': 'TOR', 'Toronto': 'TOR',
         'Oilers': 'EDM', 'Edmonton': 'EDM', 'EDM': 'EDM',
         'Flames': 'CGY', 'Calgary': 'CGY', 'CGY': 'CGY',
-        'Penguins': 'PIT', 'Pittsburgh': 'PIT', 'PIT': 'PIT',
+        'Penguins': 'PIT', 'Pittsburgh': 'PIT', 'PIT': 'PIT', 'Pens': 'PIT',
         'Jets': 'WPG', 'Winnipeg': 'WPG', 'WPG': 'WPG',
         // NFL
-        'Patriots': 'NE', 'New England': 'NE', 'NE': 'NE',
+        'Patriots': 'NE', 'New England': 'NE', 'NE': 'NE', 'Pats': 'NE',
         'Seahawks': 'SEA', 'Seattle': 'SEA', 'SEA': 'SEA',
         // NCAAB
-        'Gonzaga': 'GONZ', 'GONZ': 'GONZ',
-        "Saint Mary's": 'SMC', 'Saint Marys': 'SMC', 'SMC': 'SMC', 'St. Marys': 'SMC',
-        'Marquette': 'MARQ', 'MARQ': 'MARQ',
-        'Creighton': 'CREI', 'CREI': 'CREI',
-        'Belmont': 'BEL', 'BEL': 'BEL',
-        'Drake': 'DRAKE', 'DRAKE': 'DRAKE',
-        'Kansas': 'KU', 'KU': 'KU',
-        'Texas Tech': 'TTU', 'TTU': 'TTU',
-        'UNC': 'UNC', 'North Carolina': 'UNC',
-        'Syracuse': 'SYR', 'SYR': 'SYR',
-        'UConn': 'UCONN', 'Connecticut': 'UCONN', 'UCONN': 'UCONN',
-        'DePaul': 'DEPAUL', 'DEPAUL': 'DEPAUL',
+        'Gonzaga': 'GONZ', 'GONZ': 'GONZ', 'Zags': 'GONZ',
+        "Saint Mary's": 'SMC', 'Saint Marys': 'SMC', 'SMC': 'SMC', 'St. Marys': 'SMC', "St Mary's": 'SMC', 'Gaels': 'SMC',
+        'Marquette': 'MARQ', 'MARQ': 'MARQ', 'Golden Eagles': 'MARQ',
+        'Creighton': 'CREI', 'CREI': 'CREI', 'Bluejays': 'CREI',
+        'Belmont': 'BEL', 'BEL': 'BEL', 'Bruins': 'BEL',
+        'Drake': 'DRAKE', 'DRAKE': 'DRAKE', 'Bulldogs': 'DRAKE',
+        'Kansas': 'KU', 'KU': 'KU', 'Jayhawks': 'KU',
+        'Texas Tech': 'TTU', 'TTU': 'TTU', 'Red Raiders': 'TTU',
+        'UNC': 'UNC', 'North Carolina': 'UNC', 'Tar Heels': 'UNC',
+        'Syracuse': 'SYR', 'SYR': 'SYR', 'Orange': 'SYR',
+        'UConn': 'UCONN', 'Connecticut': 'UCONN', 'UCONN': 'UCONN', 'Huskies': 'UCONN',
+        'DePaul': 'DEPAUL', 'DEPAUL': 'DEPAUL', 'Blue Demons': 'DEPAUL',
         // UFC
         'Albazi': 'UFC', 'Horiguchi': 'UFC', 'Bautista': 'UFC', 'Oliveira': 'UFC'
     };
@@ -165,7 +165,48 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPlayerProps();
     updateHeaderStats();
     loadBetStatus();
+    initCountdownTimer();
 });
+
+// ═══════════════════════════════════════════════════════════════
+// COUNTDOWN TIMER - Time until first game
+// ═══════════════════════════════════════════════════════════════
+function initCountdownTimer() {
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}
+
+function updateCountdown() {
+    const countdownEl = document.getElementById('countdownTimer');
+    if (!countdownEl) return;
+
+    // First game is at 4:00 PM PST (7:00 PM ET) on Feb 3, 2026
+    const now = new Date();
+    const firstGame = new Date();
+    firstGame.setHours(16, 0, 0, 0); // 4:00 PM local time
+
+    // If game time has passed, show "GAMES STARTED"
+    if (now >= firstGame) {
+        countdownEl.innerHTML = '<span class="countdown-live">GAMES LIVE</span>';
+        return;
+    }
+
+    const diff = firstGame - now;
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    countdownEl.innerHTML = `
+        <div class="countdown-label">FIRST GAME IN</div>
+        <div class="countdown-time">
+            <span class="countdown-unit">${hours.toString().padStart(2, '0')}<small>H</small></span>
+            <span class="countdown-sep">:</span>
+            <span class="countdown-unit">${minutes.toString().padStart(2, '0')}<small>M</small></span>
+            <span class="countdown-sep">:</span>
+            <span class="countdown-unit">${seconds.toString().padStart(2, '0')}<small>S</small></span>
+        </div>
+    `;
+}
 
 // ═══════════════════════════════════════════════════════════════
 // NAVIGATION
@@ -329,79 +370,153 @@ function updateUnitCalculator() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// DAILY CARD RENDERING
+// DAILY CARD RENDERING - Watch-Style Game Cards
 // ═══════════════════════════════════════════════════════════════
 function renderDailyCard() {
-    // Render MAX Plays
+    // Render MAX Plays - Watch-style cards
     const maxPlaysContainer = document.getElementById('maxPlaysList');
     if (maxPlaysContainer) {
         maxPlaysContainer.innerHTML = BOOKIE_DATA.maxPlays.map((pick, i) => {
             const teams = extractTeams(pick.matchup);
+            const betAmount = pick.units * 20;
+            const potentialWin = calculateWin(betAmount, pick.odds);
             return `
-            <div class="play-item">
-                <div class="play-rank gold">${i + 1}</div>
-                <div class="play-logos">
-                    ${getTeamLogo(teams.away, 36)}
-                    <span class="vs-text">@</span>
-                    ${getTeamLogo(teams.home, 36)}
+            <div class="daily-game-card max-play">
+                <div class="daily-card-header">
+                    <div class="daily-card-badge gold">MAX PLAY</div>
+                    <div class="daily-card-sport">${getSportEmoji(pick.sport)} ${pick.sport}</div>
+                    <div class="daily-card-time">${pick.time}</div>
                 </div>
-                <div class="play-info">
-                    <div class="play-matchup">${getSportEmoji(pick.sport)} ${pick.matchup}</div>
-                    <div class="play-pick">${pick.pick}</div>
+                <div class="daily-card-matchup">
+                    <div class="daily-card-team">
+                        ${getTeamLogo(teams.away, 55)}
+                        <div class="daily-team-abbr">${teams.away}</div>
+                    </div>
+                    <div class="daily-card-vs">@</div>
+                    <div class="daily-card-team">
+                        ${getTeamLogo(teams.home, 55)}
+                        <div class="daily-team-abbr">${teams.home}</div>
+                    </div>
                 </div>
-                <div class="play-meta">
-                    <div class="conviction-badge">${'🔒'.repeat(pick.conviction)}</div>
-                    <div class="play-units">${pick.units}u · $${pick.units * 20}</div>
+                <div class="daily-card-pick">${pick.pick}</div>
+                <div class="daily-card-details">
+                    <div class="daily-detail-item">
+                        <div class="daily-detail-value">${formatOdds(pick.odds)}</div>
+                        <div class="daily-detail-label">Odds</div>
+                    </div>
+                    <div class="daily-detail-item">
+                        <div class="daily-detail-value conviction">${'🔒'.repeat(pick.conviction)}</div>
+                        <div class="daily-detail-label">Conviction</div>
+                    </div>
+                    <div class="daily-detail-item risk">
+                        <div class="daily-detail-value">$${betAmount}</div>
+                        <div class="daily-detail-label">Risk</div>
+                    </div>
+                    <div class="daily-detail-item win">
+                        <div class="daily-detail-value">$${potentialWin}</div>
+                        <div class="daily-detail-label">To Win</div>
+                    </div>
                 </div>
+                ${pick.factors ? `
+                <div class="daily-card-factors">
+                    ${pick.factors.map(f => `<div class="factor-item">→ ${f}</div>`).join('')}
+                </div>
+                ` : ''}
             </div>
         `}).join('');
     }
 
-    // Render Today's Picks
+    // Render Today's Picks - Watch-style cards
     const todaysContainer = document.getElementById('todaysPicksList');
     if (todaysContainer) {
         todaysContainer.innerHTML = BOOKIE_DATA.todaysPicks.map((pick, i) => {
             const teams = extractTeams(pick.matchup);
+            const betAmount = pick.units * 20;
+            const potentialWin = calculateWin(betAmount, pick.odds);
             return `
-            <div class="play-item">
-                <div class="play-rank ${i === 0 ? 'silver' : i === 1 ? 'bronze' : ''}">${i + 1}</div>
-                <div class="play-logos">
-                    ${getTeamLogo(teams.away, 32)}
-                    <span class="vs-text">@</span>
-                    ${getTeamLogo(teams.home, 32)}
+            <div class="daily-game-card">
+                <div class="daily-card-header">
+                    <div class="daily-card-num">${i + 1}</div>
+                    <div class="daily-card-sport">${getSportEmoji(pick.sport)} ${pick.sport}</div>
+                    <div class="daily-card-time">${pick.time}</div>
                 </div>
-                <div class="play-info">
-                    <div class="play-matchup">${getSportEmoji(pick.sport)} ${pick.matchup}</div>
-                    <div class="play-pick">${pick.pick} (${formatOdds(pick.odds)})</div>
+                <div class="daily-card-matchup">
+                    <div class="daily-card-team">
+                        ${getTeamLogo(teams.away, 50)}
+                        <div class="daily-team-abbr">${teams.away}</div>
+                    </div>
+                    <div class="daily-card-vs">@</div>
+                    <div class="daily-card-team">
+                        ${getTeamLogo(teams.home, 50)}
+                        <div class="daily-team-abbr">${teams.home}</div>
+                    </div>
                 </div>
-                <div class="play-meta">
-                    <div class="conviction-badge">${'🔒'.repeat(pick.conviction)}</div>
-                    <div class="play-units">${pick.units}u · $${pick.units * 20}</div>
+                <div class="daily-card-pick">${pick.pick}</div>
+                <div class="daily-card-details">
+                    <div class="daily-detail-item">
+                        <div class="daily-detail-value">${formatOdds(pick.odds)}</div>
+                        <div class="daily-detail-label">Odds</div>
+                    </div>
+                    <div class="daily-detail-item">
+                        <div class="daily-detail-value conviction">${'🔒'.repeat(pick.conviction)}</div>
+                        <div class="daily-detail-label">Conviction</div>
+                    </div>
+                    <div class="daily-detail-item risk">
+                        <div class="daily-detail-value">$${betAmount}</div>
+                        <div class="daily-detail-label">Risk</div>
+                    </div>
+                    <div class="daily-detail-item win">
+                        <div class="daily-detail-value">$${potentialWin}</div>
+                        <div class="daily-detail-label">To Win</div>
+                    </div>
                 </div>
             </div>
         `}).join('');
     }
 
-    // Render Weekly Picks
+    // Render Weekly Picks - Watch-style cards
     const weeklyContainer = document.getElementById('weeklyPicksList');
     if (weeklyContainer) {
         weeklyContainer.innerHTML = BOOKIE_DATA.weeklyPicks.map((pick, i) => {
             const teams = extractTeams(pick.matchup);
+            const betAmount = pick.units * 20;
+            const potentialWin = calculateWin(betAmount, pick.odds);
             return `
-            <div class="play-item">
-                <div class="play-rank">${i + 1}</div>
-                <div class="play-logos">
-                    ${getTeamLogo(teams.away, 32)}
-                    <span class="vs-text">vs</span>
-                    ${getTeamLogo(teams.home, 32)}
+            <div class="daily-game-card">
+                <div class="daily-card-header">
+                    <div class="daily-card-num">${i + 1}</div>
+                    <div class="daily-card-sport">${getSportEmoji(pick.sport)} ${pick.sport}</div>
+                    <div class="daily-card-time">${pick.time}</div>
                 </div>
-                <div class="play-info">
-                    <div class="play-matchup">${getSportEmoji(pick.sport)} ${pick.matchup} <span style="color: var(--text-muted); font-size: 12px;">(${pick.time})</span></div>
-                    <div class="play-pick">${pick.pick} (${formatOdds(pick.odds)})</div>
+                <div class="daily-card-matchup">
+                    <div class="daily-card-team">
+                        ${getTeamLogo(teams.away, 50)}
+                        <div class="daily-team-abbr">${teams.away}</div>
+                    </div>
+                    <div class="daily-card-vs">vs</div>
+                    <div class="daily-card-team">
+                        ${getTeamLogo(teams.home, 50)}
+                        <div class="daily-team-abbr">${teams.home}</div>
+                    </div>
                 </div>
-                <div class="play-meta">
-                    <div class="conviction-badge">${'🔒'.repeat(pick.conviction)}</div>
-                    <div class="play-units">${pick.units}u · $${pick.units * 20}</div>
+                <div class="daily-card-pick">${pick.pick}</div>
+                <div class="daily-card-details">
+                    <div class="daily-detail-item">
+                        <div class="daily-detail-value">${formatOdds(pick.odds)}</div>
+                        <div class="daily-detail-label">Odds</div>
+                    </div>
+                    <div class="daily-detail-item">
+                        <div class="daily-detail-value conviction">${'🔒'.repeat(pick.conviction)}</div>
+                        <div class="daily-detail-label">Conviction</div>
+                    </div>
+                    <div class="daily-detail-item risk">
+                        <div class="daily-detail-value">$${betAmount}</div>
+                        <div class="daily-detail-label">Risk</div>
+                    </div>
+                    <div class="daily-detail-item win">
+                        <div class="daily-detail-value">$${potentialWin}</div>
+                        <div class="daily-detail-label">To Win</div>
+                    </div>
                 </div>
             </div>
         `}).join('');
@@ -1272,41 +1387,44 @@ function renderParlayBets() {
         {
             id: 'parlay-1',
             name: 'CHALKY PARLAY',
+            emoji: '🔒',
             odds: '+285',
             amount: 25,
             toWin: 96,
             legs: [
-                { team: 'Philadelphia 76ers', pick: '+2.5', game: 'PHI @ GSW', odds: -110 },
-                { team: 'Detroit Pistons', pick: '-6', game: 'DEN @ DET', odds: -110 },
-                { team: 'Miami Heat', pick: '-4.5', game: 'MIA @ ATL', odds: -110 },
-                { team: 'Marquette Golden Eagles', pick: '-5', game: 'CREI @ MARQ', odds: -110 }
+                { pick: '76ers +2.5', away: 'PHI', home: 'GSW', odds: -110 },
+                { pick: 'Pistons -6', away: 'DEN', home: 'DET', odds: -110 },
+                { pick: 'Heat -4.5', away: 'MIA', home: 'ATL', odds: -110 },
+                { pick: 'Marquette -5', away: 'CREI', home: 'MARQ', odds: -110 }
             ]
         },
         {
             id: 'parlay-2',
             name: 'VALUE PARLAY',
+            emoji: '💰',
             odds: '+650',
             amount: 20,
             toWin: 150,
             legs: [
-                { team: 'Philadelphia 76ers', pick: '+2.5', game: 'PHI @ GSW', odds: -110 },
-                { team: "Saint Mary's Gaels", pick: '+4.5', game: 'GONZ @ SMC', odds: -110 },
-                { team: 'Ottawa Senators', pick: 'ML', game: 'OTT @ CAR', odds: 145 },
-                { team: 'Toronto/Edmonton', pick: 'UNDER 6.5', game: 'TOR @ EDM', odds: -115 }
+                { pick: '76ers +2.5', away: 'PHI', home: 'GSW', odds: -110 },
+                { pick: "Saint Mary's +4.5", away: 'GONZ', home: 'SMC', odds: -110 },
+                { pick: 'Senators ML', away: 'OTT', home: 'CAR', odds: 145 },
+                { pick: 'UNDER 6.5', away: 'TOR', home: 'EDM', odds: -115 }
             ]
         },
         {
             id: 'parlay-3',
             name: 'MOON SHOT',
+            emoji: '🚀',
             odds: '+2800',
             amount: 10,
             toWin: 290,
             legs: [
-                { team: 'Buffalo Sabres', pick: 'ML', game: 'BUF @ TB', odds: 195 },
-                { team: 'Ottawa Senators', pick: 'ML', game: 'OTT @ CAR', odds: 145 },
-                { team: 'Philadelphia 76ers', pick: 'ML', game: 'PHI @ GSW', odds: 115 },
-                { team: 'Dallas Mavericks', pick: '+8', game: 'BOS @ DAL', odds: -110 },
-                { team: 'Belmont Bruins', pick: '-7.5', game: 'DRAKE @ BEL', odds: -110 }
+                { pick: 'Sabres ML', away: 'BUF', home: 'TB', odds: 195 },
+                { pick: 'Senators ML', away: 'OTT', home: 'CAR', odds: 145 },
+                { pick: '76ers ML', away: 'PHI', home: 'GSW', odds: 115 },
+                { pick: 'Mavericks +8', away: 'BOS', home: 'DAL', odds: -110 },
+                { pick: 'Belmont -7.5', away: 'DRAKE', home: 'BEL', odds: -110 }
             ]
         }
     ];
@@ -1324,36 +1442,42 @@ function renderParlayBets() {
         }
 
         return `
-            <div class="parlay-card ${statusClass}" data-id="${parlay.id}">
-                <div class="parlay-card-header">
-                    <div class="parlay-name">${parlay.name}</div>
-                    <div class="parlay-odds-badge">${parlay.odds}</div>
-                </div>
-                <div class="parlay-legs-vertical">
-                    ${parlay.legs.map(leg => `
-                        <div class="parlay-leg-item">
-                            <div>
-                                <div class="leg-team-full">${leg.team}</div>
-                                <div class="leg-pick-detail">${leg.pick} · ${leg.game}</div>
-                            </div>
-                            <div class="leg-odds">${formatOdds(leg.odds)}</div>
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="parlay-card-footer">
-                    <div class="parlay-stakes">
-                        <div class="parlay-stake-item">
-                            <div class="stake-value risk">$${parlay.amount}</div>
-                            <div class="stake-label">Risk</div>
-                        </div>
-                        <div class="parlay-stake-item">
-                            <div class="stake-value win">$${parlay.toWin}</div>
-                            <div class="stake-label">To Win</div>
-                        </div>
+            <div class="parlay-bet-card ${statusClass}" data-id="${parlay.id}">
+                <div class="parlay-bet-header">
+                    <div class="parlay-bet-title">
+                        <span class="parlay-emoji">${parlay.emoji}</span>
+                        <span class="parlay-name">${parlay.name}</span>
                     </div>
+                    <div class="parlay-odds-big">${parlay.odds}</div>
                     <button class="bet-status-btn ${statusClass}" onclick="cycleBetStatus('${parlay.id}')">
                         ${statusIcon}
                     </button>
+                </div>
+                <div class="parlay-legs-list">
+                    ${parlay.legs.map((leg, i) => `
+                        <div class="parlay-leg-card">
+                            <div class="leg-number">${i + 1}</div>
+                            <div class="leg-matchup">
+                                ${getTeamLogo(leg.away, 32)}
+                                <span class="leg-vs">@</span>
+                                ${getTeamLogo(leg.home, 32)}
+                            </div>
+                            <div class="leg-pick-box">${leg.pick}</div>
+                            <div class="leg-odds-small">${formatOdds(leg.odds)}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="parlay-bet-footer">
+                    <div class="parlay-bet-amounts">
+                        <div class="parlay-amount-box risk">
+                            <div class="amount-value">$${parlay.amount}</div>
+                            <div class="amount-label">Risk</div>
+                        </div>
+                        <div class="parlay-amount-box win">
+                            <div class="amount-value">$${parlay.toWin}</div>
+                            <div class="amount-label">To Win</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
@@ -1365,15 +1489,15 @@ function renderPropBets() {
     if (!container) return;
 
     const props = [
-        { id: 'prop-1', player: 'Tyrese Maxey', team: 'PHI 76ers', teamAbbr: 'PHI', prop: 'Over 26.5 Points', odds: -115, amount: 30, game: 'PHI @ GSW' },
-        { id: 'prop-2', player: 'Joel Embiid', team: 'PHI 76ers', teamAbbr: 'PHI', prop: 'Over 11.5 Rebounds', odds: -110, amount: 20, game: 'PHI @ GSW' },
-        { id: 'prop-3', player: 'Cade Cunningham', team: 'DET Pistons', teamAbbr: 'DET', prop: 'Over 7.5 Assists', odds: -120, amount: 20, game: 'DEN @ DET' },
-        { id: 'prop-4', player: 'Nikola Jokic', team: 'DEN Nuggets', teamAbbr: 'DEN', prop: 'Triple Double YES', odds: 180, amount: 10, game: 'DEN @ DET' },
-        { id: 'prop-5', player: 'Jaylen Brown', team: 'BOS Celtics', teamAbbr: 'BOS', prop: 'Over 28.5 Points', odds: -110, amount: 20, game: 'BOS @ DAL' },
-        { id: 'prop-6', player: 'Cooper Flagg', team: 'DAL Mavericks', teamAbbr: 'DAL', prop: 'Over 18.5 Points', odds: -115, amount: 20, game: 'BOS @ DAL' },
+        { id: 'prop-1', player: 'Tyrese Maxey', teamAbbr: 'PHI', prop: 'Over 26.5 Points', odds: -115, amount: 30, away: 'PHI', home: 'GSW' },
+        { id: 'prop-2', player: 'Joel Embiid', teamAbbr: 'PHI', prop: 'Over 11.5 Rebounds', odds: -110, amount: 20, away: 'PHI', home: 'GSW' },
+        { id: 'prop-3', player: 'Cade Cunningham', teamAbbr: 'DET', prop: 'Over 7.5 Assists', odds: -120, amount: 20, away: 'DEN', home: 'DET' },
+        { id: 'prop-4', player: 'Nikola Jokic', teamAbbr: 'DEN', prop: 'Triple Double YES', odds: 180, amount: 10, away: 'DEN', home: 'DET' },
+        { id: 'prop-5', player: 'Jaylen Brown', teamAbbr: 'BOS', prop: 'Over 28.5 Points', odds: -110, amount: 20, away: 'BOS', home: 'DAL' },
+        { id: 'prop-6', player: 'Cooper Flagg', teamAbbr: 'DAL', prop: 'Over 18.5 Points', odds: -115, amount: 20, away: 'BOS', home: 'DAL' },
     ];
 
-    container.innerHTML = props.map(prop => {
+    container.innerHTML = props.map((prop, index) => {
         const potentialWin = calculateWin(prop.amount, prop.odds);
         const status = betStatus[prop.id];
         let statusClass = '';
@@ -1387,27 +1511,32 @@ function renderPropBets() {
         }
 
         return `
-            <div class="bet-item prop-item ${statusClass}" data-id="${prop.id}">
-                <div class="prop-logo">
-                    ${getTeamLogo(prop.teamAbbr, 40)}
+            <div class="prop-card ${statusClass}" data-id="${prop.id}">
+                <div class="prop-header">
+                    <div class="prop-number">${index + 1}</div>
+                    <div class="prop-game-info">${prop.away} @ ${prop.home}</div>
+                    <button class="bet-status-btn ${statusClass}" onclick="cycleBetStatus('${prop.id}')">
+                        ${statusIcon}
+                    </button>
                 </div>
-                <div class="bet-info">
-                    <div class="bet-sport-tag">🏀 ${prop.team}</div>
-                    <div class="bet-game">${prop.player} · ${prop.game}</div>
-                    <div class="bet-pick">${prop.prop}</div>
+                <div class="prop-main">
+                    <div class="prop-player-logo">
+                        ${getTeamLogo(prop.teamAbbr, 50)}
+                    </div>
+                    <div class="prop-player-name">${prop.player}</div>
+                    <div class="prop-line">${prop.prop}</div>
                 </div>
-                <div class="bet-odds">${formatOdds(prop.odds)}</div>
-                <div class="bet-stake">
-                    <div class="bet-amount">$${prop.amount}</div>
-                    <div class="bet-amount-label">Risk</div>
+                <div class="prop-footer">
+                    <div class="prop-odds-box">${formatOdds(prop.odds)}</div>
+                    <div class="prop-amount-box risk">
+                        <div class="prop-amount-value">$${prop.amount}</div>
+                        <div class="prop-amount-label">Risk</div>
+                    </div>
+                    <div class="prop-amount-box win">
+                        <div class="prop-amount-value">$${potentialWin}</div>
+                        <div class="prop-amount-label">To Win</div>
+                    </div>
                 </div>
-                <div class="bet-win">
-                    <div class="bet-win-amount">$${potentialWin}</div>
-                    <div class="bet-win-label">To Win</div>
-                </div>
-                <button class="bet-status-btn ${statusClass}" onclick="cycleBetStatus('${prop.id}')">
-                    ${statusIcon}
-                </button>
             </div>
         `;
     }).join('');

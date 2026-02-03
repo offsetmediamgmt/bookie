@@ -553,7 +553,13 @@ body {
     background: linear-gradient(135deg, #9c27b0, #e040fb);
 }
 
-.plays-list { padding: 0; }
+.plays-list {
+    padding: 15px;
+}
+
+.plays-section .plays-list {
+    padding: 15px;
+}
 
 .play-item {
     display: grid;
@@ -2455,6 +2461,579 @@ body {
 #page-watch .page-header {
     background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255, 107, 53, 0.05) 100%);
     border-color: rgba(255, 107, 53, 0.2);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COUNTDOWN TIMER
+   ═══════════════════════════════════════════════════════════════ */
+.countdown-wrapper {
+    margin-top: 20px;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, rgba(0, 230, 118, 0.1), rgba(0, 230, 118, 0.02));
+    border: 1px solid rgba(0, 230, 118, 0.3);
+    border-radius: 16px;
+    display: inline-block;
+}
+
+.countdown-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.countdown-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.countdown-unit {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent-green);
+    font-variant-numeric: tabular-nums;
+}
+
+.countdown-unit small {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-left: 2px;
+}
+
+.countdown-sep {
+    font-size: 24px;
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+.countdown-live {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--accent-green);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PARLAY BET CARDS - New Centered Layout with Logos
+   ═══════════════════════════════════════════════════════════════ */
+.parlay-bet-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.parlay-bet-card:hover {
+    border-color: var(--accent-primary);
+}
+
+.parlay-bet-card.placed {
+    background: rgba(0, 230, 118, 0.05);
+    border-color: rgba(0, 230, 118, 0.3);
+}
+
+.parlay-bet-card.missed {
+    background: rgba(255, 71, 87, 0.05);
+    border-color: rgba(255, 71, 87, 0.3);
+}
+
+.parlay-bet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    background: var(--bg-card-hover);
+    border-bottom: 1px solid var(--border);
+}
+
+.parlay-bet-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.parlay-emoji {
+    font-size: 24px;
+}
+
+.parlay-name {
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.parlay-odds-big {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--accent-green);
+    padding: 8px 16px;
+    background: rgba(0, 230, 118, 0.1);
+    border-radius: 12px;
+}
+
+.parlay-legs-list {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.parlay-leg-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px 20px;
+    background: var(--bg-card-hover);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+}
+
+.leg-number {
+    width: 28px;
+    height: 28px;
+    background: var(--accent-primary);
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.leg-matchup {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.leg-vs {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.leg-pick-box {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    padding: 8px 16px;
+    background: linear-gradient(135deg, var(--accent-glow), transparent);
+    border: 1px solid var(--accent-primary);
+    border-radius: 10px;
+    text-align: center;
+    min-width: 140px;
+}
+
+.leg-odds-small {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    background: var(--bg-dark);
+    border-radius: 8px;
+}
+
+.parlay-bet-footer {
+    padding: 18px 24px;
+    background: var(--bg-card-hover);
+    border-top: 1px solid var(--border);
+}
+
+.parlay-bet-amounts {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.parlay-amount-box {
+    text-align: center;
+}
+
+.parlay-amount-box .amount-value {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.parlay-amount-box.risk .amount-value {
+    color: var(--accent-red);
+}
+
+.parlay-amount-box.win .amount-value {
+    color: var(--accent-green);
+}
+
+.parlay-amount-box .amount-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PROP CARDS - Clean Centered Layout
+   ═══════════════════════════════════════════════════════════════ */
+.prop-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: all 0.3s;
+}
+
+.prop-card:hover {
+    border-color: var(--accent-primary);
+}
+
+.prop-card.placed {
+    background: rgba(0, 230, 118, 0.05);
+    border-color: rgba(0, 230, 118, 0.3);
+}
+
+.prop-card.missed {
+    background: rgba(255, 71, 87, 0.05);
+    border-color: rgba(255, 71, 87, 0.3);
+}
+
+.prop-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.prop-number {
+    width: 32px;
+    height: 32px;
+    background: var(--bg-dark);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--accent-primary);
+}
+
+.prop-game-info {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.prop-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.prop-player-logo {
+    margin-bottom: 5px;
+}
+
+.prop-player-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.prop-line {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent-primary);
+    padding: 10px 20px;
+    background: linear-gradient(135deg, var(--accent-glow), transparent);
+    border: 1px solid var(--accent-primary);
+    border-radius: 12px;
+}
+
+.prop-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.prop-odds-box {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    padding: 10px 18px;
+    background: var(--bg-dark);
+    border-radius: 10px;
+}
+
+.prop-amount-box {
+    text-align: center;
+}
+
+.prop-amount-box .prop-amount-value {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.prop-amount-box.risk .prop-amount-value {
+    color: var(--accent-red);
+}
+
+.prop-amount-box.win .prop-amount-value {
+    color: var(--accent-green);
+}
+
+.prop-amount-box .prop-amount-label {
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 3px;
+}
+
+/* Props list container */
+.props-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .props-list {
+        grid-template-columns: 1fr;
+        padding: 15px;
+        gap: 12px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DAILY GAME CARDS - Watch-Style Layout
+   ═══════════════════════════════════════════════════════════════ */
+.daily-game-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.daily-game-card:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+}
+
+.daily-game-card.max-play {
+    border: 2px solid var(--accent-gold);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
+}
+
+.daily-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: var(--bg-card-hover);
+    border-bottom: 1px solid var(--border);
+}
+
+.daily-card-badge {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    background: var(--accent-primary);
+    color: #000;
+}
+
+.daily-card-badge.gold {
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+}
+
+.daily-card-num {
+    width: 28px;
+    height: 28px;
+    background: var(--bg-dark);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--accent-primary);
+}
+
+.daily-card-sport {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.daily-card-time {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.daily-card-matchup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    padding: 25px 20px;
+}
+
+.daily-card-team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+}
+
+.daily-team-abbr {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    margin-top: 8px;
+}
+
+.daily-card-vs {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 600;
+    padding: 8px 12px;
+    background: var(--bg-dark);
+    border-radius: 8px;
+}
+
+.daily-card-pick {
+    text-align: center;
+    padding: 0 20px 20px;
+}
+
+.daily-card-pick {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary);
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--accent-glow), transparent);
+    border: 1px solid var(--accent-primary);
+    border-radius: 14px;
+    display: inline-block;
+}
+
+.daily-card-details {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    padding: 18px 20px;
+    background: var(--bg-card-hover);
+    border-top: 1px solid var(--border);
+}
+
+.daily-detail-item {
+    text-align: center;
+}
+
+.daily-detail-item .daily-detail-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.daily-detail-item.risk .daily-detail-value {
+    color: var(--accent-red);
+}
+
+.daily-detail-item.win .daily-detail-value {
+    color: var(--accent-green);
+}
+
+.daily-detail-item .daily-detail-label {
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+
+.daily-card-factors {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border);
+    background: rgba(255, 215, 0, 0.03);
+}
+
+.factor-item {
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.factor-item:last-child {
+    border-bottom: none;
+}
+
+/* Mobile responsive for new components */
+@media (max-width: 768px) {
+    .countdown-wrapper { padding: 12px 18px; margin-top: 15px; }
+    .countdown-unit { font-size: 22px; }
+    .countdown-unit small { font-size: 10px; }
+    .countdown-sep { font-size: 18px; }
+
+    .parlay-bet-header { padding: 14px 16px; flex-wrap: wrap; gap: 10px; }
+    .parlay-emoji { font-size: 20px; }
+    .parlay-name { font-size: 14px; }
+    .parlay-odds-big { font-size: 20px; padding: 6px 12px; }
+    .parlay-legs-list { padding: 12px; gap: 10px; }
+    .parlay-leg-card { flex-wrap: wrap; padding: 12px 15px; gap: 10px; }
+    .leg-matchup { order: 1; width: 100%; justify-content: center; }
+    .leg-number { order: 0; }
+    .leg-pick-box { order: 2; width: 100%; min-width: auto; }
+    .leg-odds-small { order: 3; }
+    .parlay-bet-footer { padding: 14px 16px; }
+    .parlay-bet-amounts { gap: 25px; }
+    .parlay-amount-box .amount-value { font-size: 18px; }
+
+    .prop-card { padding: 16px; }
+    .prop-player-name { font-size: 18px; }
+    .prop-line { font-size: 14px; padding: 8px 16px; }
+    .prop-footer { gap: 15px; flex-wrap: wrap; }
+    .prop-odds-box { font-size: 14px; padding: 8px 14px; }
+    .prop-amount-box .prop-amount-value { font-size: 16px; }
+
+    .daily-game-card { border-radius: 16px; }
+    .daily-card-header { padding: 12px 16px; }
+    .daily-card-matchup { padding: 20px 15px; gap: 18px; }
+    .daily-card-team { min-width: 70px; }
+    .daily-card-team .team-logo { width: 45px !important; height: 45px !important; }
+    .daily-team-abbr { font-size: 14px; margin-top: 6px; }
+    .daily-card-pick { font-size: 16px; padding: 10px 18px; }
+    .daily-card-details { gap: 15px; padding: 14px 15px; flex-wrap: wrap; }
+    .daily-detail-item .daily-detail-value { font-size: 14px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
