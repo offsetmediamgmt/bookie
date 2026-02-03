@@ -5,39 +5,39 @@
 
 const BOOKIE_DATA = {
     // ═══════════════════════════════════════════════════════════════
-    // BANKROLL CONFIG
+    // BANKROLL CONFIG - Starting Fresh Feb 3, 2026
     // ═══════════════════════════════════════════════════════════════
     bankroll: {
-        starting: 3000,
-        current: 3735,
-        unitPercent: 2, // 2% = standard unit
-        maxPlayPercent: 5, // 5% = MAX plays
+        starting: 1000,
+        current: 1000,
+        unitPercent: 2, // 1 unit = $20 (2% of $1000)
+        maxPlayPercent: 5, // MAX plays = $50 (5%)
     },
 
-    // Unit tiers based on conviction
+    // Unit tiers based on conviction (1u = $20)
     unitTiers: [
-        { locks: 1, units: 0.5, label: "Lean", percent: 1 },
-        { locks: 2, units: 1, label: "Standard", percent: 2 },
-        { locks: 3, units: 1.5, label: "Confident", percent: 3 },
-        { locks: 4, units: 2, label: "Strong", percent: 4 },
-        { locks: 5, units: 3, label: "MAX PLAY", percent: 5 },
+        { locks: 1, units: 0.5, label: "Lean", percent: 1, amount: 10 },
+        { locks: 2, units: 1, label: "Standard", percent: 2, amount: 20 },
+        { locks: 3, units: 1.5, label: "Confident", percent: 3, amount: 30 },
+        { locks: 4, units: 2, label: "Strong", percent: 4, amount: 40 },
+        { locks: 5, units: 2.5, label: "MAX PLAY", percent: 5, amount: 50 },
     ],
 
-    // Growth projection (conservative 10u/month at 60% win rate)
+    // Growth projection (conservative 8u/month at 55% win rate)
     growthProjection: [
-        { month: "Jan", bankroll: 3000, gain: 0, note: "Starting" },
-        { month: "Feb", bankroll: 3300, gain: 300, note: "+10u" },
-        { month: "Mar", bankroll: 3630, gain: 330, note: "+11u" },
-        { month: "Apr", bankroll: 3993, gain: 363, note: "+12u" },
-        { month: "May", bankroll: 4392, gain: 399, note: "+13u" },
-        { month: "Jun", bankroll: 4831, gain: 439, note: "+14u" },
+        { month: "Feb", bankroll: 1000, gain: 0, note: "Starting" },
+        { month: "Mar", bankroll: 1160, gain: 160, note: "+8u" },
+        { month: "Apr", bankroll: 1345, gain: 185, note: "+8u" },
+        { month: "May", bankroll: 1560, gain: 215, note: "+8u" },
+        { month: "Jun", bankroll: 1810, gain: 250, note: "+8u" },
+        { month: "Jul", bankroll: 2100, gain: 290, note: "+8u" },
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // TRACK RECORD - January 2026 History
+    // TRACK RECORD - Fresh Start Feb 2, 2026
     // ═══════════════════════════════════════════════════════════════
     history: [
-        // February 2026 picks (most recent first)
+        // February 2, 2026 - DAY 1 (4-4)
         { date: "Feb 2", sport: "NHL", pick: "Senators ML", odds: -118, units: 1, result: "win", pl: 0.85,
           team1: "OTT", score1: 3, team2: "PIT", score2: 2, picked: "OTT" },
         { date: "Feb 2", sport: "NHL", pick: "Flames +1.5", odds: -260, units: 1, result: "loss", pl: -1.00,
@@ -54,86 +54,6 @@ const BOOKIE_DATA = {
           team1: "HOU", score1: 118, team2: "IND", score2: 114, picked: "IND" },
         { date: "Feb 2", sport: "NCAAB", pick: "UNC -11.5", odds: -110, units: 1, result: "loss", pl: -1.00,
           team1: "UNC", score1: 82, team2: "SYR", score2: 72, picked: "UNC" },
-        { date: "Feb 1", sport: "NBA", pick: "Celtics -4.5", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "BOS", score1: 118, team2: "MIL", score2: 108, picked: "BOS" },
-        { date: "Feb 1", sport: "NHL", pick: "Lightning ML", odds: 125, units: 1, result: "win", pl: 1.25,
-          team1: "TB", score1: 4, team2: "BOS", score2: 2, picked: "TB" },
-        { date: "Jan 31", sport: "NBA", pick: "Suns -2.5", odds: -110, units: 1.5, result: "loss", pl: -1.50,
-          team1: "PHX", score1: 108, team2: "LAL", score2: 112, picked: "PHX" },
-        { date: "Jan 31", sport: "NHL", pick: "OVER 6.5", odds: -115, units: 1, result: "win", pl: 0.87,
-          team1: "EDM", score1: 5, team2: "CGY", score2: 4, picked: "OVER" },
-        { date: "Jan 30", sport: "NFL", pick: "Chiefs -3", odds: -110, units: 3, result: "push", pl: 0,
-          team1: "KC", score1: 24, team2: "BUF", score2: 21, picked: "KC" },
-        { date: "Jan 29", sport: "UFC", pick: "Makhachev ML", odds: -275, units: 2, result: "win", pl: 0.73,
-          team1: "Makhachev", score1: "W", team2: "Oliveira", score2: "L", picked: "Makhachev" },
-        { date: "Jan 28", sport: "NBA", pick: "Wolves -6.5", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "MIN", score1: 121, team2: "NOP", score2: 108, picked: "MIN" },
-        { date: "Jan 27", sport: "NHL", pick: "Maple Leafs ML", odds: 105, units: 1.5, result: "win", pl: 1.58,
-          team1: "TOR", score1: 3, team2: "NYR", score2: 2, picked: "TOR" },
-        { date: "Jan 26", sport: "NBA", pick: "Thunder -8", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "OKC", score1: 128, team2: "UTA", score2: 105, picked: "OKC" },
-        { date: "Jan 26", sport: "NFL", pick: "Seahawks -6", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "SEA", score1: 31, team2: "WSH", score2: 20, picked: "SEA" },
-        { date: "Jan 25", sport: "NBA", pick: "Pistons -5.5", odds: -110, units: 1.5, result: "win", pl: 1.36,
-          team1: "DET", score1: 118, team2: "WAS", score2: 104, picked: "DET" },
-        { date: "Jan 24", sport: "NHL", pick: "Hurricanes ML", odds: -135, units: 1, result: "win", pl: 0.74,
-          team1: "CAR", score1: 4, team2: "NJD", score2: 2, picked: "CAR" },
-        { date: "Jan 23", sport: "NBA", pick: "Cavaliers -7", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "CLE", score1: 122, team2: "CHA", score2: 108, picked: "CLE" },
-        { date: "Jan 22", sport: "NBA", pick: "Spurs +3", odds: -110, units: 1.5, result: "loss", pl: -1.50,
-          team1: "SAS", score1: 105, team2: "GSW", score2: 118, picked: "SAS" },
-        { date: "Jan 21", sport: "NHL", pick: "Penguins ML", odds: -120, units: 1, result: "win", pl: 0.83,
-          team1: "PIT", score1: 3, team2: "WSH", score2: 1, picked: "PIT" },
-        { date: "Jan 20", sport: "NBA", pick: "Nuggets -4", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "DEN", score1: 118, team2: "LAC", score2: 109, picked: "DEN" },
-        { date: "Jan 19", sport: "NFL", pick: "Patriots +7", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "NE", score1: 24, team2: "KC", score2: 27, picked: "NE" },
-        { date: "Jan 19", sport: "NFL", pick: "Seahawks -3", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "SEA", score1: 28, team2: "DET", score2: 24, picked: "SEA" },
-        { date: "Jan 18", sport: "NBA", pick: "Rockets -3.5", odds: -110, units: 1.5, result: "win", pl: 1.36,
-          team1: "HOU", score1: 115, team2: "ORL", score2: 106, picked: "HOU" },
-        { date: "Jan 17", sport: "NHL", pick: "Sabres ML", odds: 105, units: 1, result: "win", pl: 1.05,
-          team1: "BUF", score1: 4, team2: "OTT", score2: 3, picked: "BUF" },
-        { date: "Jan 16", sport: "NBA", pick: "Lakers +2", odds: -110, units: 2, result: "loss", pl: -2.00,
-          team1: "LAL", score1: 108, team2: "BOS", score2: 118, picked: "LAL" },
-        { date: "Jan 15", sport: "NBA", pick: "Thunder -10", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "OKC", score1: 132, team2: "BKN", score2: 108, picked: "OKC" },
-        { date: "Jan 14", sport: "NHL", pick: "Lightning -1.5", odds: 140, units: 1, result: "loss", pl: -1.00,
-          team1: "TB", score1: 2, team2: "MTL", score2: 3, picked: "TB" },
-        { date: "Jan 13", sport: "NBA", pick: "Pistons ML", odds: -145, units: 1.5, result: "win", pl: 1.03,
-          team1: "DET", score1: 112, team2: "CHI", score2: 105, picked: "DET" },
-        { date: "Jan 12", sport: "NFL", pick: "Bills -6.5", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "BUF", score1: 31, team2: "DEN", score2: 17, picked: "BUF" },
-        { date: "Jan 12", sport: "NFL", pick: "Seahawks -3", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "SEA", score1: 24, team2: "MIN", score2: 20, picked: "SEA" },
-        { date: "Jan 11", sport: "NFL", pick: "Patriots +3", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "NE", score1: 21, team2: "BAL", score2: 17, picked: "NE" },
-        { date: "Jan 11", sport: "NFL", pick: "Lions -7", odds: -110, units: 1.5, result: "loss", pl: -1.50,
-          team1: "DET", score1: 24, team2: "GB", score2: 28, picked: "DET" },
-        { date: "Jan 10", sport: "NBA", pick: "Cavaliers -5", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "CLE", score1: 118, team2: "NYK", score2: 108, picked: "CLE" },
-        { date: "Jan 9", sport: "NHL", pick: "Blue Jackets ML", odds: -125, units: 1, result: "win", pl: 0.80,
-          team1: "CBJ", score1: 4, team2: "PHI", score2: 2, picked: "CBJ" },
-        { date: "Jan 8", sport: "NBA", pick: "Spurs +6", odds: -110, units: 1.5, result: "win", pl: 1.36,
-          team1: "SAS", score1: 115, team2: "DEN", score2: 118, picked: "SAS" },
-        { date: "Jan 7", sport: "NBA", pick: "Thunder -7", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "OKC", score1: 125, team2: "MEM", score2: 110, picked: "OKC" },
-        { date: "Jan 6", sport: "NHL", pick: "Avalanche -1.5", odds: 135, units: 1, result: "win", pl: 1.35,
-          team1: "COL", score1: 5, team2: "CHI", score2: 2, picked: "COL" },
-        { date: "Jan 5", sport: "NBA", pick: "Celtics -3", odds: -110, units: 1.5, result: "win", pl: 1.36,
-          team1: "BOS", score1: 112, team2: "MIA", score2: 104, picked: "BOS" },
-        { date: "Jan 4", sport: "UFC", pick: "Pereira ML", odds: -350, units: 2, result: "win", pl: 0.57,
-          team1: "Pereira", score1: "W", team2: "Rountree", score2: "L", picked: "Pereira" },
-        { date: "Jan 4", sport: "NBA", pick: "Suns +5", odds: -110, units: 1, result: "loss", pl: -1.00,
-          team1: "PHX", score1: 105, team2: "OKC", score2: 118, picked: "PHX" },
-        { date: "Jan 3", sport: "NHL", pick: "Panthers ML", odds: -130, units: 1, result: "loss", pl: -1.00,
-          team1: "FLA", score1: 2, team2: "BOS", score2: 4, picked: "FLA" },
-        { date: "Jan 2", sport: "NBA", pick: "Lakers -2", odds: -110, units: 1.5, result: "win", pl: 1.36,
-          team1: "LAL", score1: 118, team2: "CHA", score2: 108, picked: "LAL" },
-        { date: "Jan 1", sport: "NHL", pick: "Blues ML", odds: -140, units: 1.5, result: "win", pl: 1.07,
-          team1: "STL", score1: 6, team2: "CHI", score2: 4, picked: "STL" },
-        { date: "Jan 1", sport: "NBA", pick: "Pistons -4", odds: -110, units: 2, result: "win", pl: 1.82,
-          team1: "DET", score1: 115, team2: "WAS", score2: 102, picked: "DET" },
     ],
 
     // ═══════════════════════════════════════════════════════════════
@@ -340,23 +260,23 @@ const BOOKIE_DATA = {
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // MAX PLAYS - Highest Conviction (5% bankroll)
+    // MAX PLAYS - Highest Conviction (5% bankroll = $50)
     // ═══════════════════════════════════════════════════════════════
     maxPlays: [
         {
             id: 201,
-            sport: "UFC",
-            matchup: "Albazi vs Horiguchi",
-            time: "Feb 7, 9:00 PM ET",
-            pick: "Kyoji Horiguchi ML",
-            odds: -180,
-            units: 3,
-            conviction: 5,
+            sport: "NBA",
+            matchup: "76ers @ Warriors",
+            time: "Feb 3, 10:00 PM ET",
+            pick: "Philadelphia 76ers +2.5",
+            odds: -110,
+            units: 2.5,
+            conviction: 4,
             factors: [
-                "Former double champ returning to UFC dominance",
-                "Albazi sat out entire 2025 — ring rust is REAL",
-                "Heart surgery recovery for Albazi",
-                "Horiguchi just finished Ulanbekov who NO ONE could finish"
+                "STEPH CURRY OUT (knee) — game changer",
+                "Jimmy Butler season-ending injury gutted GSW",
+                "76ers on 4-game win streak, beat LAC by 15",
+                "Maxey/Embiid combo vs depleted Warriors"
             ]
         },
         {
@@ -366,7 +286,7 @@ const BOOKIE_DATA = {
             time: "Feb 8, 6:30 PM ET",
             pick: "Patriots +4.5 (Super Bowl)",
             odds: -110,
-            units: 3,
+            units: 2.5,
             conviction: 4,
             factors: [
                 "SB underdogs 5-0 ATS last 5 years",
@@ -378,38 +298,90 @@ const BOOKIE_DATA = {
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // PARLAYS
+    // PARLAYS - February 3, 2026
     // ═══════════════════════════════════════════════════════════════
     parlays: {
         safe: {
-            name: "🔒 Lock Parlay",
-            odds: "+245",
+            name: "🔒 SAFE PARLAY",
+            odds: "+260",
+            wager: 20,
+            payout: 72,
             legs: [
-                { pick: "Rockets -5.5", odds: -110 },
-                { pick: "Penguins ML", odds: -125 },
-                { pick: "Horiguchi ML", odds: -180 }
+                { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
+                { pick: "Pistons -6", odds: -110, game: "DEN @ DET" },
+                { pick: "Celtics ML", odds: -350, game: "BOS @ DAL" }
             ]
         },
         value: {
-            name: "💰 Value Parlay",
-            odds: "+485",
+            name: "💰 VALUE PARLAY",
+            odds: "+580",
+            wager: 15,
+            payout: 102,
             legs: [
-                { pick: "Sabres ML", odds: 145 },
-                { pick: "Nuggets +6.5", odds: -110 },
-                { pick: "Patriots +4.5 (SB)", odds: -110 }
+                { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
+                { pick: "Mavericks +8", odds: -110, game: "BOS @ DAL" },
+                { pick: "Senators ML", odds: 145, game: "OTT @ CAR" }
             ]
         },
         risky: {
-            name: "🎰 Risky Parlay",
-            odds: "+1250",
+            name: "🎰 LONGSHOT PARLAY",
+            odds: "+1850",
+            wager: 10,
+            payout: 195,
             legs: [
-                { pick: "Bautista ML", odds: 135 },
-                { pick: "Sabres ML", odds: 145 },
-                { pick: "Nuggets ML", odds: 210 },
-                { pick: "Patriots ML (SB)", odds: 190 }
+                { pick: "Sabres ML", odds: 195, game: "BUF @ TB" },
+                { pick: "Senators ML", odds: 145, game: "OTT @ CAR" },
+                { pick: "76ers ML", odds: 115, game: "PHI @ GSW" },
+                { pick: "Mavericks +8", odds: -110, game: "BOS @ DAL" }
             ]
         }
     },
+
+    // ═══════════════════════════════════════════════════════════════
+    // PLAYER PROPS - February 3, 2026
+    // ═══════════════════════════════════════════════════════════════
+    playerProps: [
+        {
+            player: "Tyrese Maxey",
+            team: "PHI",
+            game: "76ers @ Warriors",
+            prop: "Over 26.5 Points",
+            odds: -115,
+            units: 1,
+            conviction: 4,
+            reasoning: "Dropped 29 last night, Curry OUT means less defensive attention, been averaging 28+ last 5 games"
+        },
+        {
+            player: "Joel Embiid",
+            team: "PHI",
+            game: "76ers @ Warriors",
+            prop: "Over 11.5 Rebounds",
+            odds: -110,
+            units: 1,
+            conviction: 3,
+            reasoning: "GSW weak interior without Lively, Embiid should feast on boards"
+        },
+        {
+            player: "Cade Cunningham",
+            team: "DET",
+            game: "Nuggets @ Pistons",
+            prop: "Over 7.5 Assists",
+            odds: -120,
+            units: 1,
+            conviction: 3,
+            reasoning: "Averaging 9.2 assists at home, Pistons move the ball well"
+        },
+        {
+            player: "Nikola Jokic",
+            team: "DEN",
+            game: "Nuggets @ Pistons",
+            prop: "Triple Double YES",
+            odds: 180,
+            units: 0.5,
+            conviction: 2,
+            reasoning: "Jokic has 8 triple doubles this season, always a threat"
+        }
+    ],
 
     // ═══════════════════════════════════════════════════════════════
     // NBA SCHEDULE - February 2026

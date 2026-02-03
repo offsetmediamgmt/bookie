@@ -12,10 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCalculators();
     renderDailyCard();
     renderHistory();
-    renderNBASchedule();
-    renderUFCSchedule();
-    renderNHLSchedule();
-    renderSoccerSchedule();
+    renderPlayerProps();
     updateHeaderStats();
 });
 
@@ -258,15 +255,50 @@ function renderParlays() {
                         <div class="parlay-leg">
                             <div class="leg-info">
                                 <div class="leg-check">✓</div>
-                                <div class="leg-pick">${leg.pick}</div>
+                                <div>
+                                    <div class="leg-pick">${leg.pick}</div>
+                                    ${leg.game ? `<div style="font-size: 10px; color: var(--text-muted);">${leg.game}</div>` : ''}
+                                </div>
                             </div>
                             <div class="leg-odds">${formatOdds(leg.odds)}</div>
                         </div>
                     `).join('')}
                 </div>
+                ${p.wager ? `
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 13px;">
+                    <span style="color: var(--text-muted);">Wager: $${p.wager}</span>
+                    <span style="color: var(--accent-green); font-weight: 700;">To Win: $${p.payout}</span>
+                </div>
+                ` : ''}
             `;
         }
     });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PLAYER PROPS
+// ═══════════════════════════════════════════════════════════════
+function renderPlayerProps() {
+    const container = document.getElementById('playerPropsGrid');
+    if (!container || !BOOKIE_DATA.playerProps) return;
+
+    container.innerHTML = BOOKIE_DATA.playerProps.map(prop => `
+        <div class="prop-card">
+            <div class="prop-header">
+                <div class="prop-player">${prop.player}</div>
+                <div class="prop-team">${prop.team} | ${prop.game}</div>
+            </div>
+            <div class="prop-body">
+                <div class="prop-pick">${prop.prop}</div>
+                <div class="prop-odds">${formatOdds(prop.odds)}</div>
+                <div class="prop-reasoning">${prop.reasoning}</div>
+                <div class="prop-footer">
+                    <span class="conviction-badge">${'🔒'.repeat(prop.conviction)}</span>
+                    <span class="prop-units">${prop.units}u</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
 }
 
 // ═══════════════════════════════════════════════════════════════
