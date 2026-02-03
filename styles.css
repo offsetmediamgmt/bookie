@@ -495,28 +495,34 @@ body {
 .plays-list { padding: 0; }
 
 .play-item {
-    display: flex; align-items: center;
+    display: flex;
+    align-items: center;
     padding: 18px 24px;
     border-bottom: 1px solid var(--border);
     transition: all 0.3s;
     cursor: pointer;
+    gap: 5px;
 }
 
 .play-item:hover {
     background: var(--bg-card-hover);
-    padding-left: 30px;
 }
 
 .play-item:last-child { border-bottom: none; }
 
 .play-rank {
-    width: 40px; height: 40px;
+    width: 40px;
+    height: 40px;
     background: var(--bg-dark);
     border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px; font-weight: 800;
-    margin-right: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    margin-right: 12px;
     border: 2px solid var(--border);
+    flex-shrink: 0;
 }
 
 .play-rank.gold { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; border: none; box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); }
@@ -2060,19 +2066,59 @@ body {
 }
 
 @media (max-width: 768px) {
-    .bets-summary { grid-template-columns: 1fr; }
-    .bet-item { grid-template-columns: 1fr 1fr; gap: 12px; text-align: left; }
-    .bet-item .bet-number { grid-column: 1; }
-    .bet-item .bet-logos { grid-column: 2; justify-content: flex-start; }
+    .header { grid-template-columns: 1fr; gap: 15px; justify-items: center; }
+    .header-stats { justify-content: center; }
+    .balance-display { margin: 10px 0; }
+
+    .nav { flex-wrap: wrap; }
+    .nav-item { padding: 12px 20px; }
+    .nav-icon { font-size: 18px; }
+    .nav-text { font-size: 9px; }
+
+    .page-header { margin-bottom: 20px; }
+    .page-title { font-size: 28px; }
+    .page-subtitle { font-size: 12px; }
+
+    .bets-summary { grid-template-columns: repeat(2, 1fr); }
+    .summary-card { padding: 15px; }
+    .summary-value { font-size: 22px; }
+
+    .bet-item {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 15px 18px;
+    }
+    .bet-item .bet-number { grid-column: 1; width: 45px; height: 45px; }
+    .bet-item .bet-logos { grid-column: 2; justify-content: flex-end; }
     .bet-item .bet-info { grid-column: 1 / -1; }
-    .bet-item .bet-odds { grid-column: 1; }
-    .bet-item .bet-stake { grid-column: 2; text-align: left; }
+    .bet-item .bet-odds { grid-column: 1; text-align: left; }
+    .bet-item .bet-stake { grid-column: 2; text-align: right; }
     .bet-item .bet-win { grid-column: 1; text-align: left; }
     .bet-item .bet-status-btn { grid-column: 2; justify-self: end; }
     .bet-status-btn { width: 50px; height: 50px; font-size: 20px; }
-    .bets-header { padding: 20px; }
-    .bets-title { font-size: 28px; }
-    .parlay-stakes { flex-direction: column; gap: 10px; }
+
+    .play-item { flex-wrap: wrap; padding: 15px 18px; }
+    .play-logos { order: 2; margin-right: 0; margin-left: auto; }
+    .play-rank { width: 35px; height: 35px; font-size: 14px; }
+    .play-info { flex: 1 1 100%; order: 3; margin-top: 10px; }
+    .play-meta { order: 4; width: 100%; display: flex; justify-content: space-between; margin-top: 10px; }
+
+    .parlay-card { margin-bottom: 15px; }
+    .parlay-stakes { flex-direction: row; gap: 20px; }
+
+    .game-card-body { flex-direction: column; gap: 20px; padding: 20px; }
+    .game-matchup { gap: 25px; }
+    .game-team { min-width: 90px; }
+    .game-team-abbr { font-size: 22px; }
+    .game-picks { align-items: center; width: 100%; }
+
+    .results-grid { grid-template-columns: 1fr; }
+    .scoreboard { padding: 15px; }
+    .team-points { font-size: 28px; }
+    .result-circle { width: 40px; height: 40px; font-size: 16px; }
+
+    .history-stats { grid-template-columns: repeat(2, 1fr); }
+    .history-stat-value { font-size: 28px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -2394,7 +2440,7 @@ body {
 }
 
 .game-card-body {
-    padding: 20px 24px;
+    padding: 25px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -2403,32 +2449,38 @@ body {
 .game-matchup {
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 40px;
+    justify-content: center;
+    flex: 1;
 }
 
 .game-team {
     text-align: center;
-    min-width: 100px;
+    min-width: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .game-team-abbr {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 800;
+    margin-top: 6px;
 }
 
 .game-team-name {
-    font-size: 11px;
+    font-size: 12px;
     color: var(--text-muted);
-    margin-top: 2px;
+    margin-top: 4px;
 }
 
 .game-vs {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--text-muted);
-    font-weight: 600;
+    font-weight: 700;
+    padding: 8px 15px;
+    background: var(--bg-dark);
+    border-radius: 8px;
 }
 
 .game-picks {
@@ -2751,46 +2803,66 @@ body {
 .team-logo {
     object-fit: contain;
     border-radius: 4px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
 }
 
 .bet-logos {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     justify-content: center;
 }
 
 .bet-logos .vs-text {
-    font-size: 10px;
+    font-size: 11px;
     color: var(--text-muted);
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .prop-logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
+    width: 60px;
 }
 
 /* Team logos in scoreboard */
 .team-score .team-logo {
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 /* Team logos in game cards */
 .game-team .team-logo {
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .next-team .team-logo {
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 /* Prop item grid adjustment */
 .bet-item.prop-item {
-    grid-template-columns: 60px 2fr 80px 100px 100px 70px;
+    grid-template-columns: 70px 2fr 70px 90px 90px 60px;
+}
+
+/* Play item logos */
+.play-logos {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-right: 15px;
+}
+
+.play-logos .vs-text {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* Parlay leg logos */
+.leg-logo {
+    flex-shrink: 0;
+    margin-right: 12px;
 }
 
 /* ═══════════════════════════════════════════════════════════════

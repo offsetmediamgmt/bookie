@@ -72,6 +72,37 @@ function getTeamLogoUrl(abbr) {
     return TEAM_LOGOS[abbr] || '';
 }
 
+// Extract team abbreviations from matchup string like "76ers @ Warriors"
+function extractTeams(matchup) {
+    const teamMap = {
+        '76ers': 'PHI', 'Warriors': 'GSW', 'Pistons': 'DET', 'Nuggets': 'DEN',
+        'Celtics': 'BOS', 'Mavericks': 'DAL', 'Heat': 'MIA', 'Hawks': 'ATL',
+        'Lakers': 'LAL', 'Clippers': 'LAC', 'Rockets': 'HOU', 'Pacers': 'IND',
+        'Thunder': 'OKC', 'Spurs': 'SAS', 'Suns': 'PHX', 'Raptors': 'TOR',
+        'Knicks': 'NYK', 'Nets': 'BKN', 'Cavaliers': 'CLE',
+        'Senators': 'OTT', 'Hurricanes': 'CAR', 'Sabres': 'BUF', 'Lightning': 'TB',
+        'Maple Leafs': 'TOR', 'Oilers': 'EDM', 'Flames': 'CGY', 'Penguins': 'PIT', 'Jets': 'WPG',
+        'Patriots': 'NE', 'Seahawks': 'SEA',
+        'Gonzaga': 'GONZ', "Saint Mary's": 'SMC', 'Marquette': 'MARQ', 'Creighton': 'CREI',
+        'Belmont': 'BEL', 'Drake': 'DRAKE', 'Kansas': 'KU', 'Texas Tech': 'TTU',
+        'UNC': 'UNC', 'Syracuse': 'SYR', 'UConn': 'UCONN', 'DePaul': 'DEPAUL'
+    };
+
+    // Try to extract from "Team1 @ Team2" or "Team1 vs Team2" format
+    const parts = matchup.split(/\s*[@vs]\s*/i);
+    let away = '', home = '';
+
+    if (parts.length >= 2) {
+        // Find team abbreviations
+        for (const [name, abbr] of Object.entries(teamMap)) {
+            if (parts[0].includes(name)) away = abbr;
+            if (parts[1].includes(name)) home = abbr;
+        }
+    }
+
+    return { away, home };
+}
+
 // ═══════════════════════════════════════════════════════════════
 // INITIALIZATION
 // ═══════════════════════════════════════════════════════════════
@@ -256,55 +287,76 @@ function renderDailyCard() {
     // Render MAX Plays
     const maxPlaysContainer = document.getElementById('maxPlaysList');
     if (maxPlaysContainer) {
-        maxPlaysContainer.innerHTML = BOOKIE_DATA.maxPlays.map((pick, i) => `
+        maxPlaysContainer.innerHTML = BOOKIE_DATA.maxPlays.map((pick, i) => {
+            const teams = extractTeams(pick.matchup);
+            return `
             <div class="play-item">
                 <div class="play-rank gold">${i + 1}</div>
+                <div class="play-logos">
+                    ${getTeamLogo(teams.away, 36)}
+                    <span class="vs-text">@</span>
+                    ${getTeamLogo(teams.home, 36)}
+                </div>
                 <div class="play-info">
                     <div class="play-matchup">${getSportEmoji(pick.sport)} ${pick.matchup}</div>
                     <div class="play-pick">${pick.pick}</div>
                 </div>
                 <div class="play-meta">
                     <div class="conviction-badge">${'🔒'.repeat(pick.conviction)}</div>
-                    <div class="play-units">${pick.units}u (5%)</div>
+                    <div class="play-units">${pick.units}u · $${pick.units * 20}</div>
                 </div>
             </div>
-        `).join('');
+        `}).join('');
     }
 
     // Render Today's Picks
     const todaysContainer = document.getElementById('todaysPicksList');
     if (todaysContainer) {
-        todaysContainer.innerHTML = BOOKIE_DATA.todaysPicks.map((pick, i) => `
+        todaysContainer.innerHTML = BOOKIE_DATA.todaysPicks.map((pick, i) => {
+            const teams = extractTeams(pick.matchup);
+            return `
             <div class="play-item">
                 <div class="play-rank ${i === 0 ? 'silver' : i === 1 ? 'bronze' : ''}">${i + 1}</div>
+                <div class="play-logos">
+                    ${getTeamLogo(teams.away, 32)}
+                    <span class="vs-text">@</span>
+                    ${getTeamLogo(teams.home, 32)}
+                </div>
                 <div class="play-info">
                     <div class="play-matchup">${getSportEmoji(pick.sport)} ${pick.matchup}</div>
                     <div class="play-pick">${pick.pick} (${formatOdds(pick.odds)})</div>
                 </div>
                 <div class="play-meta">
-                    <div class="conviction-badge">${'🔒'.repeat(pick.conviction)}${'🔒'.repeat(5 - pick.conviction).split('').map(() => '<span class="lock empty">🔒</span>').join('')}</div>
-                    <div class="play-units">${pick.units}u</div>
+                    <div class="conviction-badge">${'🔒'.repeat(pick.conviction)}</div>
+                    <div class="play-units">${pick.units}u · $${pick.units * 20}</div>
                 </div>
             </div>
-        `).join('');
+        `}).join('');
     }
 
     // Render Weekly Picks
     const weeklyContainer = document.getElementById('weeklyPicksList');
     if (weeklyContainer) {
-        weeklyContainer.innerHTML = BOOKIE_DATA.weeklyPicks.map((pick, i) => `
+        weeklyContainer.innerHTML = BOOKIE_DATA.weeklyPicks.map((pick, i) => {
+            const teams = extractTeams(pick.matchup);
+            return `
             <div class="play-item">
                 <div class="play-rank">${i + 1}</div>
+                <div class="play-logos">
+                    ${getTeamLogo(teams.away, 32)}
+                    <span class="vs-text">vs</span>
+                    ${getTeamLogo(teams.home, 32)}
+                </div>
                 <div class="play-info">
                     <div class="play-matchup">${getSportEmoji(pick.sport)} ${pick.matchup} <span style="color: var(--text-muted); font-size: 12px;">(${pick.time})</span></div>
                     <div class="play-pick">${pick.pick} (${formatOdds(pick.odds)})</div>
                 </div>
                 <div class="play-meta">
                     <div class="conviction-badge">${'🔒'.repeat(pick.conviction)}</div>
-                    <div class="play-units">${pick.units}u</div>
+                    <div class="play-units">${pick.units}u · $${pick.units * 20}</div>
                 </div>
             </div>
-        `).join('');
+        `}).join('');
     }
 
     // Render Analysis Cards (Dropdown)
@@ -388,15 +440,18 @@ function renderParlaysGrid() {
                     <div class="parlay-odds-badge">${p.odds}</div>
                 </div>
                 <div class="parlay-legs-vertical">
-                    ${p.legs.map(leg => `
+                    ${p.legs.map(leg => {
+                        const teams = extractTeams(leg.game);
+                        return `
                         <div class="parlay-leg-item">
-                            <div>
+                            <div class="leg-logo">${getTeamLogo(teams.away || teams.home, 28)}</div>
+                            <div style="flex: 1;">
                                 <div class="leg-team-full">${leg.pick}</div>
                                 <div class="leg-pick-detail">${leg.game}</div>
                             </div>
                             <div class="leg-odds">${formatOdds(leg.odds)}</div>
                         </div>
-                    `).join('')}
+                    `}).join('')}
                 </div>
                 <div class="parlay-card-footer">
                     <div class="parlay-stakes">
@@ -677,7 +732,7 @@ function renderResultCard(pick, index) {
             </div>
             <div class="scoreboard">
                 <div class="team-score ${team1IsWinner ? 'winner' : team2IsWinner ? 'loser' : ''} ${pick.picked === pick.team1 ? 'picked' : ''}">
-                    ${getTeamLogo(pick.team1, 35)}
+                    ${getTeamLogo(pick.team1, 45)}
                     <div class="team-abbr">${pick.team1 || ''}</div>
                     <div class="team-points">${pick.score1 ?? '-'}</div>
                 </div>
@@ -686,7 +741,7 @@ function renderResultCard(pick, index) {
                     <div class="score-divider-text">FINAL</div>
                 </div>
                 <div class="team-score ${team2IsWinner ? 'winner' : team1IsWinner ? 'loser' : ''} ${pick.picked === pick.team2 ? 'picked' : ''}">
-                    ${getTeamLogo(pick.team2, 35)}
+                    ${getTeamLogo(pick.team2, 45)}
                     <div class="team-abbr">${pick.team2 || ''}</div>
                     <div class="team-points">${pick.score2 ?? '-'}</div>
                 </div>
@@ -694,11 +749,10 @@ function renderResultCard(pick, index) {
             <div class="result-card-footer">
                 <div class="result-pick-info">
                     <div class="result-pick">${pick.pick}</div>
-                    <div class="result-odds">${formatOdds(pick.odds)} | ${pick.units}u</div>
+                    <div class="result-odds">${formatOdds(pick.odds)} | ${pick.units}u ($${wagered})</div>
                 </div>
                 <div class="result-pl">
-                    <div class="result-units">${pick.units}u wagered</div>
-                    <div class="result-profit ${profitClass}">${pick.pl >= 0 ? '+' : ''}${pick.pl.toFixed(2)}u</div>
+                    <div class="result-profit ${profitClass}">${pick.pl >= 0 ? '+' : ''}${pick.pl.toFixed(2)}u (${profitDollars >= 0 ? '+' : ''}$${Math.abs(profitDollars).toFixed(0)})</div>
                 </div>
             </div>
             <!-- Expandable Bet Slip -->
@@ -1109,9 +1163,9 @@ function renderStraightBets() {
                     <div class="bet-number-label">BET</div>
                 </div>
                 <div class="bet-logos">
-                    ${getTeamLogo(bet.away, 28)}
+                    ${getTeamLogo(bet.away, 36)}
                     <span class="vs-text">@</span>
-                    ${getTeamLogo(bet.home, 28)}
+                    ${getTeamLogo(bet.home, 36)}
                 </div>
                 <div class="bet-info">
                     <div class="bet-sport-tag">${getSportEmoji(bet.sport)} ${bet.sport} · ${bet.deadline}</div>
@@ -1544,13 +1598,13 @@ function renderNextGame(game) {
     container.innerHTML = `
         <div class="next-matchup">
             <div class="next-team">
-                ${getTeamLogo(game.away.abbr, 50)}
+                ${getTeamLogo(game.away.abbr, 60)}
                 <div class="next-team-name">${game.away.abbr}</div>
                 <div class="next-team-record">${game.away.name} (${game.away.record})</div>
             </div>
             <div class="next-vs">@</div>
             <div class="next-team">
-                ${getTeamLogo(game.home.abbr, 50)}
+                ${getTeamLogo(game.home.abbr, 60)}
                 <div class="next-team-name">${game.home.abbr}</div>
                 <div class="next-team-record">${game.home.name} (${game.home.record})</div>
             </div>
@@ -1609,13 +1663,13 @@ function renderGamesList(games) {
                 <div class="game-card-body">
                     <div class="game-matchup">
                         <div class="game-team">
-                            ${getTeamLogo(game.away.abbr, 45)}
+                            ${getTeamLogo(game.away.abbr, 55)}
                             <div class="game-team-abbr">${game.away.abbr}</div>
                             <div class="game-team-name">${game.away.name}</div>
                         </div>
                         <div class="game-vs">@</div>
                         <div class="game-team">
-                            ${getTeamLogo(game.home.abbr, 45)}
+                            ${getTeamLogo(game.home.abbr, 55)}
                             <div class="game-team-abbr">${game.home.abbr}</div>
                             <div class="game-team-name">${game.home.name}</div>
                         </div>
