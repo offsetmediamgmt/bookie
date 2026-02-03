@@ -205,15 +205,15 @@ const BOOKIE_DATA = {
             away: "NCST",
             home: "SMU",
             time: "9:00 PM ET",
-            pick: "SMU -4.5",
+            pick: "SMU +2.5",
             odds: -110,
             units: 1,
             conviction: 3,
             factors: [
                 "SMU 17-7, strong at home (10-2)",
-                "NC State 12-12, struggling on road",
-                "SMU 7-3 ATS as home favorite",
-                "Mustangs defense top 30 nationally"
+                "Home underdog value",
+                "Mustangs defense top 30 nationally",
+                "Close game expected"
             ]
         },
         {
@@ -222,14 +222,14 @@ const BOOKIE_DATA = {
             away: "RUT",
             home: "UCLA",
             time: "9:30 PM ET",
-            pick: "UCLA -6.5",
+            pick: "UCLA -12.5",
             odds: -110,
             units: 1.5,
             conviction: 4,
             factors: [
                 "UCLA 16-8, dominant at Pauley (11-2)",
                 "Rutgers 13-11, poor road record (3-7)",
-                "Bruins 8-2 ATS at home this year",
+                "Bruins cover big spreads at home",
                 "Big Ten West Coast trip tough for Rutgers"
             ]
         }
@@ -460,7 +460,7 @@ const BOOKIE_DATA = {
                 { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
                 { pick: "Pistons -6", odds: -110, game: "DEN @ DET" },
                 { pick: "Heat -4.5", odds: -110, game: "MIA @ ATL" },
-                { pick: "SMU -4.5", odds: -110, game: "NCST @ SMU" }
+                { pick: "SMU +2.5", odds: -110, game: "NCST @ SMU" }
             ]
         },
         value: {
@@ -470,7 +470,7 @@ const BOOKIE_DATA = {
             payout: 150,
             legs: [
                 { pick: "76ers +2.5", odds: -110, game: "PHI @ GSW" },
-                { pick: "UCLA -6.5", odds: -110, game: "RUT @ UCLA" },
+                { pick: "UCLA -12.5", odds: -110, game: "RUT @ UCLA" },
                 { pick: "Senators ML", odds: 145, game: "OTT @ CAR" },
                 { pick: "Under 6.5", odds: -115, game: "TOR @ EDM" }
             ]
@@ -503,16 +503,6 @@ const BOOKIE_DATA = {
             units: 1.5,
             conviction: 4,
             reasoning: "Dropped 29 last night, Curry OUT, averaging 28+ last 5 games"
-        },
-        {
-            player: "Trae Young",
-            team: "ATL",
-            game: "Heat @ Hawks",
-            prop: "Over 24.5 Points",
-            odds: -115,
-            units: 1,
-            conviction: 3,
-            reasoning: "Trae averaging 26+ PPG, Heat allow 4th most PPG to opposing PGs"
         },
         {
             player: "Cade Cunningham",
