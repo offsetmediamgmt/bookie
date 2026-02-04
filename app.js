@@ -1683,6 +1683,7 @@ function renderWatchPage() {
     renderNextGame(games[0]);
     renderTimeline(games);
     renderGamesList(games);
+    renderFlightTracker(games);
 }
 
 function renderNextGame(game) {
@@ -2020,6 +2021,9 @@ function renderWatchPageWithLive(games) {
 
     // Render all game cards
     container.innerHTML = sortedGames.map(game => renderWatchGameCard(game)).join('');
+
+    // Render flight tracker
+    renderFlightTracker(games);
 }
 
 // Render LIVE banner at top
@@ -2053,7 +2057,6 @@ function renderWatchGameCard(game) {
                             <span class="live-dot"></span>
                             LIVE
                         </div>
-                        <div class="game-period active">${game.period} · ${game.timeRemaining}</div>
                     ` : isFinal ? `
                         <div class="game-status final">FINAL</div>
                     ` : `
@@ -2068,13 +2071,13 @@ function renderWatchGameCard(game) {
                     <div class="game-team">
                         ${getTeamLogo(game.away.abbr, 55)}
                         <div class="game-team-abbr">${game.away.abbr}</div>
-                        ${isLive ? `<div class="live-score">${game.awayScore || 0}</div>` : `<div class="game-team-name">${game.away.name}</div>`}
+                        <div class="game-team-name">${game.away.name}</div>
                     </div>
-                    <div class="game-vs">${isLive || isFinal ? '-' : '@'}</div>
+                    <div class="game-vs">@</div>
                     <div class="game-team">
                         ${getTeamLogo(game.home.abbr, 55)}
                         <div class="game-team-abbr">${game.home.abbr}</div>
-                        ${isLive ? `<div class="live-score">${game.homeScore || 0}</div>` : `<div class="game-team-name">${game.home.name}</div>`}
+                        <div class="game-team-name">${game.home.name}</div>
                     </div>
                 </div>
 
@@ -2181,6 +2184,214 @@ function calculateStats() {
         winRate: total > 0 ? Math.round((wins / total) * 100) : 0,
         netUnits: netUnits.toFixed(2)
     };
+}
+
+// ═══════════════════════════════════════════════════════════════
+// FLIGHT TRACKER - Travel & Altitude Analysis
+// ═══════════════════════════════════════════════════════════════
+
+// Team locations with city, coordinates (lat, lng), and altitude (feet)
+const TEAM_LOCATIONS = {
+    // NBA
+    'PHI': { city: 'Philadelphia', lat: 39.9012, lng: -75.1720, altitude: 39 },
+    'GSW': { city: 'San Francisco', lat: 37.7680, lng: -122.3879, altitude: 52 },
+    'DET': { city: 'Detroit', lat: 42.3410, lng: -83.0550, altitude: 600 },
+    'DEN': { city: 'Denver', lat: 39.7486, lng: -105.0077, altitude: 5280 },
+    'BOS': { city: 'Boston', lat: 42.3662, lng: -71.0621, altitude: 20 },
+    'DAL': { city: 'Dallas', lat: 32.7905, lng: -96.8103, altitude: 430 },
+    'MIA': { city: 'Miami', lat: 25.7814, lng: -80.1870, altitude: 6 },
+    'ATL': { city: 'Atlanta', lat: 33.7573, lng: -84.3963, altitude: 1050 },
+    'LAL': { city: 'Los Angeles', lat: 34.0430, lng: -118.2673, altitude: 233 },
+    'LAC': { city: 'Los Angeles', lat: 34.0430, lng: -118.2673, altitude: 233 },
+
+    // NHL
+    'OTT': { city: 'Ottawa', lat: 45.2969, lng: -75.9269, altitude: 230 },
+    'CAR': { city: 'Raleigh', lat: 35.8033, lng: -78.7220, altitude: 315 },
+    'BUF': { city: 'Buffalo', lat: 42.8750, lng: -78.8764, altitude: 600 },
+    'TB': { city: 'Tampa', lat: 27.9427, lng: -82.4519, altitude: 48 },
+    'TOR': { city: 'Toronto', lat: 43.6435, lng: -79.3791, altitude: 250 },
+    'EDM': { city: 'Edmonton', lat: 53.5461, lng: -113.4938, altitude: 2192 },
+
+    // NCAAB
+    'DRAKE': { city: 'Des Moines', lat: 41.6061, lng: -93.6047, altitude: 965 },
+    'BEL': { city: 'Nashville', lat: 36.1318, lng: -86.7688, altitude: 440 },
+    'NCST': { city: 'Raleigh', lat: 35.7847, lng: -78.6689, altitude: 315 },
+    'SMU': { city: 'Dallas', lat: 32.8412, lng: -96.7854, altitude: 430 },
+    'RUT': { city: 'New Brunswick', lat: 40.5008, lng: -74.4474, altitude: 50 },
+    'UCLA': { city: 'Los Angeles', lat: 34.0689, lng: -118.4452, altitude: 418 }
+};
+
+// Calculate distance between two points (Haversine formula)
+function calculateDistance(lat1, lng1, lat2, lng2) {
+    const R = 3959; // Earth's radius in miles
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLng/2) * Math.sin(dLng/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return Math.round(R * c);
+}
+
+// Calculate flight time (rough estimate based on distance)
+function calculateFlightTime(distance) {
+    // Average commercial flight speed ~500 mph + 1 hour for takeoff/landing
+    const hours = (distance / 500) + 1;
+    if (hours < 1.5) return '~1.5 hrs';
+    return `~${hours.toFixed(1)} hrs`;
+}
+
+// Get fatigue rating based on distance and altitude change
+function getFatigueRating(distance, altitudeChange) {
+    let score = 0;
+
+    // Distance factor
+    if (distance > 2000) score += 3;
+    else if (distance > 1000) score += 2;
+    else if (distance > 500) score += 1;
+
+    // Altitude factor (going UP to altitude is harder)
+    if (altitudeChange > 4000) score += 3;
+    else if (altitudeChange > 2000) score += 2;
+    else if (altitudeChange > 1000) score += 1;
+
+    // Return rating
+    if (score >= 5) return { level: 'HIGH', color: '#ff4757', icon: '🔴' };
+    if (score >= 3) return { level: 'MODERATE', color: '#ffa502', icon: '🟡' };
+    if (score >= 1) return { level: 'LOW', color: '#2ed573', icon: '🟢' };
+    return { level: 'MINIMAL', color: '#7bed9f', icon: '⚪' };
+}
+
+// Get altitude impact description
+function getAltitudeImpact(homeAltitude, awayAltitude) {
+    const diff = homeAltitude - awayAltitude;
+
+    if (homeAltitude >= 5000) {
+        return {
+            icon: '🏔️',
+            text: 'MILE HIGH',
+            desc: 'Visiting teams often struggle with thin air',
+            advantage: 'HOME',
+            severity: 'high'
+        };
+    }
+    if (homeAltitude >= 2000 && diff > 1500) {
+        return {
+            icon: '⛰️',
+            text: 'ELEVATED',
+            desc: 'Altitude may affect conditioning',
+            advantage: 'HOME',
+            severity: 'moderate'
+        };
+    }
+    if (diff < -3000) {
+        return {
+            icon: '🌊',
+            text: 'SEA LEVEL',
+            desc: 'Coming down from altitude - easier breathing',
+            advantage: 'AWAY',
+            severity: 'low'
+        };
+    }
+    return {
+        icon: '✈️',
+        text: 'NEUTRAL',
+        desc: 'No significant altitude factor',
+        advantage: 'NONE',
+        severity: 'none'
+    };
+}
+
+// Render flight tracker section
+function renderFlightTracker(games) {
+    const container = document.getElementById('flightTrackerList');
+    if (!container) return;
+
+    const travelGames = games.map(game => {
+        const awayLoc = TEAM_LOCATIONS[game.away.abbr];
+        const homeLoc = TEAM_LOCATIONS[game.home.abbr];
+
+        if (!awayLoc || !homeLoc) return null;
+
+        const distance = calculateDistance(awayLoc.lat, awayLoc.lng, homeLoc.lat, homeLoc.lng);
+        const flightTime = calculateFlightTime(distance);
+        const altitudeChange = homeLoc.altitude - awayLoc.altitude;
+        const fatigue = getFatigueRating(distance, Math.abs(altitudeChange));
+        const altitudeImpact = getAltitudeImpact(homeLoc.altitude, awayLoc.altitude);
+
+        return {
+            ...game,
+            distance,
+            flightTime,
+            altitudeChange,
+            fatigue,
+            altitudeImpact,
+            awayCity: awayLoc.city,
+            homeCity: homeLoc.city,
+            awayAltitude: awayLoc.altitude,
+            homeAltitude: homeLoc.altitude
+        };
+    }).filter(Boolean);
+
+    // Sort by fatigue level (highest first)
+    travelGames.sort((a, b) => {
+        const order = { 'HIGH': 0, 'MODERATE': 1, 'LOW': 2, 'MINIMAL': 3 };
+        return order[a.fatigue.level] - order[b.fatigue.level];
+    });
+
+    container.innerHTML = travelGames.map(game => `
+        <div class="flight-card ${game.fatigue.level.toLowerCase()}">
+            <div class="flight-header">
+                <div class="flight-teams">
+                    ${getTeamLogo(game.away.abbr, 36)}
+                    <div class="flight-route">
+                        <div class="flight-cities">${game.awayCity} → ${game.homeCity}</div>
+                        <div class="flight-plane">✈️</div>
+                    </div>
+                    ${getTeamLogo(game.home.abbr, 36)}
+                </div>
+                <div class="flight-fatigue ${game.fatigue.level.toLowerCase()}">
+                    ${game.fatigue.icon} ${game.fatigue.level}
+                </div>
+            </div>
+
+            <div class="flight-stats">
+                <div class="flight-stat">
+                    <div class="flight-stat-value">${game.distance.toLocaleString()}</div>
+                    <div class="flight-stat-label">MILES</div>
+                </div>
+                <div class="flight-stat">
+                    <div class="flight-stat-value">${game.flightTime}</div>
+                    <div class="flight-stat-label">FLIGHT</div>
+                </div>
+                <div class="flight-stat">
+                    <div class="flight-stat-value">${game.altitudeChange > 0 ? '+' : ''}${game.altitudeChange.toLocaleString()}'</div>
+                    <div class="flight-stat-label">ALT Δ</div>
+                </div>
+            </div>
+
+            ${game.altitudeImpact.severity !== 'none' ? `
+                <div class="altitude-alert ${game.altitudeImpact.severity}">
+                    <span class="altitude-icon">${game.altitudeImpact.icon}</span>
+                    <div class="altitude-info">
+                        <div class="altitude-title">${game.altitudeImpact.text}</div>
+                        <div class="altitude-desc">${game.altitudeImpact.desc}</div>
+                    </div>
+                    <div class="altitude-advantage ${game.altitudeImpact.advantage.toLowerCase()}">${game.altitudeImpact.advantage} EDGE</div>
+                </div>
+            ` : ''}
+
+            <div class="flight-visual">
+                <div class="flight-line">
+                    <div class="flight-dot start">${game.awayAltitude.toLocaleString()}'</div>
+                    <div class="flight-path" style="--altitude-change: ${Math.min(Math.abs(game.altitudeChange) / 100, 50)}px">
+                        <div class="plane-icon ${game.altitudeChange > 0 ? 'ascending' : 'descending'}">✈️</div>
+                    </div>
+                    <div class="flight-dot end">${game.homeAltitude.toLocaleString()}'</div>
+                </div>
+            </div>
+        </div>
+    `).join('');
 }
 
 // Initialize live system on page load

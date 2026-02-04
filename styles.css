@@ -4757,3 +4757,323 @@ body {
     bottom: 12px;
     right: 12px;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   FLIGHT TRACKER - Travel Fatigue Analysis
+   ═══════════════════════════════════════════════════════════════ */
+
+.flight-tracker-header {
+    margin-top: 40px;
+}
+
+.flight-tracker-intro {
+    padding: 0 15px;
+    margin-bottom: 20px;
+}
+
+.flight-tracker-intro p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.flight-tracker-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 15px 30px;
+}
+
+/* Flight Card */
+.flight-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.flight-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.flight-card.high {
+    border-color: rgba(255, 71, 87, 0.4);
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.08), transparent);
+}
+
+.flight-card.moderate {
+    border-color: rgba(255, 165, 2, 0.4);
+    background: linear-gradient(135deg, rgba(255, 165, 2, 0.08), transparent);
+}
+
+.flight-card.low {
+    border-color: rgba(46, 213, 115, 0.3);
+}
+
+/* Flight Header */
+.flight-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.flight-teams {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.flight-route {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.flight-cities {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.flight-plane {
+    font-size: 20px;
+    animation: planeFly 3s ease-in-out infinite;
+}
+
+@keyframes planeFly {
+    0%, 100% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+}
+
+.flight-fatigue {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.flight-fatigue.high {
+    background: rgba(255, 71, 87, 0.2);
+    color: #ff4757;
+}
+
+.flight-fatigue.moderate {
+    background: rgba(255, 165, 2, 0.2);
+    color: #ffa502;
+}
+
+.flight-fatigue.low {
+    background: rgba(46, 213, 115, 0.2);
+    color: #2ed573;
+}
+
+.flight-fatigue.minimal {
+    background: rgba(123, 237, 159, 0.15);
+    color: #7bed9f;
+}
+
+/* Flight Stats */
+.flight-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+}
+
+.flight-stat {
+    background: var(--bg-card);
+    padding: 16px;
+    text-align: center;
+}
+
+.flight-stat-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-primary);
+    font-family: 'SF Mono', 'Monaco', monospace;
+}
+
+.flight-stat-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+
+/* Altitude Alert */
+.altitude-alert {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    margin: 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+}
+
+.altitude-alert.high {
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.15), rgba(255, 165, 2, 0.1));
+    border-color: rgba(255, 71, 87, 0.3);
+}
+
+.altitude-alert.moderate {
+    background: linear-gradient(135deg, rgba(255, 165, 2, 0.1), transparent);
+    border-color: rgba(255, 165, 2, 0.3);
+}
+
+.altitude-alert.low {
+    background: linear-gradient(135deg, rgba(46, 213, 115, 0.1), transparent);
+    border-color: rgba(46, 213, 115, 0.3);
+}
+
+.altitude-icon {
+    font-size: 24px;
+}
+
+.altitude-info {
+    flex: 1;
+}
+
+.altitude-title {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.altitude-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.altitude-advantage {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.altitude-advantage.home {
+    background: rgba(0, 230, 118, 0.2);
+    color: var(--accent-green);
+}
+
+.altitude-advantage.away {
+    background: rgba(0, 188, 212, 0.2);
+    color: var(--accent-primary);
+}
+
+.altitude-advantage.none {
+    display: none;
+}
+
+/* Flight Visual - Altitude Path */
+.flight-visual {
+    padding: 16px;
+}
+
+.flight-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.flight-dot {
+    font-size: 10px;
+    color: var(--text-muted);
+    min-width: 50px;
+}
+
+.flight-dot.start {
+    text-align: right;
+}
+
+.flight-dot.end {
+    text-align: left;
+}
+
+.flight-path {
+    flex: 1;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: 2px;
+    position: relative;
+    overflow: visible;
+}
+
+.plane-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    animation: planeMove 4s ease-in-out infinite;
+}
+
+.plane-icon.ascending {
+    transform: translate(-50%, -50%) rotate(-15deg);
+}
+
+.plane-icon.descending {
+    transform: translate(-50%, -50%) rotate(15deg);
+}
+
+@keyframes planeMove {
+    0% { left: 10%; }
+    50% { left: 90%; }
+    100% { left: 10%; }
+}
+
+/* Denver Special Styling - Mile High Alert */
+.flight-card.high .altitude-alert.high {
+    animation: mileHighPulse 3s ease-in-out infinite;
+}
+
+@keyframes mileHighPulse {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(255, 71, 87, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 71, 87, 0.4), 0 0 30px rgba(255, 165, 2, 0.2);
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .flight-stat-value {
+        font-size: 16px;
+    }
+
+    .flight-teams {
+        gap: 8px;
+    }
+
+    .flight-cities {
+        font-size: 9px;
+    }
+
+    .altitude-alert {
+        flex-wrap: wrap;
+    }
+
+    .altitude-advantage {
+        width: 100%;
+        text-align: center;
+        margin-top: 8px;
+    }
+}
