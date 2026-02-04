@@ -62,6 +62,18 @@ const TEAM_LOGOS = {
     'SMU': 'https://a.espncdn.com/i/teamlogos/ncaa/500/2567.png',
     'RUT': 'https://a.espncdn.com/i/teamlogos/ncaa/500/164.png',
     'UCLA': 'https://a.espncdn.com/i/teamlogos/ncaa/500/26.png',
+    'BC': 'https://a.espncdn.com/i/teamlogos/ncaa/500/103.png',
+    'MISS': 'https://a.espncdn.com/i/teamlogos/ncaa/500/145.png',
+
+    // More NBA teams
+    'NYK': 'https://a.espncdn.com/i/teamlogos/nba/500/ny.png',
+    'HOU': 'https://a.espncdn.com/i/teamlogos/nba/500/hou.png',
+    'SAS': 'https://a.espncdn.com/i/teamlogos/nba/500/sa.png',
+    'MIL': 'https://a.espncdn.com/i/teamlogos/nba/500/mil.png',
+    'NOP': 'https://a.espncdn.com/i/teamlogos/nba/500/no.png',
+    'MEM': 'https://a.espncdn.com/i/teamlogos/nba/500/mem.png',
+    'SAC': 'https://a.espncdn.com/i/teamlogos/nba/500/sac.png',
+    'MIN': 'https://a.espncdn.com/i/teamlogos/nba/500/min.png',
 
     // UFC (generic)
     'UFC': 'https://a.espncdn.com/i/teamlogos/leagues/500/ufc.png'
@@ -194,7 +206,7 @@ function updateCountdown() {
     const countdownEl = document.getElementById('countdownTimer');
     if (!countdownEl) return;
 
-    // First game is at 4:00 PM PST (7:00 PM ET) on Feb 3, 2026
+    // First game is at 4:00 PM PST (7:00 PM ET) on Feb 4, 2026
     const now = new Date();
     const firstGame = new Date();
     firstGame.setHours(16, 0, 0, 0); // 4:00 PM local time
@@ -1249,16 +1261,14 @@ function renderStraightBets() {
     if (!container) return;
 
     const bets = [
-        { id: 'straight-1', game: 'DEN @ DET', pick: 'Pistons -6.5', odds: 113, amount: 31, deadline: '4:00 PM', sport: 'NBA', away: 'DEN', home: 'DET' },
-        { id: 'straight-2', game: 'OTT @ CAR', pick: 'Senators ML', odds: 148, amount: 21, deadline: '4:00 PM', sport: 'NHL', away: 'OTT', home: 'CAR' },
-        { id: 'straight-3', game: 'MIA @ ATL', pick: 'Heat -4.5', odds: 138, amount: 21, deadline: '4:30 PM', sport: 'NBA', away: 'MIA', home: 'ATL' },
-        { id: 'straight-4', game: 'BUF @ TB', pick: 'Sabres ML', odds: 160, amount: 21, deadline: '4:30 PM', sport: 'NHL', away: 'BUF', home: 'TB' },
-        { id: 'straight-5', game: 'BOS @ DAL', pick: 'Mavericks +8.5', odds: -137, amount: 21, deadline: '5:00 PM', sport: 'NBA', away: 'BOS', home: 'DAL' },
-        { id: 'straight-6', game: 'DRAKE @ BEL', pick: 'Belmont -8.5', odds: -143, amount: 21, deadline: '6:00 PM', sport: 'NCAAB', away: 'DRAKE', home: 'BEL' },
-        { id: 'straight-7', game: 'TOR @ EDM', pick: 'UNDER 6.5', odds: 120, amount: 21, deadline: '5:30 PM', sport: 'NHL', away: 'TOR', home: 'EDM' },
-        { id: 'straight-8', game: 'NCST @ SMU', pick: 'SMU +2.5', odds: -133, amount: 21, deadline: '6:00 PM', sport: 'NCAAB', away: 'NCST', home: 'SMU' },
-        { id: 'straight-9', game: 'RUT @ UCLA', pick: 'UCLA -12.5', odds: -138, amount: 31, deadline: '6:30 PM', sport: 'NCAAB', away: 'RUT', home: 'UCLA' },
-        { id: 'straight-10', game: 'PHI @ GSW', pick: '76ers +2.5', odds: -102, amount: 41, deadline: '7:00 PM', sport: 'NBA', away: 'PHI', home: 'GSW' },
+        { id: 'straight-1', game: 'DEN @ NYK', pick: 'Knicks -5.5', odds: -110, amount: 27, deadline: '4:00 PM', sport: 'NBA', away: 'DEN', home: 'NYK' },
+        { id: 'straight-2', game: 'BOS @ HOU', pick: 'Celtics -2.5', odds: -110, amount: 27, deadline: '5:00 PM', sport: 'NBA', away: 'BOS', home: 'HOU' },
+        { id: 'straight-3', game: 'OKC @ SAS', pick: 'Thunder -6.5', odds: -110, amount: 35, deadline: '6:30 PM', sport: 'NBA', away: 'OKC', home: 'SAS' },
+        { id: 'straight-4', game: 'CLE @ LAC', pick: 'Cavaliers -3', odds: -110, amount: 18, deadline: '7:30 PM', sport: 'NBA', away: 'CLE', home: 'LAC' },
+        { id: 'straight-5', game: 'NOP @ MIL', pick: 'Bucks -8.5', odds: -110, amount: 18, deadline: '5:00 PM', sport: 'NBA', away: 'NOP', home: 'MIL' },
+        { id: 'straight-6', game: 'MEM @ SAC', pick: 'Kings -2.5', odds: -110, amount: 18, deadline: '7:00 PM', sport: 'NBA', away: 'MEM', home: 'SAC' },
+        { id: 'straight-7', game: 'BC @ DUKE', pick: 'Duke -18.5', odds: -110, amount: 18, deadline: '4:00 PM', sport: 'NCAAB', away: 'BC', home: 'DUKE' },
+        { id: 'straight-8', game: 'MISS @ TENN', pick: 'Tennessee -8.5', odds: -110, amount: 27, deadline: '4:00 PM', sport: 'NCAAB', away: 'MISS', home: 'TENN' },
     ];
 
     container.innerHTML = bets.map((bet, index) => {
@@ -1326,43 +1336,42 @@ function renderParlayBets() {
             id: 'parlay-1',
             name: 'CHALKY PARLAY',
             emoji: '🔒',
-            odds: '+1657',
-            amount: 25,
-            toWin: 446,
+            odds: '+595',
+            amount: 20,
+            toWin: 139,
             legs: [
-                { pick: 'Pistons -6.5', away: 'DEN', home: 'DET' },
-                { pick: 'Heat -4.5', away: 'MIA', home: 'ATL' },
-                { pick: 'SMU +2.5', away: 'NCST', home: 'SMU' },
-                { pick: '76ers +2.5', away: 'PHI', home: 'GSW' }
+                { pick: 'Knicks -5.5', away: 'DEN', home: 'NYK' },
+                { pick: 'Celtics -2.5', away: 'BOS', home: 'HOU' },
+                { pick: 'Thunder -6.5', away: 'OKC', home: 'SAS' }
             ]
         },
         {
             id: 'parlay-2',
             name: 'VALUE PARLAY',
             emoji: '💰',
-            odds: '+1831',
-            amount: 20,
-            toWin: 392,
+            odds: '+1200',
+            amount: 15,
+            toWin: 195,
             legs: [
-                { pick: 'Senators ML', away: 'OTT', home: 'CAR' },
-                { pick: 'UNDER 6.5', away: 'TOR', home: 'EDM' },
-                { pick: 'UCLA -12.5', away: 'RUT', home: 'UCLA' },
-                { pick: '76ers +2.5', away: 'PHI', home: 'GSW' }
+                { pick: 'Knicks -5.5', away: 'DEN', home: 'NYK' },
+                { pick: 'Celtics -2.5', away: 'BOS', home: 'HOU' },
+                { pick: 'Thunder -6.5', away: 'OKC', home: 'SAS' },
+                { pick: 'Duke -18.5', away: 'BC', home: 'DUKE' }
             ]
         },
         {
             id: 'parlay-3',
             name: 'MOON SHOT',
             emoji: '🚀',
-            odds: '+4306',
+            odds: '+2500',
             amount: 10,
-            toWin: 448,
+            toWin: 260,
             legs: [
-                { pick: 'Senators ML', away: 'OTT', home: 'CAR' },
-                { pick: 'Sabres ML', away: 'BUF', home: 'TB' },
-                { pick: 'Mavericks +8.5', away: 'BOS', home: 'DAL' },
-                { pick: 'Belmont -8.5', away: 'DRAKE', home: 'BEL' },
-                { pick: '76ers ML', away: 'PHI', home: 'GSW' }
+                { pick: 'Knicks -5.5', away: 'DEN', home: 'NYK' },
+                { pick: 'Thunder -6.5', away: 'OKC', home: 'SAS' },
+                { pick: 'Cavaliers -3', away: 'CLE', home: 'LAC' },
+                { pick: 'Duke -18.5', away: 'BC', home: 'DUKE' },
+                { pick: 'Tennessee -8.5', away: 'MISS', home: 'TENN' }
             ]
         }
     ];
@@ -1413,11 +1422,11 @@ function renderPropBets() {
     if (!container) return;
 
     const props = [
-        { id: 'prop-1', player: 'Tyrese Maxey', teamAbbr: 'PHI', prop: 'Over 26.5 Points', odds: -185, amount: 31, game: 'PHI @ GSW' },
-        { id: 'prop-3', player: 'Cade Cunningham', teamAbbr: 'DET', prop: 'Over 8.5 Assists', odds: -257, amount: 21, game: 'DEN @ DET' },
-        { id: 'prop-4', player: 'Nikola Jokic', teamAbbr: 'DEN', prop: 'Over 9.5 Assists', odds: 131, amount: 21, game: 'DEN @ DET' },
-        { id: 'prop-5', player: 'Jaylen Brown', teamAbbr: 'BOS', prop: 'Over 28.5 Points', odds: -145, amount: 21, game: 'BOS @ DAL' },
-        { id: 'prop-6', player: 'Cooper Flagg', teamAbbr: 'DAL', prop: 'Over 18.5 Points', odds: -250, amount: 21, game: 'BOS @ DAL' },
+        { id: 'prop-1', player: 'Jalen Brunson', teamAbbr: 'NYK', prop: 'Over 26.5 Points', odds: -115, amount: 27, game: 'DEN @ NYK' },
+        { id: 'prop-2', player: 'Shai Gilgeous-Alexander', teamAbbr: 'OKC', prop: 'Over 30.5 Points', odds: -120, amount: 27, game: 'OKC @ SAS' },
+        { id: 'prop-3', player: 'Jaylen Brown', teamAbbr: 'BOS', prop: 'Over 27.5 Points', odds: -110, amount: 18, game: 'BOS @ HOU' },
+        { id: 'prop-4', player: 'Giannis Antetokounmpo', teamAbbr: 'MIL', prop: 'Over 31.5 Points', odds: -115, amount: 18, game: 'NOP @ MIL' },
+        { id: 'prop-5', player: "De'Aaron Fox", teamAbbr: 'SAC', prop: 'Over 25.5 Points', odds: -110, amount: 18, game: 'MEM @ SAC' },
     ];
 
     container.innerHTML = props.map(prop => {
@@ -1518,9 +1527,9 @@ function resetAllBets() {
 function markAllPlaced() {
     const allIds = [
         'straight-1', 'straight-2', 'straight-3', 'straight-4', 'straight-5',
-        'straight-6', 'straight-7', 'straight-8', 'straight-9', 'straight-10',
+        'straight-6', 'straight-7', 'straight-8',
         'parlay-1', 'parlay-2', 'parlay-3',
-        'prop-1', 'prop-3', 'prop-4', 'prop-5', 'prop-6'
+        'prop-1', 'prop-2', 'prop-3', 'prop-4', 'prop-5'
     ];
     allIds.forEach(id => betStatus[id] = 'placed');
     saveBetStatus();
@@ -1531,18 +1540,20 @@ function markAllPlaced() {
 // WATCH PAGE - Game Schedule
 // ═══════════════════════════════════════════════════════════════
 function renderWatchPage() {
+    // February 4, 2026 - No NHL (Olympic break)
     const games = [
         {
             id: 1,
             time: '4:00 PM',
             timePST: '4:00 PM PST',
             timeET: '7:00 PM ET',
-            sport: 'NHL',
-            away: { abbr: 'OTT', name: 'Senators', record: '27-21-7' },
-            home: { abbr: 'CAR', name: 'Hurricanes', record: '34-15-4' },
-            channel: 'ESPN+',
+            sport: 'NBA',
+            away: { abbr: 'DEN', name: 'Nuggets', record: '33-18' },
+            home: { abbr: 'NYK', name: 'Knicks', record: '34-17' },
+            channel: 'TNT',
             picks: [
-                { pick: 'Senators ML', odds: '+145', amount: 20 }
+                { pick: 'Knicks -5.5', odds: '-110', amount: 27 },
+                { pick: 'Brunson O27.5 pts', odds: '-115', amount: 18 }
             ],
             status: 'upcoming'
         },
@@ -1551,42 +1562,42 @@ function renderWatchPage() {
             time: '4:00 PM',
             timePST: '4:00 PM PST',
             timeET: '7:00 PM ET',
-            sport: 'NBA',
-            away: { abbr: 'DEN', name: 'Nuggets', record: '33-17' },
-            home: { abbr: 'DET', name: 'Pistons', record: '36-12' },
-            channel: 'League Pass',
+            sport: 'NCAAB',
+            away: { abbr: 'BC', name: 'Boston College', record: '14-10' },
+            home: { abbr: 'MISS', name: 'Ole Miss', record: '14-10' },
+            channel: 'SECN',
             picks: [
-                { pick: 'Pistons -6', odds: '-110', amount: 30 },
-                { pick: 'Cade O7.5 ast', odds: '-120', amount: 20 },
-                { pick: 'Jokic Triple Dub', odds: '+180', amount: 10 }
+                { pick: 'Boston College -2.5', odds: '-110', amount: 18 }
             ],
             status: 'upcoming'
         },
         {
             id: 3,
-            time: '4:30 PM',
-            timePST: '4:30 PM PST',
-            timeET: '7:30 PM ET',
+            time: '5:00 PM',
+            timePST: '5:00 PM PST',
+            timeET: '8:00 PM ET',
             sport: 'NBA',
-            away: { abbr: 'MIA', name: 'Heat', record: '27-24' },
-            home: { abbr: 'ATL', name: 'Hawks', record: '24-27' },
-            channel: 'League Pass',
+            away: { abbr: 'BOS', name: 'Celtics', record: '32-18' },
+            home: { abbr: 'HOU', name: 'Rockets', record: '33-16' },
+            channel: 'ESPN',
             picks: [
-                { pick: 'Heat -4.5', odds: '-110', amount: 20 }
+                { pick: 'Celtics -2.5', odds: '-110', amount: 27 },
+                { pick: 'J. Brown O26.5 pts', odds: '-110', amount: 18 }
             ],
             status: 'upcoming'
         },
         {
             id: 4,
-            time: '4:30 PM',
-            timePST: '4:30 PM PST',
-            timeET: '7:30 PM ET',
-            sport: 'NHL',
-            away: { abbr: 'BUF', name: 'Sabres', record: '32-18-5' },
-            home: { abbr: 'TB', name: 'Lightning', record: '35-14-4' },
-            channel: 'ESPN+',
+            time: '5:00 PM',
+            timePST: '5:00 PM PST',
+            timeET: '8:00 PM ET',
+            sport: 'NBA',
+            away: { abbr: 'MIL', name: 'Bucks', record: '28-22' },
+            home: { abbr: 'NOP', name: 'Pelicans', record: '12-39' },
+            channel: 'League Pass',
             picks: [
-                { pick: 'Sabres ML', odds: '+195', amount: 20 }
+                { pick: 'Bucks -3.5', odds: '-110', amount: 18 },
+                { pick: 'Giannis O31.5 pts', odds: '-115', amount: 18 }
             ],
             status: 'upcoming'
         },
@@ -1596,13 +1607,11 @@ function renderWatchPage() {
             timePST: '5:00 PM PST',
             timeET: '8:00 PM ET',
             sport: 'NBA',
-            away: { abbr: 'BOS', name: 'Celtics', record: '31-18' },
-            home: { abbr: 'DAL', name: 'Mavericks', record: '19-30' },
-            channel: 'TNT',
+            away: { abbr: 'LAL', name: 'Lakers', record: '28-22' },
+            home: { abbr: 'MEM', name: 'Grizzlies', record: '31-19' },
+            channel: 'League Pass',
             picks: [
-                { pick: 'Mavericks +8', odds: '-110', amount: 20 },
-                { pick: 'Jaylen Brown O28.5', odds: '-110', amount: 20 },
-                { pick: 'Cooper Flagg O18.5', odds: '-115', amount: 20 }
+                { pick: 'UNDER 232.5', odds: '-110', amount: 18 }
             ],
             status: 'upcoming'
         },
@@ -1611,70 +1620,28 @@ function renderWatchPage() {
             time: '5:00 PM',
             timePST: '5:00 PM PST',
             timeET: '8:00 PM ET',
-            sport: 'NCAAB',
-            away: { abbr: 'DRAKE', name: 'Drake', record: '12-10' },
-            home: { abbr: 'BEL', name: 'Belmont', record: '19-3' },
-            channel: 'ESPN+',
+            sport: 'NBA',
+            away: { abbr: 'SAC', name: 'Kings', record: '26-25' },
+            home: { abbr: 'MIN', name: 'Timberwolves', record: '28-23' },
+            channel: 'League Pass',
             picks: [
-                { pick: 'Belmont -7.5', odds: '-110', amount: 20 }
+                { pick: 'Kings +5.5', odds: '-110', amount: 18 },
+                { pick: 'Fox O25.5 pts', odds: '-115', amount: 18 }
             ],
             status: 'upcoming'
         },
         {
             id: 7,
-            time: '6:00 PM',
-            timePST: '6:00 PM PST',
-            timeET: '9:00 PM ET',
-            sport: 'NHL',
-            away: { abbr: 'TOR', name: 'Maple Leafs', record: '32-17-4' },
-            home: { abbr: 'EDM', name: 'Oilers', record: '30-18-5' },
-            channel: 'ESPN',
-            picks: [
-                { pick: 'UNDER 6.5', odds: '-115', amount: 20 }
-            ],
-            status: 'upcoming'
-        },
-        {
-            id: 8,
-            time: '6:00 PM',
-            timePST: '6:00 PM PST',
-            timeET: '9:00 PM ET',
-            sport: 'NCAAB',
-            away: { abbr: 'NCST', name: 'NC State', record: '12-12' },
-            home: { abbr: 'SMU', name: 'SMU', record: '17-7' },
-            channel: 'ESPN2',
-            picks: [
-                { pick: 'SMU +2.5', odds: '-110', amount: 20 }
-            ],
-            status: 'upcoming'
-        },
-        {
-            id: 9,
-            time: '6:30 PM',
-            timePST: '6:30 PM PST',
-            timeET: '9:30 PM ET',
-            sport: 'NCAAB',
-            away: { abbr: 'RUT', name: 'Rutgers', record: '13-11' },
-            home: { abbr: 'UCLA', name: 'UCLA', record: '16-8' },
-            channel: 'BTN',
-            picks: [
-                { pick: 'UCLA -12.5', odds: '-110', amount: 30 }
-            ],
-            status: 'upcoming'
-        },
-        {
-            id: 10,
-            time: '7:00 PM',
-            timePST: '7:00 PM PST',
-            timeET: '10:00 PM ET',
+            time: '5:30 PM',
+            timePST: '5:30 PM PST',
+            timeET: '8:30 PM ET',
             sport: 'NBA',
-            away: { abbr: 'PHI', name: '76ers', record: '28-21' },
-            home: { abbr: 'GSW', name: 'Warriors', record: '27-23' },
+            away: { abbr: 'OKC', name: 'Thunder', record: '40-9' },
+            home: { abbr: 'SAS', name: 'Spurs', record: '20-30' },
             channel: 'NBA TV',
             picks: [
-                { pick: '76ers +2.5', odds: '-110', amount: 40 },
-                { pick: 'Maxey O26.5 pts', odds: '-115', amount: 30 },
-                { pick: 'Embiid O11.5 reb', odds: '-110', amount: 20 }
+                { pick: 'Thunder -9.5', odds: '-110', amount: 27 },
+                { pick: 'SGA O30.5 pts', odds: '-115', amount: 18 }
             ],
             status: 'upcoming'
         }
@@ -1984,17 +1951,15 @@ function formatTimeRemaining(minutes) {
 
 // Get games data (would be from BOOKIE_DATA in production)
 function getGamesData() {
+    // February 4, 2026 - No NHL (Olympic break)
     return [
-        { id: 1, time: '4:00 PM', sport: 'NHL', away: { abbr: 'OTT', name: 'Senators' }, home: { abbr: 'CAR', name: 'Hurricanes' }, channel: 'ESPN+', picks: [{ pick: 'Senators ML', odds: '+148', amount: 21 }] },
-        { id: 2, time: '4:00 PM', sport: 'NBA', away: { abbr: 'DEN', name: 'Nuggets' }, home: { abbr: 'DET', name: 'Pistons' }, channel: 'League Pass', picks: [{ pick: 'Pistons -6.5', odds: '+113', amount: 31 }] },
-        { id: 3, time: '4:30 PM', sport: 'NBA', away: { abbr: 'MIA', name: 'Heat' }, home: { abbr: 'ATL', name: 'Hawks' }, channel: 'League Pass', picks: [{ pick: 'Heat -4.5', odds: '+138', amount: 21 }] },
-        { id: 4, time: '4:30 PM', sport: 'NHL', away: { abbr: 'BUF', name: 'Sabres' }, home: { abbr: 'TB', name: 'Lightning' }, channel: 'ESPN+', picks: [{ pick: 'Sabres ML', odds: '+160', amount: 21 }] },
-        { id: 5, time: '5:00 PM', sport: 'NBA', away: { abbr: 'BOS', name: 'Celtics' }, home: { abbr: 'DAL', name: 'Mavericks' }, channel: 'TNT', picks: [{ pick: 'Mavs +8.5', odds: '-137', amount: 21 }] },
-        { id: 6, time: '5:00 PM', sport: 'NCAAB', away: { abbr: 'DRAKE', name: 'Drake' }, home: { abbr: 'BEL', name: 'Belmont' }, channel: 'ESPN+', picks: [{ pick: 'Belmont -8.5', odds: '-143', amount: 21 }] },
-        { id: 7, time: '6:00 PM', sport: 'NHL', away: { abbr: 'TOR', name: 'Maple Leafs' }, home: { abbr: 'EDM', name: 'Oilers' }, channel: 'ESPN', picks: [{ pick: 'UNDER 6.5', odds: '+120', amount: 21 }] },
-        { id: 8, time: '6:00 PM', sport: 'NCAAB', away: { abbr: 'NCST', name: 'NC State' }, home: { abbr: 'SMU', name: 'SMU' }, channel: 'ESPN2', picks: [{ pick: 'SMU +2.5', odds: '-133', amount: 21 }] },
-        { id: 9, time: '6:30 PM', sport: 'NCAAB', away: { abbr: 'RUT', name: 'Rutgers' }, home: { abbr: 'UCLA', name: 'UCLA' }, channel: 'BTN', picks: [{ pick: 'UCLA -12.5', odds: '-138', amount: 31 }] },
-        { id: 10, time: '7:00 PM', sport: 'NBA', away: { abbr: 'PHI', name: '76ers' }, home: { abbr: 'GSW', name: 'Warriors' }, channel: 'NBA TV', picks: [{ pick: '76ers +2.5', odds: '-102', amount: 41 }] }
+        { id: 1, time: '4:00 PM', sport: 'NBA', away: { abbr: 'DEN', name: 'Nuggets' }, home: { abbr: 'NYK', name: 'Knicks' }, channel: 'TNT', picks: [{ pick: 'Knicks -5.5', odds: '-110', amount: 27 }] },
+        { id: 2, time: '4:00 PM', sport: 'NCAAB', away: { abbr: 'BC', name: 'Boston College' }, home: { abbr: 'MISS', name: 'Ole Miss' }, channel: 'SECN', picks: [{ pick: 'BC -2.5', odds: '-110', amount: 18 }] },
+        { id: 3, time: '5:00 PM', sport: 'NBA', away: { abbr: 'BOS', name: 'Celtics' }, home: { abbr: 'HOU', name: 'Rockets' }, channel: 'ESPN', picks: [{ pick: 'Celtics -2.5', odds: '-110', amount: 27 }] },
+        { id: 4, time: '5:00 PM', sport: 'NBA', away: { abbr: 'MIL', name: 'Bucks' }, home: { abbr: 'NOP', name: 'Pelicans' }, channel: 'League Pass', picks: [{ pick: 'Bucks -3.5', odds: '-110', amount: 18 }] },
+        { id: 5, time: '5:00 PM', sport: 'NBA', away: { abbr: 'LAL', name: 'Lakers' }, home: { abbr: 'MEM', name: 'Grizzlies' }, channel: 'League Pass', picks: [{ pick: 'UNDER 232.5', odds: '-110', amount: 18 }] },
+        { id: 6, time: '5:00 PM', sport: 'NBA', away: { abbr: 'SAC', name: 'Kings' }, home: { abbr: 'MIN', name: 'Timberwolves' }, channel: 'League Pass', picks: [{ pick: 'Kings +5.5', odds: '-110', amount: 18 }] },
+        { id: 7, time: '5:30 PM', sport: 'NBA', away: { abbr: 'OKC', name: 'Thunder' }, home: { abbr: 'SAS', name: 'Spurs' }, channel: 'NBA TV', picks: [{ pick: 'Thunder -9.5', odds: '-110', amount: 27 }] }
     ];
 }
 
@@ -2203,6 +2168,15 @@ const TEAM_LOCATIONS = {
     'ATL': { city: 'Atlanta', lat: 33.7573, lng: -84.3963, altitude: 1050 },
     'LAL': { city: 'Los Angeles', lat: 34.0430, lng: -118.2673, altitude: 233 },
     'LAC': { city: 'Los Angeles', lat: 34.0430, lng: -118.2673, altitude: 233 },
+    'NYK': { city: 'New York', lat: 40.7505, lng: -73.9934, altitude: 33 },
+    'HOU': { city: 'Houston', lat: 29.7508, lng: -95.3621, altitude: 43 },
+    'SAS': { city: 'San Antonio', lat: 29.4270, lng: -98.4375, altitude: 650 },
+    'MIL': { city: 'Milwaukee', lat: 43.0436, lng: -87.9169, altitude: 617 },
+    'NOP': { city: 'New Orleans', lat: 29.9490, lng: -90.0821, altitude: 3 },
+    'MEM': { city: 'Memphis', lat: 35.1382, lng: -90.0505, altitude: 337 },
+    'SAC': { city: 'Sacramento', lat: 38.5802, lng: -121.4997, altitude: 30 },
+    'MIN': { city: 'Minneapolis', lat: 44.9795, lng: -93.2760, altitude: 830 },
+    'OKC': { city: 'Oklahoma City', lat: 35.4634, lng: -97.5151, altitude: 1201 },
 
     // NHL
     'OTT': { city: 'Ottawa', lat: 45.2969, lng: -75.9269, altitude: 230 },
@@ -2218,7 +2192,9 @@ const TEAM_LOCATIONS = {
     'NCST': { city: 'Raleigh', lat: 35.7847, lng: -78.6689, altitude: 315 },
     'SMU': { city: 'Dallas', lat: 32.8412, lng: -96.7854, altitude: 430 },
     'RUT': { city: 'New Brunswick', lat: 40.5008, lng: -74.4474, altitude: 50 },
-    'UCLA': { city: 'Los Angeles', lat: 34.0689, lng: -118.4452, altitude: 418 }
+    'UCLA': { city: 'Los Angeles', lat: 34.0689, lng: -118.4452, altitude: 418 },
+    'BC': { city: 'Boston', lat: 42.3355, lng: -71.1685, altitude: 72 },
+    'MISS': { city: 'Oxford', lat: 34.3665, lng: -89.5186, altitude: 394 }
 };
 
 // Calculate distance between two points (Haversine formula)

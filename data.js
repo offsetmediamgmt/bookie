@@ -5,38 +5,59 @@
 
 const BOOKIE_DATA = {
     // ═══════════════════════════════════════════════════════════════
-    // BANKROLL CONFIG - Starting Fresh Feb 3, 2026
+    // BANKROLL CONFIG - Updated Feb 4, 2026
     // ═══════════════════════════════════════════════════════════════
     bankroll: {
         starting: 1000,
-        current: 1004,
-        unitPercent: 2, // 1 unit = $20 (2% of $1000)
-        maxPlayPercent: 5, // MAX plays = $50 (5%)
+        current: 885,
+        unitPercent: 2, // 1 unit = $18 (2% of $885)
+        maxPlayPercent: 5, // MAX plays = $44 (5%)
     },
 
-    // Unit tiers based on conviction (1u = $20)
+    // Unit tiers based on conviction (1u = $18)
     unitTiers: [
-        { locks: 1, units: 0.5, label: "Lean", percent: 1, amount: 10 },
-        { locks: 2, units: 1, label: "Standard", percent: 2, amount: 20 },
-        { locks: 3, units: 1.5, label: "Confident", percent: 3, amount: 30 },
-        { locks: 4, units: 2, label: "Strong", percent: 4, amount: 40 },
-        { locks: 5, units: 2.5, label: "MAX PLAY", percent: 5, amount: 50 },
+        { locks: 1, units: 0.5, label: "Lean", percent: 1, amount: 9 },
+        { locks: 2, units: 1, label: "Standard", percent: 2, amount: 18 },
+        { locks: 3, units: 1.5, label: "Confident", percent: 3, amount: 27 },
+        { locks: 4, units: 2, label: "Strong", percent: 4, amount: 35 },
+        { locks: 5, units: 2.5, label: "MAX PLAY", percent: 5, amount: 44 },
     ],
 
     // Growth projection (conservative 8u/month at 55% win rate)
     growthProjection: [
-        { month: "Feb", bankroll: 1000, gain: 0, note: "Starting" },
-        { month: "Mar", bankroll: 1160, gain: 160, note: "+8u" },
-        { month: "Apr", bankroll: 1345, gain: 185, note: "+8u" },
-        { month: "May", bankroll: 1560, gain: 215, note: "+8u" },
-        { month: "Jun", bankroll: 1810, gain: 250, note: "+8u" },
-        { month: "Jul", bankroll: 2100, gain: 290, note: "+8u" },
+        { month: "Feb", bankroll: 885, gain: -115, note: "Current" },
+        { month: "Mar", bankroll: 1030, gain: 145, note: "+8u" },
+        { month: "Apr", bankroll: 1195, gain: 165, note: "+8u" },
+        { month: "May", bankroll: 1385, gain: 190, note: "+8u" },
+        { month: "Jun", bankroll: 1605, gain: 220, note: "+8u" },
+        { month: "Jul", bankroll: 1860, gain: 255, note: "+8u" },
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // TRACK RECORD - Fresh Start Feb 2, 2026
+    // TRACK RECORD - Feb 2-3, 2026
     // ═══════════════════════════════════════════════════════════════
     history: [
+        // February 3, 2026 - DAY 2 (4-6 straights, 3-2 props)
+        { date: "Feb 3", sport: "NBA", pick: "76ers +2.5", odds: -102, units: 2, result: "win", pl: 1.96,
+          team1: "PHI", score1: 113, team2: "GSW", score2: 94, picked: "PHI" },
+        { date: "Feb 3", sport: "NCAAB", pick: "UCLA -12.5", odds: -138, units: 1.5, result: "win", pl: 1.09,
+          team1: "UCLA", score1: 98, team2: "RUT", score2: 66, picked: "UCLA" },
+        { date: "Feb 3", sport: "NCAAB", pick: "SMU +2.5", odds: -133, units: 1, result: "win", pl: 0.75,
+          team1: "NCST", score1: 84, team2: "SMU", score2: 83, picked: "SMU" },
+        { date: "Feb 3", sport: "NCAAB", pick: "Belmont -8.5", odds: -143, units: 1, result: "win", pl: 0.70,
+          team1: "BEL", score1: 103, team2: "DRAKE", score2: 90, picked: "BEL" },
+        { date: "Feb 3", sport: "NBA", pick: "Pistons -6.5", odds: 113, units: 1.5, result: "loss", pl: -1.50,
+          team1: "DET", score1: 124, team2: "DEN", score2: 121, picked: "DET" },
+        { date: "Feb 3", sport: "NBA", pick: "Heat -4.5", odds: 138, units: 1, result: "loss", pl: -1.00,
+          team1: "ATL", score1: 127, team2: "MIA", score2: 115, picked: "MIA" },
+        { date: "Feb 3", sport: "NBA", pick: "Mavs +8.5", odds: -137, units: 1, result: "loss", pl: -1.00,
+          team1: "BOS", score1: 110, team2: "DAL", score2: 100, picked: "DAL" },
+        { date: "Feb 3", sport: "NHL", pick: "Senators ML", odds: 148, units: 1, result: "loss", pl: -1.00,
+          team1: "CAR", score1: 4, team2: "OTT", score2: 3, picked: "OTT" },
+        { date: "Feb 3", sport: "NHL", pick: "Sabres ML", odds: 160, units: 1, result: "loss", pl: -1.00,
+          team1: "TB", score1: 4, team2: "BUF", score2: 3, picked: "BUF" },
+        { date: "Feb 3", sport: "NHL", pick: "UNDER 6.5", odds: 120, units: 1, result: "loss", pl: -1.00,
+          team1: "TOR", score1: 5, team2: "EDM", score2: 2, picked: "UNDER" },
         // February 2, 2026 - DAY 1 (4-4)
         { date: "Feb 2", sport: "NHL", pick: "Senators ML", odds: -118, units: 1, result: "win", pl: 0.85,
           team1: "OTT", score1: 3, team2: "PIT", score2: 2, picked: "OTT" },
@@ -57,186 +78,152 @@ const BOOKIE_DATA = {
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // TODAY'S PICKS - February 3, 2026 (FULL SLATE)
+    // TODAY'S PICKS - February 4, 2026
     // ═══════════════════════════════════════════════════════════════
     todaysPicks: [
         // NBA PICKS
         {
             id: 1,
             sport: "NBA",
-            away: "PHI",
-            home: "GSW",
-            time: "10:00 PM ET",
-            pick: "76ers +2.5",
-            odds: -102,
-            units: 2,
+            away: "DEN",
+            home: "NYK",
+            time: "7:00 PM ET",
+            pick: "Knicks -5.5",
+            odds: -110,
+            units: 1.5,
             conviction: 4,
             factors: [
-                "STEPH CURRY OUT (knee) — massive",
-                "Jimmy Butler season-ending injury hurt GSW",
-                "76ers on 4-game win streak, beat LAC by 15",
-                "Maxey/Embiid vs depleted Warriors"
+                "Knicks 30-20, strong at MSG (17-7)",
+                "Nuggets on back-to-back after loss in Detroit",
+                "Jokic had 24/15 last night, may be tired",
+                "MSG is a tough place to play"
             ]
         },
         {
             id: 2,
             sport: "NBA",
-            away: "DEN",
-            home: "DET",
-            time: "7:00 PM ET",
-            pick: "Pistons -6.5",
-            odds: 113,
+            away: "BOS",
+            home: "HOU",
+            time: "8:00 PM ET",
+            pick: "Celtics -2.5",
+            odds: -110,
             units: 1.5,
-            conviction: 3,
+            conviction: 4,
             factors: [
-                "Pistons 36-12, best record in East",
-                "Detroit 7-1 ATS last 8 February games",
-                "Pistons 20-5 at home with elite D",
-                "Nuggets 0-5 SU last 5 in Detroit"
+                "Celtics coming off win, 31-18 record",
+                "Boston just acquired Nikola Vucevic",
+                "Jaylen Brown on fire (33 pts last night)",
+                "Celtics 18-7 on the road"
             ]
         },
         {
             id: 3,
             sport: "NBA",
-            away: "BOS",
-            home: "DAL",
-            time: "8:00 PM ET",
-            pick: "Mavericks +8.5",
-            odds: -137,
-            units: 1,
-            conviction: 3,
+            away: "OKC",
+            home: "SAS",
+            time: "9:30 PM ET",
+            pick: "Thunder -6.5",
+            odds: -110,
+            units: 2,
+            conviction: 4,
             factors: [
-                "Mavs 7-3 ATS last 10 games",
-                "8.5 points is too many for home team",
-                "Cooper Flagg averaging 19.8 PPG",
-                "Home dog value at AAC"
+                "OKC 38-11, best record in NBA",
+                "Thunder 20-4 on the road this season",
+                "Spurs struggling without Wemby rest games",
+                "SGA averaging 32 PPG"
             ]
         },
         {
             id: 4,
             sport: "NBA",
-            away: "MIA",
-            home: "ATL",
-            time: "7:30 PM ET",
-            pick: "Heat -4.5",
-            odds: 138,
+            away: "CLE",
+            home: "LAC",
+            time: "10:30 PM ET",
+            pick: "Cavaliers -3",
+            odds: -110,
             units: 1,
             conviction: 3,
             factors: [
-                "Heat 27-24, Hawks 24-27",
-                "Miami 29-21-1 ATS this season",
-                "Heat 10-9 ATS when favored by 4.5+",
-                "Butler replacement stepping up"
+                "Cavs 30-20, playing well",
+                "Clippers without Kawhi Leonard",
+                "Cleveland 14-11 on road",
+                "Donovan Mitchell averaging 25+ PPG"
             ]
         },
-        // NHL PICKS
         {
             id: 5,
-            sport: "NHL",
-            away: "BUF",
-            home: "TB",
-            time: "7:30 PM ET",
-            pick: "Sabres ML",
-            odds: 160,
+            sport: "NBA",
+            away: "NOP",
+            home: "MIL",
+            time: "8:00 PM ET",
+            pick: "Bucks -8.5",
+            odds: -110,
             units: 1,
-            conviction: 2,
+            conviction: 3,
             factors: [
-                "VALUE PLAY — 3.3% model edge",
-                "Sabres 32-18-5, solid road team",
-                "Buffalo 5th best offense (3.4 GPG)",
-                "Good underdog price"
+                "Pelicans decimated by injuries",
+                "Giannis dominating at home",
+                "Bucks need wins for playoff positioning",
+                "NO has worst record in West"
             ]
         },
         {
             id: 6,
-            sport: "NHL",
-            away: "OTT",
-            home: "CAR",
-            time: "7:00 PM ET",
-            pick: "Senators ML",
-            odds: 148,
-            units: 1,
-            conviction: 2,
-            factors: [
-                "Senators on 4-game win streak",
-                "Outscored opponents 19-6 in last 4",
-                "Giroux coming off GWG",
-                "Riding the hot hand"
-            ]
-        },
-        {
-            id: 7,
-            sport: "NHL",
-            away: "TOR",
-            home: "EDM",
-            time: "8:30 PM ET",
-            pick: "UNDER 6.5",
-            odds: 120,
+            sport: "NBA",
+            away: "MEM",
+            home: "SAC",
+            time: "10:00 PM ET",
+            pick: "Kings -2.5",
+            odds: -110,
             units: 1,
             conviction: 3,
             factors: [
-                "Both teams tightening up before Olympic break",
-                "Sharp money on Under",
-                "Woll/Skinner both playing well",
-                "Low-scoring recent meetings"
+                "Kings strong at home (16-8)",
+                "De'Aaron Fox playing elite basketball",
+                "Ja Morant questionable with injury",
+                "Sacramento needs playoff push"
             ]
         },
+        // NO NHL - OLYMPIC BREAK STARTS
         // NCAAB PICKS
+        {
+            id: 7,
+            sport: "NCAAB",
+            away: "BC",
+            home: "DUKE",
+            time: "7:00 PM ET",
+            pick: "Duke -18.5",
+            odds: -110,
+            units: 1,
+            conviction: 3,
+            factors: [
+                "Duke 20-4, dominant at Cameron Indoor",
+                "Cameron Boozer averaging 18 PPG",
+                "BC 10-13, struggling in ACC",
+                "Duke 19-0 straight up in ACC"
+            ]
+        },
         {
             id: 8,
             sport: "NCAAB",
-            away: "DRAKE",
-            home: "BEL",
-            time: "9:00 PM ET",
-            pick: "Belmont -8.5",
-            odds: -143,
-            units: 1,
-            conviction: 3,
-            factors: [
-                "Belmont 19-3 at home",
-                "Drake 12-10, struggling on road",
-                "Belmont 8-2 ATS last 10",
-                "Home court advantage huge"
-            ]
-        },
-        {
-            id: 9,
-            sport: "NCAAB",
-            away: "NCST",
-            home: "SMU",
-            time: "9:00 PM ET",
-            pick: "SMU +2.5",
-            odds: -133,
-            units: 1,
-            conviction: 3,
-            factors: [
-                "SMU 17-7, strong at home (10-2)",
-                "Home underdog value",
-                "Mustangs defense top 30 nationally",
-                "Close game expected"
-            ]
-        },
-        {
-            id: 10,
-            sport: "NCAAB",
-            away: "RUT",
-            home: "UCLA",
-            time: "9:30 PM ET",
-            pick: "UCLA -12.5",
-            odds: -138,
+            away: "MISS",
+            home: "TENN",
+            time: "7:00 PM ET",
+            pick: "Tennessee -8.5",
+            odds: -110,
             units: 1.5,
             conviction: 4,
             factors: [
-                "UCLA 16-8, dominant at Pauley (11-2)",
-                "Rutgers 13-11, poor road record (3-7)",
-                "Bruins cover big spreads at home",
-                "Big Ten West Coast trip tough for Rutgers"
+                "Tennessee #25, strong at home",
+                "Vols 16-8 overall, 8-3 at home",
+                "Ole Miss 13-10, struggles on road",
+                "SEC home court advantage"
             ]
         }
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // WEEKLY PICKS - February 3-8, 2026 (SUPER BOWL WEEK)
+    // WEEKLY PICKS - February 4-8, 2026 (SUPER BOWL WEEK)
     // ═══════════════════════════════════════════════════════════════
     weeklyPicks: [
         // SUPER BOWL LX - FEBRUARY 8
@@ -246,7 +233,7 @@ const BOOKIE_DATA = {
             away: "NE",
             home: "SEA",
             time: "Feb 8, 6:30 PM ET",
-            venue: "SUPER BOWL LX — Levi's Stadium",
+            venue: "SUPER BOWL LX - Levi's Stadium",
             pick: "Patriots +4.5",
             odds: -110,
             units: 2.5,
@@ -254,7 +241,7 @@ const BOOKIE_DATA = {
             factors: [
                 "Underdogs 5-0 ATS in last 5 Super Bowls",
                 "Mike Vrabel: 3x SB champ as player",
-                "Drake Maye Year 2 — 4,000 yds, 35 TDs",
+                "Drake Maye Year 2 - 4,000 yds, 35 TDs",
                 "Sharp money on Pats, public on Seattle"
             ]
         },
@@ -264,7 +251,7 @@ const BOOKIE_DATA = {
             away: "NE",
             home: "SEA",
             time: "Feb 8, 6:30 PM ET",
-            venue: "SUPER BOWL LX — Total",
+            venue: "SUPER BOWL LX - Total",
             pick: "UNDER 45.5",
             odds: -108,
             units: 1.5,
@@ -276,60 +263,6 @@ const BOOKIE_DATA = {
                 "Big game = tight game"
             ]
         },
-        {
-            id: 103,
-            sport: "NFL",
-            away: "NE",
-            home: "SEA",
-            time: "Feb 8, 6:30 PM ET",
-            venue: "SUPER BOWL LX — Prop",
-            pick: "K. Walker U73.5 rush yds",
-            odds: -115,
-            units: 1,
-            conviction: 4,
-            factors: [
-                "95% of bets on Under at BetMGM",
-                "Line dropped from 78.5 opener",
-                "Patriots elite run defense",
-                "Most-bet prop of Super Bowl"
-            ]
-        },
-        {
-            id: 104,
-            sport: "NFL",
-            away: "NE",
-            home: "SEA",
-            time: "Feb 8, 6:30 PM ET",
-            venue: "SUPER BOWL LX — Prop",
-            pick: "Drake Maye O32.5 rush yds",
-            odds: -115,
-            units: 1,
-            conviction: 3,
-            factors: [
-                "Maye is mobile, scrambles well",
-                "Seattle D susceptible to QB runs",
-                "32.5 is low for dual-threat QB",
-                "Should hit this easily"
-            ]
-        },
-        {
-            id: 105,
-            sport: "NFL",
-            away: "NE",
-            home: "SEA",
-            time: "Feb 8, 6:30 PM ET",
-            venue: "SUPER BOWL LX — Prop",
-            pick: "Kayshon Boutte TD",
-            odds: 310,
-            units: 0.5,
-            conviction: 2,
-            factors: [
-                "Boutte had 6 TDs in regular season",
-                "+310 is great value",
-                "Red zone threat",
-                "Low risk, high reward"
-            ]
-        },
         // UFC FIGHT NIGHT 266 - FEBRUARY 7
         {
             id: 106,
@@ -337,7 +270,7 @@ const BOOKIE_DATA = {
             away: "UFC",
             home: "UFC",
             time: "Feb 7, 9:00 PM ET",
-            venue: "UFC Fight Night 266 — Co-Main",
+            venue: "UFC Fight Night 266 - Co-Main",
             pick: "Kyoji Horiguchi ML",
             odds: -180,
             units: 2,
@@ -355,7 +288,7 @@ const BOOKIE_DATA = {
             away: "UFC",
             home: "UFC",
             time: "Feb 7, 9:00 PM ET",
-            venue: "UFC Fight Night 266 — Main Event",
+            venue: "UFC Fight Night 266 - Main Event",
             pick: "Mario Bautista ML",
             odds: 135,
             units: 1.5,
@@ -367,23 +300,23 @@ const BOOKIE_DATA = {
                 "Better all-around fighter"
             ]
         },
-        // NCAAW - BIG GAMES
+        // DUKE vs UNC - FEBRUARY 7
         {
             id: 108,
-            sport: "NCAAW",
-            away: "UCONN",
-            home: "DEPAUL",
-            time: "Feb 4, 8:00 PM ET",
-            venue: "Big East Women's",
-            pick: "UConn -24.5",
+            sport: "NCAAB",
+            away: "DUKE",
+            home: "UNC",
+            time: "Feb 7, 6:30 PM ET",
+            venue: "Dean Smith Center - ESPN",
+            pick: "Duke -2.5",
             odds: -110,
-            units: 1,
-            conviction: 3,
+            units: 2,
+            conviction: 4,
             factors: [
-                "UConn 38-game win streak",
-                "Sarah Strong dominating",
-                "DePaul overmatched",
-                "Huskies cover big spreads"
+                "Duke 19-0 in ACC play",
+                "Cameron Boozer vs Caleb Wilson showdown",
+                "Duke 20-4 overall, best team in country",
+                "UNC 18-6 but Duke too good"
             ]
         },
         // NBA SATURDAY
@@ -408,24 +341,24 @@ const BOOKIE_DATA = {
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // MAX PLAYS - Highest Conviction (5% bankroll = $50)
+    // MAX PLAYS - Highest Conviction (5% bankroll = $44)
     // ═══════════════════════════════════════════════════════════════
     maxPlays: [
         {
             id: 201,
             sport: "NBA",
-            away: "PHI",
-            home: "GSW",
-            time: "Feb 3, 10:00 PM ET",
-            pick: "76ers +2.5",
+            away: "OKC",
+            home: "SAS",
+            time: "Feb 4, 9:30 PM ET",
+            pick: "Thunder -6.5",
             odds: -110,
             units: 2.5,
             conviction: 5,
             factors: [
-                "STEPH CURRY OUT (knee) — game changer",
-                "Jimmy Butler season-ending injury gutted GSW",
-                "76ers on 4-game win streak, beat LAC by 15",
-                "Maxey/Embiid combo vs depleted Warriors"
+                "OKC best team in NBA at 38-11",
+                "Thunder 20-4 on road - elite",
+                "Spurs inconsistent without Wemby",
+                "SGA is MVP frontrunner"
             ]
         },
         {
@@ -448,101 +381,100 @@ const BOOKIE_DATA = {
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // PARLAYS - February 3, 2026 (AGGRESSIVE)
+    // PARLAYS - February 4, 2026
     // ═══════════════════════════════════════════════════════════════
     parlays: {
         safe: {
-            name: "🔒 CHALKY PARLAY",
-            odds: "+1657",
-            wager: 25,
-            payout: 446,
+            name: "CHALKY PARLAY",
+            odds: "+595",
+            wager: 20,
+            payout: 139,
             legs: [
-                { pick: "Pistons -6.5", odds: 113, game: "DEN @ DET" },
-                { pick: "Heat -4.5", odds: 138, game: "MIA @ ATL" },
-                { pick: "SMU +2.5", odds: -133, game: "NCST @ SMU" },
-                { pick: "76ers +2.5", odds: -102, game: "PHI @ GSW" }
+                { pick: "Knicks -5.5", odds: -110, game: "DEN @ NYK" },
+                { pick: "Celtics -2.5", odds: -110, game: "BOS @ HOU" },
+                { pick: "Thunder -6.5", odds: -110, game: "OKC @ SAS" }
             ]
         },
         value: {
-            name: "💰 VALUE PARLAY",
-            odds: "+1831",
-            wager: 20,
-            payout: 392,
+            name: "VALUE PARLAY",
+            odds: "+1200",
+            wager: 15,
+            payout: 195,
             legs: [
-                { pick: "Senators ML", odds: 148, game: "OTT @ CAR" },
-                { pick: "Under 6.5", odds: 120, game: "TOR @ EDM" },
-                { pick: "UCLA -12.5", odds: -138, game: "RUT @ UCLA" },
-                { pick: "76ers +2.5", odds: -102, game: "PHI @ GSW" }
+                { pick: "Knicks -5.5", odds: -110, game: "DEN @ NYK" },
+                { pick: "Celtics -2.5", odds: -110, game: "BOS @ HOU" },
+                { pick: "Thunder -6.5", odds: -110, game: "OKC @ SAS" },
+                { pick: "Duke -18.5", odds: -110, game: "BC @ DUKE" }
             ]
         },
         risky: {
-            name: "🎰 MOON SHOT",
-            odds: "+4306",
+            name: "MOON SHOT",
+            odds: "+2500",
             wager: 10,
-            payout: 448,
+            payout: 260,
             legs: [
-                { pick: "Senators ML", odds: 148, game: "OTT @ CAR" },
-                { pick: "Sabres ML", odds: 160, game: "BUF @ TB" },
-                { pick: "Mavericks +8.5", odds: -137, game: "BOS @ DAL" },
-                { pick: "Belmont -8.5", odds: -143, game: "DRAKE @ BEL" },
-                { pick: "76ers ML", odds: 131, game: "PHI @ GSW" }
+                { pick: "Knicks -5.5", odds: -110, game: "DEN @ NYK" },
+                { pick: "Thunder -6.5", odds: -110, game: "OKC @ SAS" },
+                { pick: "Cavaliers -3", odds: -110, game: "CLE @ LAC" },
+                { pick: "Duke -18.5", odds: -110, game: "BC @ DUKE" },
+                { pick: "Tennessee -8.5", odds: -110, game: "MISS @ TENN" }
             ]
         }
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // PLAYER PROPS - February 3, 2026
+    // PLAYER PROPS - February 4, 2026
     // ═══════════════════════════════════════════════════════════════
     playerProps: [
         {
-            player: "Tyrese Maxey",
-            team: "PHI",
-            game: "76ers @ Warriors",
+            player: "Jalen Brunson",
+            team: "NYK",
+            game: "Nuggets @ Knicks",
             prop: "Over 26.5 Points",
-            odds: -185,
+            odds: -115,
             units: 1.5,
             conviction: 4,
-            reasoning: "Dropped 29 last night, Curry OUT, averaging 28+ last 5 games"
+            reasoning: "Brunson averaging 28+ at MSG, Nuggets tired on B2B"
         },
         {
-            player: "Cade Cunningham",
-            team: "DET",
-            game: "Nuggets @ Pistons",
-            prop: "Over 8.5 Assists",
-            odds: -257,
-            units: 1,
-            conviction: 3,
-            reasoning: "Averaging 9.2 assists at home, Pistons move ball well"
-        },
-        {
-            player: "Nikola Jokic",
-            team: "DEN",
-            game: "Nuggets @ Pistons",
-            prop: "Over 9.5 Assists",
-            odds: 131,
-            units: 1,
-            conviction: 3,
-            reasoning: "Averaging 10.2 APG, Pistons give up 27 APG to opponents"
+            player: "Shai Gilgeous-Alexander",
+            team: "OKC",
+            game: "Thunder @ Spurs",
+            prop: "Over 30.5 Points",
+            odds: -120,
+            units: 1.5,
+            conviction: 4,
+            reasoning: "SGA averaging 32 PPG, MVP candidate, dominates weak teams"
         },
         {
             player: "Jaylen Brown",
             team: "BOS",
-            game: "Celtics @ Mavericks",
-            prop: "Over 28.5 Points",
-            odds: -145,
+            game: "Celtics @ Rockets",
+            prop: "Over 27.5 Points",
+            odds: -110,
             units: 1,
             conviction: 3,
-            reasoning: "Averaging 29.4 PPG, no Tatum = more usage"
+            reasoning: "Coming off 33-point game, on fire right now"
         },
         {
-            player: "Cooper Flagg",
-            team: "DAL",
-            game: "Celtics @ Mavericks",
-            prop: "Over 18.5 Points",
-            odds: -250,
+            player: "Giannis Antetokounmpo",
+            team: "MIL",
+            game: "Pelicans @ Bucks",
+            prop: "Over 31.5 Points",
+            odds: -115,
             units: 1,
             conviction: 3,
-            reasoning: "Rookie of Year candidate, home game showcase"
+            reasoning: "Giannis dominates weak defenses, Pelicans depleted"
+        },
+        {
+            player: "De'Aaron Fox",
+            team: "SAC",
+            game: "Grizzlies @ Kings",
+            prop: "Over 25.5 Points",
+            odds: -110,
+            units: 1,
+            conviction: 3,
+            reasoning: "Fox averaging 27 at home, Ja likely out"
         }
     ],
 
@@ -550,34 +482,29 @@ const BOOKIE_DATA = {
     // NBA SCHEDULE - February 2026
     // ═══════════════════════════════════════════════════════════════
     nbaSchedule: [
-        // Feb 2
-        { date: "Feb 2", games: [
-            { away: "Indiana Pacers", awayRecord: "13-36", home: "Houston Rockets", homeRecord: "30-17", time: "7:00 PM", spread: "HOU -5.5", ou: "228.5" },
-            { away: "OKC Thunder", awayRecord: "38-11", home: "Denver Nuggets", homeRecord: "32-16", time: "9:00 PM", spread: "OKC -6.5", ou: "225" },
-        ]},
-        // Feb 3
-        { date: "Feb 3", games: [
-            { away: "Boston Celtics", awayRecord: "29-18", home: "Miami Heat", homeRecord: "24-25", time: "7:30 PM", spread: "BOS -4", ou: "216" },
-            { away: "Detroit Pistons", awayRecord: "35-12", home: "Cleveland Cavaliers", homeRecord: "30-20", time: "7:00 PM", spread: "DET -1.5", ou: "223" },
-        ]},
         // Feb 4
         { date: "Feb 4", games: [
-            { away: "LA Lakers", awayRecord: "29-19", home: "San Antonio Spurs", homeRecord: "33-16", time: "8:00 PM", spread: "SAS -2", ou: "231" },
-            { away: "Phoenix Suns", awayRecord: "29-19", home: "Golden State Warriors", homeRecord: "25-24", time: "10:00 PM", spread: "PHX -3", ou: "227" },
+            { away: "Denver Nuggets", awayRecord: "33-18", home: "New York Knicks", homeRecord: "30-20", time: "7:00 PM", spread: "NYK -5.5", ou: "224" },
+            { away: "Minnesota Timberwolves", awayRecord: "28-21", home: "Toronto Raptors", homeRecord: "23-27", time: "7:30 PM", spread: "MIN -4", ou: "218" },
+            { away: "Boston Celtics", awayRecord: "31-18", home: "Houston Rockets", homeRecord: "30-18", time: "8:00 PM", spread: "BOS -2.5", ou: "226" },
+            { away: "New Orleans Pelicans", awayRecord: "12-38", home: "Milwaukee Bucks", homeRecord: "28-22", time: "8:00 PM", spread: "MIL -8.5", ou: "221" },
+            { away: "Oklahoma City Thunder", awayRecord: "38-11", home: "San Antonio Spurs", homeRecord: "33-17", time: "9:30 PM", spread: "OKC -6.5", ou: "225" },
+            { away: "Memphis Grizzlies", awayRecord: "29-20", home: "Sacramento Kings", homeRecord: "27-22", time: "10:00 PM", spread: "SAC -2.5", ou: "232" },
+            { away: "Cleveland Cavaliers", awayRecord: "30-20", home: "LA Clippers", homeRecord: "25-25", time: "10:30 PM", spread: "CLE -3", ou: "219" },
         ]},
         // Feb 5 - TRADE DEADLINE
         { date: "Feb 5", games: [
             { away: "Brooklyn Nets", awayRecord: "13-35", home: "OKC Thunder", homeRecord: "38-11", time: "8:00 PM", spread: "OKC -15", ou: "218" },
-            { away: "Toronto Raptors", awayRecord: "30-20", home: "New York Knicks", homeRecord: "30-20", time: "7:30 PM", spread: "NYK -2.5", ou: "221" },
+            { away: "Toronto Raptors", awayRecord: "23-27", home: "New York Knicks", homeRecord: "30-20", time: "7:30 PM", spread: "NYK -6", ou: "221" },
         ]},
         // Feb 7 - ABC Saturday
         { date: "Feb 7", games: [
-            { away: "Houston Rockets", awayRecord: "30-17", home: "OKC Thunder", homeRecord: "38-11", time: "3:30 PM", spread: "OKC -5", ou: "219", tv: "ABC" },
-            { away: "Golden State Warriors", awayRecord: "25-24", home: "LA Lakers", homeRecord: "29-19", time: "8:30 PM", spread: "LAL -3", ou: "229", tv: "ABC" },
+            { away: "Houston Rockets", awayRecord: "30-18", home: "OKC Thunder", homeRecord: "38-11", time: "3:30 PM", spread: "OKC -5", ou: "219", tv: "ABC" },
+            { away: "LA Lakers", awayRecord: "29-19", home: "Golden State Warriors", homeRecord: "27-24", time: "8:30 PM", spread: "LAL -3", ou: "229", tv: "ABC" },
         ]},
         // Feb 8 - Pre-All Star
         { date: "Feb 8", games: [
-            { away: "New York Knicks", awayRecord: "30-20", home: "Boston Celtics", homeRecord: "29-18", time: "12:30 PM", spread: "BOS -3", ou: "218", tv: "ABC" },
+            { away: "New York Knicks", awayRecord: "30-20", home: "Boston Celtics", homeRecord: "31-18", time: "12:30 PM", spread: "BOS -3", ou: "218", tv: "ABC" },
         ]},
     ],
 
@@ -594,7 +521,6 @@ const BOOKIE_DATA = {
                 { weight: "Bantamweight", fighter1: "Mario Bautista (16-3)", fighter2: "Vinicius Oliveira (23-3)", type: "Main Event" },
                 { weight: "Flyweight", fighter1: "Amir Albazi (17-2)", fighter2: "Kyoji Horiguchi (35-5)", type: "Co-Main" },
                 { weight: "Heavyweight", fighter1: "Jailton Almeida (22-4)", fighter2: "Rizvan Kuniev", type: "Main Card" },
-                { weight: "Bantamweight", fighter1: "Said Nurmagomedov", fighter2: "Javid Basharat", type: "Prelim" },
             ]
         },
         {
@@ -605,39 +531,15 @@ const BOOKIE_DATA = {
             fights: [
                 { weight: "Middleweight", fighter1: "Sean Strickland (29-7)", fighter2: "Anthony Hernandez (15-2)", type: "Main Event" },
                 { weight: "Heavyweight", fighter1: "Serghei Spivac", fighter2: "Ante Delija", type: "Co-Main" },
-                { weight: "Welterweight", fighter1: "Geoff Neal", fighter2: "Kevin Holland", type: "Main Card" },
             ]
         },
-        {
-            date: "Feb 28",
-            event: "UFC Fight Night 268",
-            location: "Mexico City",
-            mainEvent: "Brandon Moreno vs Asu Almabayev",
-            fights: [
-                { weight: "Flyweight", fighter1: "Brandon Moreno (23-9-2)", fighter2: "Asu Almabayev (23-3)", type: "Main Event" },
-                { weight: "Bantamweight", fighter1: "Marlon Vera", fighter2: "David Martinez", type: "Main Card" },
-                { weight: "Lightweight", fighter1: "Daniel Zellhuber", fighter2: "King Green", type: "Main Card" },
-            ]
-        }
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // NHL SCHEDULE - February 2026 (Pre-Olympic Break)
+    // NHL SCHEDULE - February 2026 (OLYMPIC BREAK)
     // ═══════════════════════════════════════════════════════════════
     nhlSchedule: [
-        { date: "Feb 1", games: [
-            { away: "Los Angeles Kings", home: "Carolina Hurricanes", time: "3:00 PM" },
-            { away: "Boston Bruins", home: "Tampa Bay Lightning", time: "6:30 PM", note: "STADIUM SERIES" },
-            { away: "Vegas Golden Knights", home: "Anaheim Ducks", time: "9:30 PM" },
-        ]},
-        { date: "Feb 2", games: [
-            { away: "Buffalo Sabres", home: "Florida Panthers", time: "7:00 PM" },
-            { away: "Ottawa Senators", home: "Pittsburgh Penguins", time: "7:00 PM" },
-            { away: "NY Islanders", home: "Washington Capitals", time: "7:00 PM" },
-            { away: "Montreal Canadiens", home: "Minnesota Wild", time: "7:30 PM" },
-        ]},
-        { date: "Feb 3-5", note: "Final games before Olympic Break" },
-        { date: "Feb 6-24", note: "NHL PAUSED FOR WINTER OLYMPICS (Milan, Italy)" },
+        { date: "Feb 4-24", note: "NHL PAUSED FOR WINTER OLYMPICS (Milan, Italy)" },
         { date: "Feb 25", note: "NHL Season Resumes" },
     ],
 
@@ -645,19 +547,12 @@ const BOOKIE_DATA = {
     // SOCCER SCHEDULE - February 2026
     // ═══════════════════════════════════════════════════════════════
     soccerSchedule: [
-        { date: "Feb 1", league: "EPL", games: [
-            { home: "Tottenham", away: "Man City", time: "11:30 AM ET" },
-            { home: "Man Utd", away: "Fulham", time: "9:00 AM ET" },
-        ]},
         { date: "Feb 7", league: "EPL", games: [
             { home: "Man Utd", away: "Tottenham", time: "7:30 AM ET", tv: "TNT" },
             { home: "Newcastle", away: "Brentford", time: "12:30 PM ET" },
         ]},
         { date: "Feb 8", league: "EPL", games: [
             { home: "Liverpool", away: "Man City", time: "11:30 AM ET", note: "TITLE DECIDER" },
-        ]},
-        { date: "Feb 22", league: "EPL", games: [
-            { home: "Tottenham", away: "Arsenal", time: "11:30 AM ET", note: "NORTH LONDON DERBY" },
         ]},
     ],
 
