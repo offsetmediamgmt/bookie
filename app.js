@@ -844,65 +844,58 @@ function renderResultCard(pick, index) {
     const wagered = pick.units * 20;
     const profitDollars = pick.pl * 20;
 
+    // Result stamp text
+    const resultStampText = isWin ? 'WIN!' : isLoss ? 'LOSS' : 'PUSH';
+
     return `
-        <div class="result-card ${pick.result}" data-index="${index}" onclick="toggleResultCard(${index})">
-            <div class="result-card-header">
-                <div class="result-date">
-                    ${pick.date}, 2026
-                </div>
-                <div class="result-sport">
-                    ${getSportEmoji(pick.sport)} ${pick.sport}
-                    <span class="expand-indicator">▼</span>
-                </div>
-            </div>
-            <div class="scoreboard">
-                <div class="team-score ${team1IsWinner ? 'winner' : team2IsWinner ? 'loser' : ''} ${pick.picked === pick.team1 ? 'picked' : ''}">
-                    ${getTeamLogo(pick.team1, 45)}
-                    <div class="team-abbr">${pick.team1 || ''}</div>
-                    <div class="team-points">${pick.score1 ?? '-'}</div>
-                </div>
-                <div class="score-divider">
-                    <div class="result-circle ${pick.result}">${circleIcon}</div>
-                    <div class="score-divider-text">FINAL</div>
-                </div>
-                <div class="team-score ${team2IsWinner ? 'winner' : team1IsWinner ? 'loser' : ''} ${pick.picked === pick.team2 ? 'picked' : ''}">
-                    ${getTeamLogo(pick.team2, 45)}
-                    <div class="team-abbr">${pick.team2 || ''}</div>
-                    <div class="team-points">${pick.score2 ?? '-'}</div>
-                </div>
-            </div>
-            <div class="result-card-footer">
-                <div class="result-pick-info">
-                    <div class="result-pick">${pick.pick}</div>
-                    <div class="result-odds">${formatOdds(pick.odds)} | ${pick.units}u ($${wagered})</div>
-                </div>
-                <div class="result-pl">
-                    <div class="result-profit ${profitClass}">${pick.pl >= 0 ? '+' : ''}${pick.pl.toFixed(2)}u (${profitDollars >= 0 ? '+' : ''}$${Math.abs(profitDollars).toFixed(0)})</div>
-                </div>
-            </div>
-            <!-- Expandable Bet Slip -->
-            <div class="result-bet-slip">
-                <div class="bet-slip-inner">
-                    <div class="bet-slip-header">
-                        <div class="bet-slip-title">BET SLIP</div>
-                        <div class="bet-slip-status ${pick.result}">${pick.result.toUpperCase()}</div>
+        <div class="flip-card result-card ${pick.result}" data-index="${index}" onclick="flipCard(this)">
+            <div class="flip-card-inner">
+                <!-- FRONT SIDE - Bet Info -->
+                <div class="flip-card-front">
+                    <div class="result-card-header">
+                        <div class="result-date">
+                            ${pick.date}, 2026
+                        </div>
+                        <div class="result-sport">
+                            ${getSportEmoji(pick.sport)} ${pick.sport}
+                        </div>
                     </div>
-                    <div class="bet-slip-details">
-                        <div class="slip-detail">
-                            <div class="slip-detail-value">${formatOdds(pick.odds)}</div>
-                            <div class="slip-detail-label">Odds</div>
+                    <div class="scoreboard">
+                        <div class="team-score ${team1IsWinner ? 'winner' : team2IsWinner ? 'loser' : ''} ${pick.picked === pick.team1 ? 'picked' : ''}">
+                            ${getTeamLogo(pick.team1, 45)}
+                            <div class="team-abbr">${pick.team1 || ''}</div>
+                            <div class="team-points">${pick.score1 ?? '-'}</div>
                         </div>
-                        <div class="slip-detail">
-                            <div class="slip-detail-value risk">$${wagered}</div>
-                            <div class="slip-detail-label">Wagered</div>
+                        <div class="score-divider">
+                            <div class="result-circle ${pick.result}">${circleIcon}</div>
+                            <div class="score-divider-text">FINAL</div>
                         </div>
-                        <div class="slip-detail">
-                            <div class="slip-detail-value ${profitClass === 'positive' ? 'win' : ''}">${profitDollars >= 0 ? '+' : ''}$${Math.abs(profitDollars).toFixed(0)}</div>
-                            <div class="slip-detail-label">Profit/Loss</div>
+                        <div class="team-score ${team2IsWinner ? 'winner' : team1IsWinner ? 'loser' : ''} ${pick.picked === pick.team2 ? 'picked' : ''}">
+                            ${getTeamLogo(pick.team2, 45)}
+                            <div class="team-abbr">${pick.team2 || ''}</div>
+                            <div class="team-points">${pick.score2 ?? '-'}</div>
                         </div>
-                        <div class="slip-detail">
-                            <div class="slip-detail-value">${pick.units}u</div>
-                            <div class="slip-detail-label">Units</div>
+                    </div>
+                    <div class="result-card-footer">
+                        <div class="result-pick-info">
+                            <div class="result-pick">${pick.pick}</div>
+                            <div class="result-odds">${formatOdds(pick.odds)} | ${pick.units}u ($${wagered})</div>
+                        </div>
+                    </div>
+                    <button class="reveal-btn">TAP TO REVEAL</button>
+                </div>
+
+                <!-- BACK SIDE - Result Reveal -->
+                <div class="flip-card-back ${pick.result}">
+                    <div class="result-stamp ${pick.result}">${resultStampText}</div>
+                    <div class="result-details">
+                        <div class="result-score">${pick.score1 ?? 0} - ${pick.score2 ?? 0}</div>
+                        <div class="result-profit ${profitClass}">
+                            ${profitDollars >= 0 ? '+' : ''}$${Math.abs(profitDollars).toFixed(0)}
+                            <span style="font-size: 14px; opacity: 0.8;">(${pick.pl >= 0 ? '+' : ''}${pick.pl.toFixed(2)}u)</span>
+                        </div>
+                        <div style="margin-top: 15px; font-size: 12px; color: var(--text-muted);">
+                            ${pick.pick} · ${formatOdds(pick.odds)}
                         </div>
                     </div>
                 </div>
@@ -1790,6 +1783,415 @@ function renderGamesList(games) {
     }).join('');
 }
 
+// ═══════════════════════════════════════════════════════════════
+// ADVANCED ANIMATIONS - Card Flips & Confetti
+// ═══════════════════════════════════════════════════════════════
+
+// Flip card to reveal result
+function flipCard(cardElement) {
+    if (cardElement.classList.contains('flipped')) {
+        cardElement.classList.remove('flipped');
+    } else {
+        cardElement.classList.add('flipped');
+
+        // Check if it's a win and trigger confetti
+        const backSide = cardElement.querySelector('.flip-card-back');
+        if (backSide && backSide.classList.contains('win')) {
+            setTimeout(() => triggerConfetti(), 400);
+        }
+    }
+}
+
+// Confetti explosion effect
+function triggerConfetti() {
+    const container = document.createElement('div');
+    container.className = 'confetti-container';
+    document.body.appendChild(container);
+
+    const colors = ['#00e676', '#ffd700', '#00bcd4', '#ff6b6b', '#a78bfa', '#ff9800'];
+    const shapes = ['square', 'circle', 'triangle'];
+
+    // Create 100 confetti pieces
+    for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+
+        // Random position
+        confetti.style.left = Math.random() * 100 + '%';
+
+        // Random color
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.backgroundColor = color;
+
+        // Random shape
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+        if (shape === 'circle') {
+            confetti.style.borderRadius = '50%';
+        } else if (shape === 'triangle') {
+            confetti.style.width = '0';
+            confetti.style.height = '0';
+            confetti.style.backgroundColor = 'transparent';
+            confetti.style.borderLeft = '5px solid transparent';
+            confetti.style.borderRight = '5px solid transparent';
+            confetti.style.borderBottom = `10px solid ${color}`;
+        }
+
+        // Random size
+        const size = Math.random() * 8 + 5;
+        confetti.style.width = size + 'px';
+        confetti.style.height = size + 'px';
+
+        // Random animation delay and duration
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+
+        container.appendChild(confetti);
+    }
+
+    // Add sparkles around the card
+    triggerSparkles();
+
+    // Remove after animation
+    setTimeout(() => container.remove(), 4000);
+}
+
+// Sparkle effect
+function triggerSparkles() {
+    const sparkleCount = 20;
+
+    for (let i = 0; i < sparkleCount; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+
+        // Position around center of screen
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const angle = (i / sparkleCount) * Math.PI * 2;
+        const radius = 100 + Math.random() * 100;
+
+        sparkle.style.left = (centerX + Math.cos(angle) * radius) + 'px';
+        sparkle.style.top = (centerY + Math.sin(angle) * radius) + 'px';
+        sparkle.style.animationDelay = Math.random() * 0.3 + 's';
+
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => sparkle.remove(), 1500);
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LIVE GAME SYSTEM - Real-time Updates
+// ═══════════════════════════════════════════════════════════════
+
+// Game state management
+let liveGameState = {};
+
+// Initialize live game checking
+function initLiveGameSystem() {
+    // Check for live games every 30 seconds
+    checkLiveGames();
+    setInterval(checkLiveGames, 30000);
+}
+
+// Simulate checking for live games (in production, this would be an API call)
+function checkLiveGames() {
+    const now = new Date();
+    const games = getGamesData();
+
+    games.forEach(game => {
+        const gameTime = parseGameTime(game.time);
+        const gameDuration = game.sport === 'NHL' ? 180 :
+                            game.sport === 'NBA' ? 130 :
+                            game.sport === 'NCAAB' ? 120 : 150; // minutes
+
+        const gameStart = new Date(now);
+        gameStart.setHours(gameTime.hours, gameTime.minutes, 0, 0);
+
+        const gameEnd = new Date(gameStart);
+        gameEnd.setMinutes(gameEnd.getMinutes() + gameDuration);
+
+        // Determine game status
+        if (now >= gameStart && now < gameEnd) {
+            game.status = 'live';
+            // Calculate progress and period
+            const elapsed = (now - gameStart) / (1000 * 60); // minutes
+            game.progress = Math.min((elapsed / gameDuration) * 100, 100);
+            game.period = calculatePeriod(game.sport, elapsed);
+            game.timeRemaining = formatTimeRemaining(gameDuration - elapsed);
+
+            // Simulate scores (in production would come from API)
+            if (!liveGameState[game.id]) {
+                liveGameState[game.id] = {
+                    awayScore: 0,
+                    homeScore: 0
+                };
+            }
+            game.awayScore = liveGameState[game.id].awayScore;
+            game.homeScore = liveGameState[game.id].homeScore;
+        } else if (now >= gameEnd) {
+            game.status = 'final';
+            game.progress = 100;
+        } else {
+            game.status = 'upcoming';
+            game.progress = 0;
+        }
+    });
+
+    // Re-render with updated data
+    renderWatchPageWithLive(games);
+}
+
+// Parse time string like "4:00 PM" to hours/minutes
+function parseGameTime(timeStr) {
+    const match = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+    if (!match) return { hours: 16, minutes: 0 };
+
+    let hours = parseInt(match[1]);
+    const minutes = parseInt(match[2]);
+    const isPM = match[3].toUpperCase() === 'PM';
+
+    if (isPM && hours !== 12) hours += 12;
+    if (!isPM && hours === 12) hours = 0;
+
+    return { hours, minutes };
+}
+
+// Calculate what period/quarter the game is in
+function calculatePeriod(sport, elapsedMinutes) {
+    if (sport === 'NBA' || sport === 'NCAAB') {
+        // Basketball: 4 quarters (or 2 halves for college)
+        const quarterLength = sport === 'NBA' ? 12 : 20;
+        const quarters = sport === 'NBA' ? 4 : 2;
+        const periodNum = Math.min(Math.floor(elapsedMinutes / quarterLength) + 1, quarters);
+        return sport === 'NBA' ? `Q${periodNum}` : `H${periodNum}`;
+    } else if (sport === 'NHL') {
+        // Hockey: 3 periods
+        const periodLength = 20;
+        const periodNum = Math.min(Math.floor(elapsedMinutes / periodLength) + 1, 3);
+        return `P${periodNum}`;
+    }
+    return '';
+}
+
+// Format time remaining
+function formatTimeRemaining(minutes) {
+    if (minutes < 0) return '0:00';
+    const mins = Math.floor(minutes);
+    const secs = Math.floor((minutes - mins) * 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+// Get games data (would be from BOOKIE_DATA in production)
+function getGamesData() {
+    return [
+        { id: 1, time: '4:00 PM', sport: 'NHL', away: { abbr: 'OTT', name: 'Senators' }, home: { abbr: 'CAR', name: 'Hurricanes' }, channel: 'ESPN+', picks: [{ pick: 'Senators ML', odds: '+148', amount: 21 }] },
+        { id: 2, time: '4:00 PM', sport: 'NBA', away: { abbr: 'DEN', name: 'Nuggets' }, home: { abbr: 'DET', name: 'Pistons' }, channel: 'League Pass', picks: [{ pick: 'Pistons -6.5', odds: '+113', amount: 31 }] },
+        { id: 3, time: '4:30 PM', sport: 'NBA', away: { abbr: 'MIA', name: 'Heat' }, home: { abbr: 'ATL', name: 'Hawks' }, channel: 'League Pass', picks: [{ pick: 'Heat -4.5', odds: '+138', amount: 21 }] },
+        { id: 4, time: '4:30 PM', sport: 'NHL', away: { abbr: 'BUF', name: 'Sabres' }, home: { abbr: 'TB', name: 'Lightning' }, channel: 'ESPN+', picks: [{ pick: 'Sabres ML', odds: '+160', amount: 21 }] },
+        { id: 5, time: '5:00 PM', sport: 'NBA', away: { abbr: 'BOS', name: 'Celtics' }, home: { abbr: 'DAL', name: 'Mavericks' }, channel: 'TNT', picks: [{ pick: 'Mavs +8.5', odds: '-137', amount: 21 }] },
+        { id: 6, time: '5:00 PM', sport: 'NCAAB', away: { abbr: 'DRAKE', name: 'Drake' }, home: { abbr: 'BEL', name: 'Belmont' }, channel: 'ESPN+', picks: [{ pick: 'Belmont -8.5', odds: '-143', amount: 21 }] },
+        { id: 7, time: '6:00 PM', sport: 'NHL', away: { abbr: 'TOR', name: 'Maple Leafs' }, home: { abbr: 'EDM', name: 'Oilers' }, channel: 'ESPN', picks: [{ pick: 'UNDER 6.5', odds: '+120', amount: 21 }] },
+        { id: 8, time: '6:00 PM', sport: 'NCAAB', away: { abbr: 'NCST', name: 'NC State' }, home: { abbr: 'SMU', name: 'SMU' }, channel: 'ESPN2', picks: [{ pick: 'SMU +2.5', odds: '-133', amount: 21 }] },
+        { id: 9, time: '6:30 PM', sport: 'NCAAB', away: { abbr: 'RUT', name: 'Rutgers' }, home: { abbr: 'UCLA', name: 'UCLA' }, channel: 'BTN', picks: [{ pick: 'UCLA -12.5', odds: '-138', amount: 31 }] },
+        { id: 10, time: '7:00 PM', sport: 'NBA', away: { abbr: 'PHI', name: '76ers' }, home: { abbr: 'GSW', name: 'Warriors' }, channel: 'NBA TV', picks: [{ pick: '76ers +2.5', odds: '-102', amount: 41 }] }
+    ];
+}
+
+// Render Watch page with LIVE updates
+function renderWatchPageWithLive(games) {
+    const container = document.getElementById('watchGamesList');
+    if (!container) return;
+
+    // Sort games: LIVE first, then Upcoming, then Final
+    const sortedGames = [...games].sort((a, b) => {
+        const statusOrder = { 'live': 0, 'upcoming': 1, 'final': 2 };
+        return statusOrder[a.status] - statusOrder[b.status];
+    });
+
+    // Count live games
+    const liveCount = sortedGames.filter(g => g.status === 'live').length;
+
+    // Add live banner if games are live
+    const liveBannerContainer = document.getElementById('nextGameCard');
+    if (liveBannerContainer && liveCount > 0) {
+        const liveGames = sortedGames.filter(g => g.status === 'live');
+        renderLiveBanner(liveBannerContainer, liveGames);
+    }
+
+    // Render all game cards
+    container.innerHTML = sortedGames.map(game => renderWatchGameCard(game)).join('');
+}
+
+// Render LIVE banner at top
+function renderLiveBanner(container, liveGames) {
+    container.innerHTML = `
+        <div class="watch-live-banner">
+            <div class="watch-live-title">
+                <div class="live-badge">
+                    <span class="live-dot"></span>
+                    LIVE
+                </div>
+                <span>${liveGames.length} ${liveGames.length === 1 ? 'GAME' : 'GAMES'} IN PROGRESS</span>
+            </div>
+            <div class="watch-live-count">${liveGames.map(g => `${g.away.abbr} @ ${g.home.abbr}`).join(' · ')}</div>
+        </div>
+    `;
+}
+
+// Render individual game card with live features
+function renderWatchGameCard(game) {
+    const isLive = game.status === 'live';
+    const isFinal = game.status === 'final';
+    const totalAmount = game.picks.reduce((sum, p) => sum + p.amount, 0);
+
+    return `
+        <div class="watch-game-card ${game.status}">
+            <div class="game-card-header">
+                <div class="game-time-block">
+                    ${isLive ? `
+                        <div class="live-badge">
+                            <span class="live-dot"></span>
+                            LIVE
+                        </div>
+                        <div class="game-period active">${game.period} · ${game.timeRemaining}</div>
+                    ` : isFinal ? `
+                        <div class="game-status final">FINAL</div>
+                    ` : `
+                        <div class="game-time">${game.time} PST</div>
+                    `}
+                </div>
+                <div class="game-sport">${getSportEmoji(game.sport)} ${game.sport} · ${game.channel}</div>
+            </div>
+
+            <div class="game-card-body">
+                <div class="game-matchup">
+                    <div class="game-team">
+                        ${getTeamLogo(game.away.abbr, 55)}
+                        <div class="game-team-abbr">${game.away.abbr}</div>
+                        ${isLive ? `<div class="live-score">${game.awayScore || 0}</div>` : `<div class="game-team-name">${game.away.name}</div>`}
+                    </div>
+                    <div class="game-vs">${isLive || isFinal ? '-' : '@'}</div>
+                    <div class="game-team">
+                        ${getTeamLogo(game.home.abbr, 55)}
+                        <div class="game-team-abbr">${game.home.abbr}</div>
+                        ${isLive ? `<div class="live-score">${game.homeScore || 0}</div>` : `<div class="game-team-name">${game.home.name}</div>`}
+                    </div>
+                </div>
+
+                ${isLive ? `
+                    <div class="game-progress">
+                        <div class="game-progress-bar" style="width: ${game.progress}%"></div>
+                    </div>
+                    ${renderPeriodDots(game)}
+                ` : ''}
+
+                <div class="game-picks">
+                    ${game.picks.map(p => `
+                        <div class="game-pick-item ${isLive ? 'live' : ''}">
+                            ${p.pick} (${p.odds}) <span class="amount">$${p.amount}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Render period/quarter dots
+function renderPeriodDots(game) {
+    let totalPeriods = 4;
+    let periodLabel = 'QTR';
+
+    if (game.sport === 'NHL') {
+        totalPeriods = 3;
+        periodLabel = 'PERIOD';
+    } else if (game.sport === 'NCAAB') {
+        totalPeriods = 2;
+        periodLabel = 'HALF';
+    }
+
+    const currentPeriod = parseInt(game.period.replace(/[^0-9]/g, '')) || 1;
+
+    let dots = '';
+    for (let i = 1; i <= totalPeriods; i++) {
+        let dotClass = 'period-dot';
+        if (i < currentPeriod) dotClass += ' complete';
+        else if (i === currentPeriod) dotClass += ' active';
+        dots += `<div class="${dotClass}"></div>`;
+    }
+
+    return `
+        <div class="game-period">
+            <span>${periodLabel}</span>
+            <div class="period-dots">${dots}</div>
+        </div>
+    `;
+}
+
+// Update a specific game's score (call this when scores update)
+function updateGameScore(gameId, awayScore, homeScore) {
+    liveGameState[gameId] = { awayScore, homeScore };
+
+    // Trigger score update animation
+    const scoreElements = document.querySelectorAll(`.watch-game-card[data-id="${gameId}"] .live-score`);
+    scoreElements.forEach(el => {
+        el.style.animation = 'none';
+        el.offsetHeight; // Trigger reflow
+        el.style.animation = 'scoreUpdate 0.3s ease-out';
+    });
+
+    checkLiveGames();
+}
+
+// Demo function to simulate live score updates
+function simulateLiveScores() {
+    const games = getGamesData().filter(g => g.status === 'live');
+    games.forEach(game => {
+        if (liveGameState[game.id]) {
+            // Randomly update scores
+            if (Math.random() > 0.7) {
+                const team = Math.random() > 0.5 ? 'away' : 'home';
+                const points = game.sport === 'NBA' || game.sport === 'NCAAB' ?
+                    Math.floor(Math.random() * 3) + 1 : 1;
+
+                if (team === 'away') {
+                    liveGameState[game.id].awayScore += points;
+                } else {
+                    liveGameState[game.id].homeScore += points;
+                }
+            }
+        }
+    });
+    checkLiveGames();
+}
+
+// Calculate stats from history
+function calculateStats() {
+    const history = BOOKIE_DATA.history;
+    const wins = history.filter(p => p.result === 'win').length;
+    const losses = history.filter(p => p.result === 'loss').length;
+    const total = wins + losses;
+    const netUnits = history.reduce((sum, p) => sum + (p.pl || 0), 0);
+
+    return {
+        total: history.length,
+        wins,
+        losses,
+        record: `${wins}-${losses}`,
+        winRate: total > 0 ? Math.round((wins / total) * 100) : 0,
+        netUnits: netUnits.toFixed(2)
+    };
+}
+
+// Initialize live system on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Start live game checking
+    initLiveGameSystem();
+
+    // Simulate score updates every 15 seconds (for demo)
+    setInterval(simulateLiveScores, 15000);
+});
+
 // Make functions globally available
 window.logBet = logBet;
 window.settleBet = settleBet;
@@ -1799,3 +2201,6 @@ window.markAllPlaced = markAllPlaced;
 window.toggleAnalysisCard = toggleAnalysisCard;
 window.togglePlaysSection = togglePlaysSection;
 window.toggleResultCard = toggleResultCard;
+window.flipCard = flipCard;
+window.triggerConfetti = triggerConfetti;
+window.updateGameScore = updateGameScore;
