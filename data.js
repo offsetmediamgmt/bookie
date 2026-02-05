@@ -645,14 +645,14 @@ const BOOKIE_DATA = {
             reasoning: "Cade averaging 9.2 APG, Wizards give up 28 assists/game"
         },
         {
-            player: "Stephen Curry",
-            team: "GSW",
-            game: "Warriors @ Suns",
-            prop: "Over 25.5 Points",
-            odds: -110,
+            player: "Anthony Davis",
+            team: "LAL",
+            game: "76ers @ Lakers",
+            prop: "Over 10.5 Rebounds",
+            odds: -115,
             units: 1,
-            conviction: 3,
-            reasoning: "Curry loves playing Phoenix, 30+ in 3 of last 5 vs Suns"
+            conviction: 4,
+            reasoning: "AD averaging 11.8 RPG, Embiid matchup = battle on the boards"
         },
         {
             player: "Victor Wembanyama",
