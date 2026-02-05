@@ -1843,7 +1843,7 @@ function renderWatchPage() {
             home: { abbr: 'DET', name: 'Pistons', record: '37-12' },
             channel: 'League Pass',
             picks: [
-                { pick: 'Pistons -14.5', odds: '-110', amount: 38 },
+                { pick: 'Wizards +14.5', odds: '-112', amount: 38 },
                 { pick: 'Cade O24.5 pts', odds: '-115', amount: 19 }
             ],
             status: 'upcoming'
@@ -2365,7 +2365,7 @@ function formatTimeRemaining(minutes) {
 function getGamesData() {
     // February 5, 2026 - Trade Deadline + Last NHL before Olympics
     return [
-        { id: 1, time: '4:00 PM', sport: 'NBA', away: { abbr: 'WAS', name: 'Wizards' }, home: { abbr: 'DET', name: 'Pistons' }, channel: 'League Pass', picks: [{ pick: 'Pistons -14.5', odds: '-110', amount: 38 }] },
+        { id: 1, time: '4:00 PM', sport: 'NBA', away: { abbr: 'WAS', name: 'Wizards' }, home: { abbr: 'DET', name: 'Pistons' }, channel: 'League Pass', picks: [{ pick: 'Wizards +14.5', odds: '-112', amount: 38 }] },
         { id: 2, time: '4:00 PM', sport: 'NHL', away: { abbr: 'CAR', name: 'Hurricanes' }, home: { abbr: 'NYR', name: 'Rangers' }, channel: 'ESPN+', picks: [{ pick: 'Hurricanes ML', odds: '+110', amount: 19 }] },
         { id: 3, time: '4:30 PM', sport: 'NHL', away: { abbr: 'FLA', name: 'Panthers' }, home: { abbr: 'TB', name: 'Lightning' }, channel: 'ESPN+', picks: [{ pick: 'Panthers ML', odds: '-125', amount: 28 }] },
         { id: 4, time: '5:30 PM', sport: 'NBA', away: { abbr: 'SAS', name: 'Spurs' }, home: { abbr: 'DAL', name: 'Mavericks' }, channel: 'League Pass', picks: [{ pick: 'Spurs +7.5', odds: '-110', amount: 19 }] },
@@ -3468,41 +3468,60 @@ function calculateConfidence(analysisData, game, sharpData) {
 
 function generateRecommendation(game, analysisData, sharpData, confidence, awayTrends, homeTrends) {
     let pick, reasoning, units;
-    const favorSide = analysisData.awayScore > analysisData.homeScore ? 'away' : 'home';
 
-    // Build pick based on analysis
-    if (sharpData && sharpData.insightType === 'sharp') {
-        // Sharp money is king
-        pick = sharpData.pick;
-        reasoning = `Sharp money (${sharpData.sharpMoney}%) strongly supports this side. ${analysisData.factors.slice(0, 2).join('. ')}.`;
-    } else if (favorSide === 'away') {
-        // Extract the spread number for away team
-        const spreadMatch = game.spread.match(/-?\d+\.?\d*/);
-        const spreadNum = spreadMatch ? parseFloat(spreadMatch[0]) : 0;
-        pick = `${game.away} +${Math.abs(spreadNum)}`;
+    // FIRST: Check if this game has an official BOOKIE pick in todaysPicks
+    const officialPick = BOOKIE_DATA.todaysPicks.find(p => p.away === game.away && p.home === game.home);
 
-        let reasons = [];
-        if (awayTrends.atsLast10) reasons.push(`${game.away} ${awayTrends.atsLast10} ATS L10`);
-        if (analysisData.factors.length > 0) reasons.push(analysisData.factors[0]);
-        reasoning = reasons.join('. ') + '.';
+    if (officialPick) {
+        // Use the official BOOKIE pick as the authoritative source
+        pick = officialPick.pick;
+        units = officialPick.units;
+
+        // Build reasoning from the official factors
+        if (officialPick.factors && officialPick.factors.length > 0) {
+            reasoning = officialPick.factors.slice(0, 2).join('. ') + '.';
+        } else if (sharpData && sharpData.insight) {
+            reasoning = sharpData.insight;
+        } else {
+            reasoning = `${analysisData.factors.slice(0, 2).join('. ')}.`;
+        }
     } else {
-        pick = game.spread;
-        let reasons = [];
-        if (homeTrends.atsLast10) reasons.push(`${game.home} ${homeTrends.atsLast10} ATS L10`);
-        if (analysisData.factors.length > 0) reasons.push(analysisData.factors[0]);
-        reasoning = reasons.join('. ') + '.';
+        // Fallback: Generate pick based on analysis
+        const favorSide = analysisData.awayScore > analysisData.homeScore ? 'away' : 'home';
+
+        if (sharpData && sharpData.insightType === 'sharp') {
+            // Sharp money is king
+            pick = sharpData.pick;
+            reasoning = `Sharp money (${sharpData.sharpMoney}%) strongly supports this side. ${analysisData.factors.slice(0, 2).join('. ')}.`;
+        } else if (favorSide === 'away') {
+            // Extract the spread number for away team
+            const spreadMatch = game.spread.match(/-?\d+\.?\d*/);
+            const spreadNum = spreadMatch ? parseFloat(spreadMatch[0]) : 0;
+            pick = `${game.away} +${Math.abs(spreadNum)}`;
+
+            let reasons = [];
+            if (awayTrends.atsLast10) reasons.push(`${game.away} ${awayTrends.atsLast10} ATS L10`);
+            if (analysisData.factors.length > 0) reasons.push(analysisData.factors[0]);
+            reasoning = reasons.join('. ') + '.';
+        } else {
+            pick = game.spread;
+            let reasons = [];
+            if (homeTrends.atsLast10) reasons.push(`${game.home} ${homeTrends.atsLast10} ATS L10`);
+            if (analysisData.factors.length > 0) reasons.push(analysisData.factors[0]);
+            reasoning = reasons.join('. ') + '.';
+        }
+
+        // Unit sizing based on confidence
+        if (confidence >= 80) units = 2.5;
+        else if (confidence >= 70) units = 2;
+        else if (confidence >= 60) units = 1.5;
+        else units = 1;
     }
 
     // Add warnings to reasoning if any
     if (analysisData.warnings.length > 0) {
         reasoning += ` ⚠️ ${analysisData.warnings[0]}`;
     }
-
-    // Unit sizing based on confidence
-    if (confidence >= 80) units = 2.5;
-    else if (confidence >= 70) units = 2;
-    else if (confidence >= 60) units = 1.5;
-    else units = 1;
 
     return { pick, reasoning, units };
 }

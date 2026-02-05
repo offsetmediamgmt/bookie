@@ -222,10 +222,10 @@ const BOOKIE_DATA = {
     // ═══════════════════════════════════════════════════════════════
     sharpData: [
         {
-            id: 1, away: "WAS", home: "DET", pick: "Pistons -14.5",
+            id: 1, away: "WAS", home: "DET", pick: "Wizards +14.5",
             publicBets: 63, publicMoney: 52, sharpBets: 37, sharpMoney: 48,
-            insight: "Public likes Pistons but sharps cautious on 14.5 spread - too many points",
-            insightType: "fade",
+            insight: "SHARP FADE: Public likes Pistons but sharps cautious on 14.5 spread - too many points to cover",
+            insightType: "sharp",
             source: "TheSpread.com"
         },
         {
@@ -243,10 +243,10 @@ const BOOKIE_DATA = {
             source: "TheSpread.com"
         },
         {
-            id: 4, away: "GSW", home: "PHX", pick: "Suns -6.5",
+            id: 4, away: "GSW", home: "PHX", pick: "Warriors +6.5",
             publicBets: 66, publicMoney: 61, sharpBets: 34, sharpMoney: 39,
             insight: "Public on home favorite Suns - sharps taking small side on Warriors +6.5",
-            insightType: "against",
+            insightType: "sharp",
             source: "Action Network"
         },
         {
