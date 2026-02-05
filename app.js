@@ -2712,6 +2712,557 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(simulateLiveScores, 15000);
 });
 
+// ═══════════════════════════════════════════════════════════════
+// LIVE SCORE TRACKER
+// ═══════════════════════════════════════════════════════════════
+const liveGames = [
+    { id: 1, away: "WAS", home: "DET", awayScore: 0, homeScore: 0, quarter: "7:00 PM", status: "upcoming", pick: "WAS +14.5", pickTeam: "WAS", spread: 14.5 },
+    { id: 2, away: "PHI", home: "LAL", awayScore: 0, homeScore: 0, quarter: "10:30 PM", status: "upcoming", pick: "PHI +4.5", pickTeam: "PHI", spread: 4.5 },
+    { id: 3, away: "GSW", home: "PHX", awayScore: 0, homeScore: 0, quarter: "10:00 PM", status: "upcoming", pick: "GSW +6.5", pickTeam: "GSW", spread: 6.5 },
+    { id: 4, away: "CHI", home: "TOR", awayScore: 0, homeScore: 0, quarter: "7:30 PM", status: "upcoming", pick: "CHI +8.5", pickTeam: "CHI", spread: 8.5 },
+    { id: 5, away: "FLA", home: "TB", awayScore: 0, homeScore: 0, period: "7:00 PM", status: "upcoming", pick: "FLA ML", pickTeam: "FLA", isML: true },
+    { id: 6, away: "CAR", home: "NYR", awayScore: 0, homeScore: 0, period: "7:00 PM", status: "upcoming", pick: "CAR ML", pickTeam: "CAR", isML: true },
+];
+
+function renderLiveTracker() {
+    const container = document.getElementById('liveTrackerGrid');
+    if (!container) return;
+
+    const activeGames = liveGames.filter(g => g.status === 'live' || g.status === 'upcoming');
+    document.getElementById('liveStatus').textContent = `${activeGames.filter(g => g.status === 'live').length} Live · ${activeGames.filter(g => g.status === 'upcoming').length} Upcoming`;
+
+    container.innerHTML = liveGames.map(game => {
+        const isCovering = checkCovering(game);
+        const statusClass = game.status === 'live' ? (isCovering ? 'winning' : 'losing') : 'pending';
+
+        return `
+            <div class="live-bet-card ${statusClass}">
+                <div class="live-bet-top">
+                    <span class="live-bet-sport">${game.isML ? 'NHL' : 'NBA'}</span>
+                    <span class="live-bet-status ${game.status}">${game.status === 'live' ? game.quarter || game.period : game.status.toUpperCase()}</span>
+                </div>
+                <div class="live-bet-matchup">
+                    <div class="live-bet-team away">
+                        ${getTeamLogo(game.away, 28)}
+                        <div class="live-team-info">
+                            <div class="live-team-abbr">${game.away}</div>
+                            <div class="live-team-score">${game.status === 'upcoming' ? '-' : game.awayScore}</div>
+                        </div>
+                    </div>
+                    <div class="live-bet-vs">${game.status === 'live' ? 'VS' : '@'}</div>
+                    <div class="live-bet-team home">
+                        ${getTeamLogo(game.home, 28)}
+                        <div class="live-team-info">
+                            <div class="live-team-abbr">${game.home}</div>
+                            <div class="live-team-score">${game.status === 'upcoming' ? '-' : game.homeScore}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="live-bet-bottom">
+                    <span class="live-bet-pick">${game.pick}</span>
+                    <span class="live-bet-result ${isCovering ? 'covering' : game.status === 'upcoming' ? '' : 'not-covering'}">
+                        ${game.status === 'upcoming' ? 'Starts Soon' : (isCovering ? '✓ Covering' : '✗ Not Covering')}
+                    </span>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function checkCovering(game) {
+    if (game.status === 'upcoming') return null;
+    if (game.isML) {
+        return game.pickTeam === game.away ? game.awayScore > game.homeScore : game.homeScore > game.awayScore;
+    }
+    const margin = game.pickTeam === game.away ? (game.awayScore - game.homeScore) : (game.homeScore - game.awayScore);
+    return margin > -game.spread;
+}
+
+function refreshLiveScores() {
+    // Simulate fetching live scores
+    liveGames.forEach(game => {
+        if (game.status === 'live') {
+            // Simulate score changes
+            if (Math.random() > 0.5) {
+                game.awayScore += Math.floor(Math.random() * 3);
+                game.homeScore += Math.floor(Math.random() * 3);
+            }
+        }
+    });
+    renderLiveTracker();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ANALYTICS DASHBOARD
+// ═══════════════════════════════════════════════════════════════
+function renderAnalytics() {
+    renderROIBySport();
+    renderROIByType();
+    renderBankrollChart();
+    renderStreaks();
+}
+
+function renderROIBySport() {
+    const container = document.getElementById('analyticsBySport');
+    if (!container) return;
+
+    const history = BOOKIE_DATA.history || [];
+    const sports = ['NBA', 'NHL', 'NCAAB', 'NFL', 'UFC'];
+
+    const sportStats = sports.map(sport => {
+        const bets = history.filter(h => h.sport === sport);
+        const wins = bets.filter(b => b.result === 'win').length;
+        const total = bets.length;
+        const units = bets.reduce((sum, b) => sum + b.pl, 0);
+        const roi = total > 0 ? ((units / total) * 100).toFixed(1) : 0;
+        return { sport, wins, total, units, roi };
+    }).filter(s => s.total > 0);
+
+    const icons = { 'NBA': '🏀', 'NHL': '🏒', 'NCAAB': '🎓', 'NFL': '🏈', 'UFC': '🥊' };
+
+    container.innerHTML = sportStats.map(s => `
+        <div class="analytics-sport-card">
+            <div class="analytics-card-icon">${icons[s.sport] || '🎯'}</div>
+            <div class="analytics-card-title">${s.sport}</div>
+            <div class="analytics-card-roi ${s.roi >= 0 ? 'positive' : 'negative'}">${s.roi >= 0 ? '+' : ''}${s.roi}%</div>
+            <div class="analytics-card-record">${s.wins}-${s.total - s.wins} (${s.units >= 0 ? '+' : ''}${s.units.toFixed(2)}u)</div>
+        </div>
+    `).join('');
+}
+
+function renderROIByType() {
+    const container = document.getElementById('analyticsByType');
+    if (!container) return;
+
+    // Simulated bet type breakdown
+    const types = [
+        { type: 'Spread', icon: '📊', wins: 8, total: 15, units: -1.2 },
+        { type: 'Moneyline', icon: '💰', wins: 3, total: 5, units: 1.8 },
+        { type: 'Totals', icon: '🎯', wins: 1, total: 3, units: -2.1 },
+        { type: 'Props', icon: '⭐', wins: 2, total: 4, units: 0.5 },
+        { type: 'Parlays', icon: '🎰', wins: 0, total: 2, units: -0.8 }
+    ];
+
+    container.innerHTML = types.map(t => {
+        const roi = ((t.units / t.total) * 100).toFixed(1);
+        return `
+            <div class="analytics-type-card">
+                <div class="analytics-card-icon">${t.icon}</div>
+                <div class="analytics-card-title">${t.type}</div>
+                <div class="analytics-card-roi ${roi >= 0 ? 'positive' : 'negative'}">${roi >= 0 ? '+' : ''}${roi}%</div>
+                <div class="analytics-card-record">${t.wins}-${t.total - t.wins} (${t.units >= 0 ? '+' : ''}${t.units.toFixed(1)}u)</div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderBankrollChart() {
+    const container = document.getElementById('bankrollChart');
+    if (!container) return;
+
+    // Bankroll history by day
+    const days = [
+        { label: 'Feb 2', value: 1000 },
+        { label: 'Feb 3', value: 1004 },
+        { label: 'Feb 4', value: 885 },
+        { label: 'Feb 5', value: 939 },
+    ];
+
+    const maxVal = Math.max(...days.map(d => d.value));
+    const minVal = Math.min(...days.map(d => d.value)) * 0.9;
+
+    container.innerHTML = `
+        <div class="chart-bar-container">
+            ${days.map(d => {
+                const height = ((d.value - minVal) / (maxVal - minVal) * 100);
+                const color = d.value >= 1000 ? 'var(--accent-green)' : 'var(--accent-red)';
+                return `
+                    <div class="chart-bar" style="height: ${height}%; background: ${color};">
+                        <span class="chart-bar-label">${d.label}</span>
+                    </div>
+                `;
+            }).join('')}
+        </div>
+        <div style="text-align: center; margin-top: 30px; font-size: 11px; color: var(--text-muted);">
+            Starting: $1,000 → Current: $939 (${((939-1000)/1000*100).toFixed(1)}%)
+        </div>
+    `;
+}
+
+function renderStreaks() {
+    const container = document.getElementById('analyticsStreaks');
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="streak-card hot">
+            <div class="streak-header">
+                <span>🔥</span>
+                <span class="streak-title">HOT STREAKS</span>
+            </div>
+            <div class="streak-content">
+                <p>• <strong>NBA Spreads:</strong> 4-1 last 5 bets</p>
+                <p>• <strong>76ers bets:</strong> 3-0 all time</p>
+                <p>• <strong>Road dogs:</strong> 5-2 this week</p>
+            </div>
+        </div>
+        <div class="streak-card cold">
+            <div class="streak-header">
+                <span>❄️</span>
+                <span class="streak-title">COLD STREAKS</span>
+            </div>
+            <div class="streak-content">
+                <p>• <strong>NHL picks:</strong> 1-5 last 6 bets</p>
+                <p>• <strong>Totals:</strong> 1-4 overall</p>
+                <p>• <strong>Parlays:</strong> 0-2 all time</p>
+            </div>
+        </div>
+    `;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// AI PICK GENERATOR
+// ═══════════════════════════════════════════════════════════════
+const todaysGames = {
+    NBA: [
+        { away: 'WAS', home: 'DET', time: '7:00 PM', spread: 'DET -14.5', ou: '227.5' },
+        { away: 'PHI', home: 'LAL', time: '10:30 PM', spread: 'LAL -4.5', ou: '231.5' },
+        { away: 'GSW', home: 'PHX', time: '10:00 PM', spread: 'PHX -6.5', ou: '217.5' },
+        { away: 'CHI', home: 'TOR', time: '7:30 PM', spread: 'TOR -8.5', ou: '225.5' },
+    ],
+    NHL: [
+        { away: 'FLA', home: 'TB', time: '7:00 PM', spread: 'TB -1.5', ou: '6.5' },
+        { away: 'CAR', home: 'NYR', time: '7:00 PM', spread: 'NYR -1.5', ou: '5.5' },
+        { away: 'LAK', home: 'VGK', time: '10:00 PM', spread: 'VGK -1.5', ou: '5.5' },
+    ]
+};
+
+document.getElementById('aiSportSelect')?.addEventListener('change', function() {
+    const gameSelect = document.getElementById('aiGameSelect');
+    const sport = this.value;
+
+    if (!sport) {
+        gameSelect.disabled = true;
+        gameSelect.innerHTML = '<option value="">Select Game</option>';
+        return;
+    }
+
+    const games = todaysGames[sport] || [];
+    gameSelect.disabled = false;
+    gameSelect.innerHTML = '<option value="">Select Game</option>' +
+        games.map((g, i) => `<option value="${i}">${g.away} @ ${g.home} (${g.time})</option>`).join('');
+});
+
+function runAIAnalysis() {
+    const sport = document.getElementById('aiSportSelect').value;
+    const gameIndex = document.getElementById('aiGameSelect').value;
+
+    if (!sport || gameIndex === '') {
+        alert('Please select a sport and game');
+        return;
+    }
+
+    const game = todaysGames[sport][gameIndex];
+    const output = document.getElementById('aiOutputSection');
+    output.style.display = 'block';
+
+    // Set matchup
+    document.getElementById('aiMatchup').innerHTML = `
+        ${getTeamLogo(game.away, 40)}
+        <span style="margin: 0 15px; color: var(--text-muted);">@</span>
+        ${getTeamLogo(game.home, 40)}
+        <span style="margin-left: 15px;">${game.away} @ ${game.home}</span>
+    `;
+
+    // Get trends data
+    const awayTrends = BOOKIE_DATA.trends[game.away] || {};
+    const homeTrends = BOOKIE_DATA.trends[game.home] || {};
+    const h2hKey = `${game.away}_${game.home}`;
+    const h2h = BOOKIE_DATA.h2h[h2hKey] || [];
+    const sharpData = BOOKIE_DATA.sharpData.find(s => s.away === game.away && s.home === game.home);
+
+    // Analyze factors
+    let awayScore = 0, homeScore = 0;
+
+    // ATS Trends
+    const awayATS = awayTrends.atsLast10 || 'N/A';
+    const homeATS = homeTrends.atsLast10 || 'N/A';
+    document.getElementById('aiTrends').innerHTML = `
+        <p><strong>${game.away}:</strong> ${awayATS} ATS L10, ${awayTrends.atsAway || 'N/A'} away</p>
+        <p><strong>${game.home}:</strong> ${homeATS} ATS L10, ${homeTrends.atsHome || 'N/A'} home</p>
+        <p class="trend-note">${awayTrends.note || ''} ${homeTrends.note || ''}</p>
+    `;
+
+    // Sharp Action
+    if (sharpData) {
+        document.getElementById('aiSharp').innerHTML = `
+            <p><strong>Public:</strong> ${sharpData.publicBets}% bets, ${sharpData.publicMoney}% money</p>
+            <p><strong>Sharp:</strong> ${sharpData.sharpBets}% bets, ${sharpData.sharpMoney}% money</p>
+            <p class="sharp-insight">${sharpData.insight}</p>
+        `;
+        if (sharpData.insightType === 'sharp') awayScore += 2;
+    } else {
+        document.getElementById('aiSharp').innerHTML = '<p>No sharp data available for this game</p>';
+    }
+
+    // H2H
+    if (h2h.length > 0) {
+        const awayWins = h2h.filter(g => g.result === 'win').length;
+        document.getElementById('aiH2H').innerHTML = `
+            <p><strong>Last ${h2h.length} meetings:</strong> ${game.away} ${awayWins}-${h2h.length - awayWins}</p>
+            ${h2h.slice(0, 3).map(g => `<p>${g.date}: ${g.score}</p>`).join('')}
+        `;
+    } else {
+        document.getElementById('aiH2H').innerHTML = '<p>No recent H2H data</p>';
+    }
+
+    // Injuries
+    const injuries = BOOKIE_DATA.injuries.filter(i => i.team === game.away || i.team === game.home);
+    if (injuries.length > 0) {
+        document.getElementById('aiInjury').innerHTML = injuries.map(i =>
+            `<p><strong>${i.player}</strong> (${i.team}): ${i.status} - ${i.injury}</p>`
+        ).join('');
+    } else {
+        document.getElementById('aiInjury').innerHTML = '<p>No significant injuries</p>';
+    }
+
+    // Calculate confidence and recommendation
+    const confidence = calculateConfidence(game, awayTrends, homeTrends, sharpData, h2h);
+    const confLevel = confidence >= 75 ? 'high' : confidence >= 50 ? 'medium' : 'low';
+
+    document.getElementById('aiConfidence').innerHTML = `
+        <span class="confidence-label">Confidence</span>
+        <span class="confidence-value ${confLevel}">${confidence}%</span>
+    `;
+
+    // Generate recommendation
+    const rec = generateRecommendation(game, awayTrends, homeTrends, sharpData, confidence);
+    document.getElementById('aiRecPick').textContent = rec.pick;
+    document.getElementById('aiRecReasoning').textContent = rec.reasoning;
+    document.getElementById('aiRecUnits').textContent = `Recommended: ${rec.units}u ($${rec.units * 20})`;
+
+    output.scrollIntoView({ behavior: 'smooth' });
+}
+
+function calculateConfidence(game, awayTrends, homeTrends, sharpData, h2h) {
+    let score = 50;
+
+    // Trends factor
+    if (awayTrends.atsLast10) {
+        const [w, l] = awayTrends.atsLast10.split('-').map(Number);
+        if (w > l) score += 5;
+    }
+
+    // Sharp money factor
+    if (sharpData && sharpData.sharpMoney >= 60) score += 15;
+    if (sharpData && sharpData.insightType === 'sharp') score += 10;
+
+    // H2H factor
+    if (h2h.length >= 2) {
+        const wins = h2h.filter(g => g.result === 'win').length;
+        if (wins >= 2) score += 10;
+    }
+
+    return Math.min(95, Math.max(25, score));
+}
+
+function generateRecommendation(game, awayTrends, homeTrends, sharpData, confidence) {
+    let pick, reasoning, units;
+
+    // Default to taking the dog with the spread
+    if (sharpData && sharpData.insightType === 'sharp') {
+        pick = sharpData.pick;
+        reasoning = `Sharp money (${sharpData.sharpMoney}%) supports this side. ${sharpData.insight}`;
+    } else if (awayTrends.atsLast10) {
+        const [w, l] = awayTrends.atsLast10.split('-').map(Number);
+        if (w > l) {
+            pick = `${game.away} ${game.spread.includes(game.away) ? game.spread.split(' ')[1] : '+' + game.spread.split('-')[1]}`;
+            reasoning = `${game.away} is ${awayTrends.atsLast10} ATS in last 10. ${awayTrends.note || ''}`;
+        } else {
+            pick = `${game.home} ${game.spread}`;
+            reasoning = `${game.home} is ${homeTrends.atsLast10 || 'solid'} ATS at home.`;
+        }
+    } else {
+        pick = game.spread;
+        reasoning = 'Limited data available. Proceed with caution.';
+    }
+
+    units = confidence >= 75 ? 2 : confidence >= 50 ? 1.5 : 1;
+
+    return { pick, reasoning, units };
+}
+
+function renderAIQuickPicks() {
+    const container = document.getElementById('aiQuickPicks');
+    if (!container) return;
+
+    const quickPicks = BOOKIE_DATA.todaysPicks.slice(0, 5).map((pick, i) => {
+        const confidence = 90 - (i * 10);
+        return { ...pick, confidence, rank: i + 1 };
+    });
+
+    container.innerHTML = quickPicks.map(pick => `
+        <div class="ai-quick-card">
+            <div class="ai-quick-rank">#${pick.rank}</div>
+            <div class="ai-quick-teams">
+                ${getTeamLogo(pick.away, 28)}
+                <span style="margin: 0 5px; color: var(--text-muted);">@</span>
+                ${getTeamLogo(pick.home, 28)}
+            </div>
+            <div class="ai-quick-info">
+                <div class="ai-quick-matchup">${pick.away} @ ${pick.home}</div>
+                <div class="ai-quick-meta">${getSportEmoji(pick.sport)} ${pick.sport} · ${pick.time}</div>
+            </div>
+            <div class="ai-quick-pick">
+                <div class="ai-quick-line">${pick.pick}</div>
+                <div class="ai-quick-confidence">${pick.confidence}% confidence</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// VALUE FINDER / ARBITRAGE
+// ═══════════════════════════════════════════════════════════════
+const oddsData = {
+    games: [
+        {
+            game: 'PHI @ LAL',
+            team: 'PHI +4.5',
+            draftkings: -118,
+            fanduel: -110,
+            betmgm: -115,
+            caesars: -112,
+            best: 'fanduel'
+        },
+        {
+            game: 'WAS @ DET',
+            team: 'WAS +14.5',
+            draftkings: -112,
+            fanduel: -115,
+            betmgm: -110,
+            caesars: -108,
+            best: 'caesars'
+        },
+        {
+            game: 'GSW @ PHX',
+            team: 'GSW +6.5',
+            draftkings: -110,
+            fanduel: -108,
+            betmgm: -112,
+            caesars: -110,
+            best: 'fanduel'
+        },
+        {
+            game: 'FLA @ TB',
+            team: 'FLA ML',
+            draftkings: +105,
+            fanduel: +100,
+            betmgm: +110,
+            caesars: +102,
+            best: 'betmgm'
+        }
+    ],
+    evBets: [
+        { game: 'PHI @ LAL', pick: '76ers +4.5', currentOdds: -110, fairOdds: -118, ev: '+4.2%', reasoning: 'Sharp money creating value' },
+        { game: 'FLA @ TB', pick: 'Panthers ML', currentOdds: +110, fairOdds: +100, ev: '+3.8%', reasoning: '5-1 last 6 vs Tampa' },
+        { game: 'CAR @ NYR', pick: 'Hurricanes ML', currentOdds: +115, fairOdds: +105, ev: '+3.2%', reasoning: 'Rangers struggling at home' }
+    ],
+    lineMovement: [
+        { game: 'PHI @ LAL', pick: '76ers', open: '+5.5', current: '+4.5', direction: 'down', timestamp: '2 hours ago', steam: false },
+        { game: 'WAS @ DET', pick: 'Pistons', open: '-13.5', current: '-14.5', direction: 'up', timestamp: '4 hours ago', steam: true },
+        { game: 'GSW @ PHX', pick: 'Suns', open: '-5.5', current: '-6.5', direction: 'up', timestamp: '1 hour ago', steam: false }
+    ]
+};
+
+function renderOddsComparison() {
+    const container = document.getElementById('oddsComparisonTable');
+    if (!container) return;
+
+    container.innerHTML = `
+        <table class="odds-table">
+            <thead>
+                <tr>
+                    <th>Game</th>
+                    <th>Pick</th>
+                    <th>DraftKings</th>
+                    <th>FanDuel</th>
+                    <th>BetMGM</th>
+                    <th>Caesars</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${oddsData.games.map(g => `
+                    <tr>
+                        <td class="game-cell">${g.game}</td>
+                        <td>${g.team}</td>
+                        <td class="${g.best === 'draftkings' ? 'best-odds' : ''}">${g.draftkings > 0 ? '+' : ''}${g.draftkings}</td>
+                        <td class="${g.best === 'fanduel' ? 'best-odds' : ''}">${g.fanduel > 0 ? '+' : ''}${g.fanduel}</td>
+                        <td class="${g.best === 'betmgm' ? 'best-odds' : ''}">${g.betmgm > 0 ? '+' : ''}${g.betmgm}</td>
+                        <td class="${g.best === 'caesars' ? 'best-odds' : ''}">${g.caesars > 0 ? '+' : ''}${g.caesars}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+}
+
+function renderEVBets() {
+    const container = document.getElementById('evBetsList');
+    if (!container) return;
+
+    container.innerHTML = oddsData.evBets.map(bet => `
+        <div class="ev-bet-card">
+            <div class="ev-bet-edge">${bet.ev}</div>
+            <div class="ev-bet-info">
+                <div class="ev-bet-game">${bet.game}</div>
+                <div class="ev-bet-pick">${bet.pick} — ${bet.reasoning}</div>
+            </div>
+            <div class="ev-bet-odds">
+                <div class="ev-bet-current">${bet.currentOdds > 0 ? '+' : ''}${bet.currentOdds}</div>
+                <div class="ev-bet-fair">Fair: ${bet.fairOdds > 0 ? '+' : ''}${bet.fairOdds}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderLineMovement() {
+    const container = document.getElementById('lineMovementList');
+    if (!container) return;
+
+    container.innerHTML = oddsData.lineMovement.map(line => `
+        <div class="line-movement-card ${line.steam ? 'steam' : ''}">
+            <div class="line-direction">${line.direction === 'up' ? '📈' : '📉'}</div>
+            <div class="line-info">
+                <div class="line-game">${line.game}</div>
+                <div class="line-detail">${line.pick} line moved ${line.direction === 'up' ? 'up' : 'down'} ${line.steam ? '(STEAM MOVE)' : ''}</div>
+            </div>
+            <div class="line-change">
+                <div class="line-from-to">${line.open} → ${line.current}</div>
+                <div class="line-timestamp">${line.timestamp}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderValueFinder() {
+    renderOddsComparison();
+    renderEVBets();
+    renderLineMovement();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INITIALIZE NEW PAGES
+// ═══════════════════════════════════════════════════════════════
+function initNewPages() {
+    renderLiveTracker();
+    renderAnalytics();
+    renderAIQuickPicks();
+    renderValueFinder();
+}
+
+// Call on page load
+document.addEventListener('DOMContentLoaded', initNewPages);
+
 // Make functions globally available
 window.logBet = logBet;
 window.settleBet = settleBet;
@@ -2725,3 +3276,5 @@ window.toggleExplainer = toggleExplainer;
 window.flipCard = flipCard;
 window.triggerConfetti = triggerConfetti;
 window.updateGameScore = updateGameScore;
+window.refreshLiveScores = refreshLiveScores;
+window.runAIAnalysis = runAIAnalysis;
