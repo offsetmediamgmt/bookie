@@ -27,7 +27,7 @@ const TEAM_LOGOS = {
     'BKN': 'https://a.espncdn.com/i/teamlogos/nba/500/bkn.png',
     'CLE': 'https://a.espncdn.com/i/teamlogos/nba/500/cle.png',
 
-    // NHL Teams - Use different keys for NHL Toronto
+    // NHL Teams
     'OTT': 'https://a.espncdn.com/i/teamlogos/nhl/500/ott.png',
     'CAR': 'https://a.espncdn.com/i/teamlogos/nhl/500/car.png',
     'BUF': 'https://a.espncdn.com/i/teamlogos/nhl/500/buf.png',
@@ -37,6 +37,10 @@ const TEAM_LOGOS = {
     'CGY': 'https://a.espncdn.com/i/teamlogos/nhl/500/cgy.png',
     'PIT': 'https://a.espncdn.com/i/teamlogos/nhl/500/pit.png',
     'WPG': 'https://a.espncdn.com/i/teamlogos/nhl/500/wpg.png',
+    'FLA': 'https://a.espncdn.com/i/teamlogos/nhl/500/fla.png',
+    'NYR': 'https://a.espncdn.com/i/teamlogos/nhl/500/nyr.png',
+    'LAK': 'https://a.espncdn.com/i/teamlogos/nhl/500/la.png',
+    'VGK': 'https://a.espncdn.com/i/teamlogos/nhl/500/vgk.png',
 
     // NFL Teams
     'NE': 'https://a.espncdn.com/i/teamlogos/nfl/500/ne.png',
@@ -74,6 +78,13 @@ const TEAM_LOGOS = {
     'MEM': 'https://a.espncdn.com/i/teamlogos/nba/500/mem.png',
     'SAC': 'https://a.espncdn.com/i/teamlogos/nba/500/sac.png',
     'MIN': 'https://a.espncdn.com/i/teamlogos/nba/500/min.png',
+    'WAS': 'https://a.espncdn.com/i/teamlogos/nba/500/wsh.png',
+    'TOR-NBA': 'https://a.espncdn.com/i/teamlogos/nba/500/tor.png',
+    'CHI': 'https://a.espncdn.com/i/teamlogos/nba/500/chi.png',
+    'ORL': 'https://a.espncdn.com/i/teamlogos/nba/500/orl.png',
+    'CHA': 'https://a.espncdn.com/i/teamlogos/nba/500/cha.png',
+    'POR': 'https://a.espncdn.com/i/teamlogos/nba/500/por.png',
+    'UTA': 'https://a.espncdn.com/i/teamlogos/nba/500/uta.png',
 
     // UFC (generic)
     'UFC': 'https://a.espncdn.com/i/teamlogos/leagues/500/ufc.png'
@@ -307,6 +318,13 @@ function toggleResultCard(index) {
     const card = document.querySelector(`.result-card[data-index="${index}"]`);
     if (card) {
         card.classList.toggle('expanded');
+    }
+}
+
+function toggleExplainer() {
+    const section = document.querySelector('.explainer-section');
+    if (section) {
+        section.classList.toggle('collapsed');
     }
 }
 
@@ -577,17 +595,24 @@ function getSharpIndicator(pick) {
 
     if (!matchingSharp) return '';
 
-    const isSharpSide = matchingSharp.sharpMoney >= 55;
-    if (!isSharpSide) return '';
+    // Determine indicator type based on insight type
+    const typeConfig = {
+        'sharp': { icon: '🧠', title: 'SHARP PLAY', badge: 'SHARP', color: 'green' },
+        'fade': { icon: '⚖️', title: 'FADE ALERT', badge: 'CAUTION', color: 'yellow' },
+        'against': { icon: '⚠️', title: 'CONTRARIAN', badge: 'FADE', color: 'orange' }
+    };
+
+    const config = typeConfig[matchingSharp.insightType] || typeConfig.sharp;
 
     return `
-        <div class="pick-sharp-indicator">
-            <span class="pick-sharp-icon">🧠</span>
+        <div class="pick-sharp-indicator ${config.color}">
+            <span class="pick-sharp-icon">${config.icon}</span>
             <div class="pick-sharp-info">
-                <div class="pick-sharp-title">SHARP MONEY AGREES</div>
-                <div class="pick-sharp-desc">${matchingSharp.sharpMoney}% of money on this side</div>
+                <div class="pick-sharp-title">${config.title}</div>
+                <div class="pick-sharp-desc">${matchingSharp.insight}</div>
+                <div class="pick-sharp-source">Source: ${matchingSharp.source}</div>
             </div>
-            <span class="pick-sharp-badge">SHARP</span>
+            <span class="pick-sharp-badge ${config.color}">${config.badge}</span>
         </div>
     `;
 }
@@ -2696,6 +2721,7 @@ window.markAllPlaced = markAllPlaced;
 window.toggleAnalysisCard = toggleAnalysisCard;
 window.togglePlaysSection = togglePlaysSection;
 window.toggleResultCard = toggleResultCard;
+window.toggleExplainer = toggleExplainer;
 window.flipCard = flipCard;
 window.triggerConfetti = triggerConfetti;
 window.updateGameScore = updateGameScore;

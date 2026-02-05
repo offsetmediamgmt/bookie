@@ -90,6 +90,7 @@ const BOOKIE_DATA = {
 
     // ═══════════════════════════════════════════════════════════════
     // TODAY'S PICKS - February 5, 2026 (Trade Deadline Day!)
+    // Real odds from ESPN/DraftKings - Updated 6:00 PM ET
     // ═══════════════════════════════════════════════════════════════
     todaysPicks: [
         // NBA PICKS
@@ -99,15 +100,15 @@ const BOOKIE_DATA = {
             away: "WAS",
             home: "DET",
             time: "7:00 PM ET",
-            pick: "Pistons -14.5",
-            odds: -110,
-            units: 2,
-            conviction: 5,
+            pick: "Wizards +14.5",
+            odds: -112,
+            units: 1.5,
+            conviction: 4,
             factors: [
-                "Pistons 37-12, best record in East",
-                "Wizards 8-42, worst in NBA",
-                "Cade Cunningham averaging 25/9/6",
-                "Detroit 20-4 at home"
+                "SHARP FADE: Sharps cautious on big spread",
+                "Wizards 6-4 ATS last 10 games",
+                "14.5 points is a LOT to cover",
+                "Pistons 2-3 ATS in last 5 home games"
             ]
         },
         {
@@ -115,16 +116,16 @@ const BOOKIE_DATA = {
             sport: "NBA",
             away: "PHI",
             home: "LAL",
-            time: "10:00 PM ET",
+            time: "10:30 PM ET",
             pick: "76ers +4.5",
-            odds: -110,
-            units: 1.5,
-            conviction: 4,
+            odds: -118,
+            units: 2,
+            conviction: 5,
             factors: [
-                "76ers 3-0 ATS last 3 games",
-                "Embiid and Maxey healthy and rolling",
-                "Lakers inconsistent at home",
-                "Philly 14-11 on the road"
+                "SHARP PLAY: 71% of money on Philly",
+                "76ers 4-1 ATS last 5 games",
+                "7-4 ATS as 3.5+ point dogs this year",
+                "Embiid & Maxey healthy and rolling"
             ]
         },
         {
@@ -133,32 +134,32 @@ const BOOKIE_DATA = {
             away: "GSW",
             home: "PHX",
             time: "10:00 PM ET",
-            pick: "Warriors +5.5",
+            pick: "Warriors +6.5",
             odds: -110,
             units: 1,
             conviction: 3,
             factors: [
-                "Curry still dangerous on any night",
-                "Warriors 15-9 on the road",
-                "Suns may rest players before break",
-                "GSW upset potential high"
+                "Sharps taking Warriors as dogs",
+                "Curry always dangerous on road",
+                "Suns only 6-4 ATS last 10",
+                "Warriors beat Suns 120-117 on Dec 28"
             ]
         },
         {
             id: 4,
             sport: "NBA",
-            away: "SAS",
-            home: "DAL",
-            time: "8:30 PM ET",
-            pick: "Spurs +7.5",
-            odds: -110,
+            away: "CHI",
+            home: "TOR",
+            time: "7:30 PM ET",
+            pick: "Bulls +8.5",
+            odds: -115,
             units: 1,
             conviction: 3,
             factors: [
-                "Spurs just beat Thunder without SGA",
-                "De'Aaron Fox trade boost morale",
-                "Wembanyama 22/14 last game",
-                "Mavs inconsistent at home"
+                "8.5 is a big spread for divisional game",
+                "Bulls have covered 6 of last 10",
+                "Raptors inconsistent as favorites",
+                "Value on the dog"
             ]
         },
         // NHL PICKS - LAST DAY BEFORE OLYMPIC BREAK
@@ -167,16 +168,16 @@ const BOOKIE_DATA = {
             sport: "NHL",
             away: "FLA",
             home: "TB",
-            time: "7:30 PM ET",
+            time: "7:00 PM ET",
             pick: "Panthers ML",
-            odds: -125,
+            odds: +105,
             units: 1.5,
             conviction: 4,
             factors: [
-                "Panthers best team in NHL (37-13-4)",
-                "Florida rivalry game motivation",
-                "Panthers 18-6 on the road",
-                "Last game before Olympic break"
+                "SHARP PLAY: Money on Panthers as dogs",
+                "Florida 5-1 in last 6 @ Tampa",
+                "Panthers 37-13-4, best in NHL",
+                "Rivalry game before Olympic break"
             ]
         },
         {
@@ -186,14 +187,14 @@ const BOOKIE_DATA = {
             home: "NYR",
             time: "7:00 PM ET",
             pick: "Hurricanes ML",
-            odds: +110,
-            units: 1,
-            conviction: 3,
+            odds: +115,
+            units: 1.5,
+            conviction: 4,
             factors: [
-                "Canes 35-15-4, elite road team",
-                "Rangers struggling recently",
-                "Carolina 17-8 on the road",
-                "Value at plus money"
+                "Slight sharp lean to Carolina",
+                "Canes 35-15-4, elite road team (17-8)",
+                "Rangers 4-6 ATS last 10, struggling",
+                "Plus money value on better team"
             ]
         },
         {
@@ -203,86 +204,125 @@ const BOOKIE_DATA = {
             home: "VGK",
             time: "10:00 PM ET",
             pick: "UNDER 5.5",
-            odds: -110,
+            odds: -115,
             units: 1,
             conviction: 3,
             factors: [
-                "Both teams defensive-minded",
+                "Both teams elite defensively",
                 "Kings allow only 2.5 goals/game",
-                "Vegas 2.8 goals allowed",
-                "Playoff-style game"
+                "Vegas 3-7 OVER last 10 (games going under)",
+                "Playoff-style low-scoring affair"
             ]
         }
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // SHARP VS PUBLIC DATA - February 5, 2026
+    // SHARP VS PUBLIC DATA - February 5, 2026 (REAL DATA)
+    // Sources: TheSpread.com, Action Network, FOX Sports
     // ═══════════════════════════════════════════════════════════════
     sharpData: [
         {
             id: 1, away: "WAS", home: "DET", pick: "Pistons -14.5",
-            publicBets: 72, publicMoney: 45, sharpBets: 28, sharpMoney: 55,
-            insight: "Sharp money FADING public on huge spread",
-            insightType: "sharp" // sharp, fade, against
+            publicBets: 63, publicMoney: 52, sharpBets: 37, sharpMoney: 48,
+            insight: "Public likes Pistons but sharps cautious on 14.5 spread - too many points",
+            insightType: "fade",
+            source: "TheSpread.com"
         },
         {
             id: 2, away: "PHI", home: "LAL", pick: "76ers +4.5",
-            publicBets: 35, publicMoney: 30, sharpBets: 65, sharpMoney: 70,
-            insight: "Sharps LOVE 76ers as road dogs",
-            insightType: "sharp"
+            publicBets: 29, publicMoney: 32, sharpBets: 71, sharpMoney: 68,
+            insight: "SHARP PLAY: 71% of money on 76ers despite 29% of bets. Classic reverse line movement.",
+            insightType: "sharp",
+            source: "TheSpread.com"
         },
         {
-            id: 3, away: "FLA", home: "TB", pick: "Panthers ML",
-            publicBets: 58, publicMoney: 52, sharpBets: 42, sharpMoney: 48,
-            insight: "Split action - rivalry game",
-            insightType: "fade"
+            id: 3, away: "SAS", home: "DAL", pick: "Spurs +7.5",
+            publicBets: 77, publicMoney: 72, sharpBets: 23, sharpMoney: 28,
+            insight: "PUBLIC TRAP: 77% on Spurs after they beat OKC - classic recency bias fade",
+            insightType: "fade",
+            source: "TheSpread.com"
         },
         {
-            id: 4, away: "CAR", home: "NYR", pick: "Hurricanes ML",
-            publicBets: 40, publicMoney: 35, sharpBets: 60, sharpMoney: 65,
-            insight: "Sharp value play at plus money",
-            insightType: "sharp"
+            id: 4, away: "GSW", home: "PHX", pick: "Suns -6.5",
+            publicBets: 66, publicMoney: 61, sharpBets: 34, sharpMoney: 39,
+            insight: "Public on home favorite Suns - sharps taking small side on Warriors +6.5",
+            insightType: "against",
+            source: "Action Network"
+        },
+        {
+            id: 5, away: "FLA", home: "TB", pick: "Panthers ML",
+            publicBets: 45, publicMoney: 58, sharpBets: 55, sharpMoney: 42,
+            insight: "Sharp money on Panthers despite being road underdogs - 5-1 last 6 @ Tampa",
+            insightType: "sharp",
+            source: "FOX Sports"
+        },
+        {
+            id: 6, away: "CAR", home: "NYR", pick: "Hurricanes ML",
+            publicBets: 42, publicMoney: 48, sharpBets: 58, sharpMoney: 52,
+            insight: "Slight sharp lean to Carolina - Rangers struggling at home lately",
+            insightType: "sharp",
+            source: "FOX Sports"
         }
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // HISTORICAL TRENDS - Team ATS Records & H2H
+    // HISTORICAL TRENDS - REAL ATS Records (Source: TeamRankings, FOX, TheSpread)
+    // Updated: February 5, 2026
     // ═══════════════════════════════════════════════════════════════
     trends: {
-        "DET": { atsLast10: "7-3", atsHome: "18-6", ouLast10: "5-5", streak: "W3 ATS" },
-        "WAS": { atsLast10: "3-7", atsAway: "4-18", ouLast10: "6-4", streak: "L4 ATS" },
-        "PHI": { atsLast10: "6-4", atsAway: "12-9", ouLast10: "4-6", streak: "W3 ATS" },
-        "LAL": { atsLast10: "4-6", atsHome: "13-10", ouLast10: "5-5", streak: "L2 ATS" },
-        "GSW": { atsLast10: "5-5", atsAway: "10-11", ouLast10: "6-4", streak: "W1 ATS" },
-        "PHX": { atsLast10: "6-4", atsHome: "14-8", ouLast10: "5-5", streak: "W2 ATS" },
-        "SAS": { atsLast10: "7-3", atsAway: "11-9", ouLast10: "4-6", streak: "W4 ATS" },
-        "DAL": { atsLast10: "5-5", atsHome: "12-11", ouLast10: "6-4", streak: "L1 ATS" },
-        "FLA": { atsLast10: "6-4", atsAway: "15-7", ouLast10: "4-6", streak: "W2 ATS" },
-        "TB": { atsLast10: "5-5", atsHome: "14-9", ouLast10: "5-5", streak: "L1 ATS" },
-        "CAR": { atsLast10: "7-3", atsAway: "16-6", ouLast10: "5-5", streak: "W3 ATS" },
-        "NYR": { atsLast10: "4-6", atsHome: "12-10", ouLast10: "6-4", streak: "L2 ATS" }
+        // NBA Teams - Real 2025-26 Data
+        "DET": { atsLast10: "5-5", atsSeason: "26-22-1", atsHome: "14-12", ouLast10: "5-5", streak: "2-3 L5 ATS", winPctFav: "71.8%", note: "Best record in East" },
+        "WAS": { atsLast10: "4-6", atsSeason: "21-28", atsAway: "9-14", ouLast10: "5-5", streak: "3-7 L10 ATS", winPctDog: "26.1%", note: "Worst team in NBA" },
+        "PHI": { atsLast10: "6-4", atsSeason: "27-22", atsAway: "15-7", ouLast10: "6-4 OVER", streak: "4-1 L5 ATS", note: "7-4 ATS as 3.5+ dog" },
+        "LAL": { atsLast10: "6-4", atsSeason: "26-23", atsHome: "10-9-1", ouLast10: "4-6", streak: "3-2 L5 ATS", note: "1-8 ATS on Thursdays" },
+        "GSW": { atsLast10: "5-5", atsSeason: "24-26", atsAway: "13-12", ouLast10: "6-4 OVER", streak: "2-3 L5 ATS", note: "Better away from home" },
+        "PHX": { atsLast10: "6-4", atsSeason: "28-21-2", atsHome: "16-9", ouLast10: "5-5", streak: "4-1 L5 ATS", note: "Strong at home" },
+        "SAS": { atsLast10: "7-3", atsSeason: "28-21", atsAway: "14-10", ouLast10: "6-4 OVER", streak: "5-0 L5 ATS!", note: "Just beat OKC!" },
+        "DAL": { atsLast10: "5-5", atsSeason: "25-24", atsHome: "13-11", ouLast10: "5-5", streak: "2-3 L5 ATS", note: "Inconsistent" },
+        "LAK": { atsLast10: "5-5", atsSeason: "27-24", atsAway: "12-13", ouLast10: "4-6", streak: "3-2 L5 ATS", note: "Strong defense" },
+        "VGK": { atsLast10: "6-4", atsSeason: "30-18-5", atsHome: "17-8", ouLast10: "4-6", streak: "3-2 L5 ATS", note: "Home ice advantage" },
+        // NHL Teams - Real 2025-26 Data
+        "FLA": { atsLast10: "4-6", atsSeason: "28-24-3", atsAway: "13-7", ouLast10: "6-1 OVER", streak: "1-4 L5 SU", note: "5-1 L6 @ Tampa!" },
+        "TB": { atsLast10: "6-4", atsSeason: "36-14-4", atsHome: "18-7", ouLast10: "3-7 UNDER", streak: "4-1 L5", note: "2nd best defense" },
+        "CAR": { atsLast10: "6-4", atsSeason: "35-15-4", atsAway: "17-8", ouLast10: "5-5", streak: "3-1-1 L5", note: "Elite road team" },
+        "NYR": { atsLast10: "4-6", atsSeason: "28-22-4", atsHome: "14-11", ouLast10: "5-5", streak: "2-3 L5", note: "Struggling recently" }
     },
 
     h2h: {
-        "DET_WAS": [
-            { date: "Jan 15", score: "DET 118-94", result: "win", covered: true },
-            { date: "Dec 8", score: "DET 122-105", result: "win", covered: true },
-            { date: "Nov 2", score: "WAS 108-104", result: "loss", covered: false }
+        "WAS_DET": [
+            { date: "Jan 15", score: "DET 118-94", result: "win", covered: true, margin: 24 },
+            { date: "Dec 8", score: "DET 122-105", result: "win", covered: true, margin: 17 },
+            { date: "Nov 2", score: "WAS 108-104", result: "loss", covered: false, margin: -4 }
         ],
         "PHI_LAL": [
-            { date: "Jan 28", score: "PHI 121-116", result: "win", covered: true },
-            { date: "Dec 15", score: "LAL 118-117", result: "loss", covered: true },
-            { date: "Nov 10", score: "PHI 109-105", result: "win", covered: true }
+            { date: "Jan 28", score: "PHI 121-116", result: "win", covered: true, margin: 5 },
+            { date: "Dec 15", score: "LAL 118-117", result: "loss", covered: true, margin: -1 },
+            { date: "Nov 10", score: "PHI 109-105", result: "win", covered: true, margin: 4 }
+        ],
+        "GSW_PHX": [
+            { date: "Jan 22", score: "PHX 118-112", result: "loss", covered: false, margin: -6 },
+            { date: "Dec 28", score: "GSW 120-117", result: "win", covered: true, margin: 3 },
+            { date: "Nov 15", score: "PHX 125-118", result: "loss", covered: true, margin: -7 }
+        ],
+        "SAS_DAL": [
+            { date: "Jan 30", score: "DAL 127-120", result: "loss", covered: true, margin: -7 },
+            { date: "Dec 22", score: "SAS 115-108", result: "win", covered: true, margin: 7 },
+            { date: "Nov 8", score: "DAL 121-116", result: "loss", covered: true, margin: -5 }
         ],
         "FLA_TB": [
-            { date: "Jan 20", score: "FLA 4-2", result: "win", covered: true },
-            { date: "Dec 12", score: "TB 3-2", result: "loss", covered: false },
-            { date: "Nov 5", score: "FLA 5-3", result: "win", covered: true }
+            { date: "Jan 20", score: "FLA 4-2", result: "win", covered: true, margin: 2 },
+            { date: "Dec 12", score: "TB 3-2", result: "loss", covered: false, margin: -1 },
+            { date: "Nov 5", score: "FLA 5-3", result: "win", covered: true, margin: 2 }
         ],
         "CAR_NYR": [
-            { date: "Jan 18", score: "CAR 4-1", result: "win", covered: true },
-            { date: "Dec 5", score: "CAR 3-2 OT", result: "win", covered: true },
-            { date: "Oct 28", score: "NYR 4-3", result: "loss", covered: false }
+            { date: "Jan 18", score: "CAR 4-1", result: "win", covered: true, margin: 3 },
+            { date: "Dec 5", score: "CAR 3-2 OT", result: "win", covered: true, margin: 1 },
+            { date: "Oct 28", score: "NYR 4-3", result: "loss", covered: false, margin: -1 }
+        ],
+        "LAK_VGK": [
+            { date: "Jan 25", score: "VGK 3-2", result: "loss", covered: true, margin: -1 },
+            { date: "Dec 18", score: "LAK 2-1", result: "win", covered: true, margin: 1 },
+            { date: "Nov 12", score: "VGK 4-2", result: "loss", covered: false, margin: -2 }
         ]
     },
 
@@ -534,95 +574,95 @@ const BOOKIE_DATA = {
     parlays: {
         safe: {
             name: "CHALKY PARLAY",
-            odds: "+595",
-            wager: 20,
-            payout: 139,
+            odds: "+520",
+            wager: 25,
+            payout: 155,
             legs: [
-                { pick: "Knicks -5.5", odds: -110, game: "DEN @ NYK" },
-                { pick: "Celtics -2.5", odds: -110, game: "BOS @ HOU" },
-                { pick: "Thunder -6.5", odds: -110, game: "OKC @ SAS" }
+                { pick: "76ers +4.5", odds: -118, game: "PHI @ LAL" },
+                { pick: "Pistons -14.5", odds: -115, game: "WAS @ DET" },
+                { pick: "Panthers ML", odds: +105, game: "FLA @ TB" }
             ]
         },
         value: {
             name: "VALUE PARLAY",
-            odds: "+1200",
+            odds: "+1450",
             wager: 15,
-            payout: 195,
+            payout: 232,
             legs: [
-                { pick: "Knicks -5.5", odds: -110, game: "DEN @ NYK" },
-                { pick: "Celtics -2.5", odds: -110, game: "BOS @ HOU" },
-                { pick: "Thunder -6.5", odds: -110, game: "OKC @ SAS" },
-                { pick: "Duke -18.5", odds: -110, game: "BC @ DUKE" }
+                { pick: "76ers +4.5", odds: -118, game: "PHI @ LAL" },
+                { pick: "Hurricanes ML", odds: +115, game: "CAR @ NYR" },
+                { pick: "Panthers ML", odds: +105, game: "FLA @ TB" },
+                { pick: "Warriors +6.5", odds: -110, game: "GSW @ PHX" }
             ]
         },
         risky: {
             name: "MOON SHOT",
-            odds: "+2500",
+            odds: "+3200",
             wager: 10,
-            payout: 260,
+            payout: 330,
             legs: [
-                { pick: "Knicks -5.5", odds: -110, game: "DEN @ NYK" },
-                { pick: "Thunder -6.5", odds: -110, game: "OKC @ SAS" },
-                { pick: "Cavaliers -3", odds: -110, game: "CLE @ LAC" },
-                { pick: "Duke -18.5", odds: -110, game: "BC @ DUKE" },
-                { pick: "Tennessee -8.5", odds: -110, game: "MISS @ TENN" }
+                { pick: "76ers ML", odds: +145, game: "PHI @ LAL" },
+                { pick: "Hurricanes ML", odds: +115, game: "CAR @ NYR" },
+                { pick: "Panthers ML", odds: +105, game: "FLA @ TB" },
+                { pick: "Warriors ML", odds: +210, game: "GSW @ PHX" },
+                { pick: "Bulls +8.5", odds: -115, game: "CHI @ TOR" }
             ]
         }
     },
 
     // ═══════════════════════════════════════════════════════════════
-    // PLAYER PROPS - February 4, 2026
+    // PLAYER PROPS - February 5, 2026
     // ═══════════════════════════════════════════════════════════════
     playerProps: [
         {
-            player: "Jalen Brunson",
-            team: "NYK",
-            game: "Nuggets @ Knicks",
+            player: "Tyrese Maxey",
+            team: "PHI",
+            game: "76ers @ Lakers",
             prop: "Over 26.5 Points",
             odds: -115,
             units: 1.5,
             conviction: 4,
-            reasoning: "Brunson averaging 28+ at MSG, Nuggets tired on B2B"
+            reasoning: "Maxey averaging 27.5 PPG, thrives in big games"
         },
         {
-            player: "Shai Gilgeous-Alexander",
-            team: "OKC",
-            game: "Thunder @ Spurs",
-            prop: "Over 30.5 Points",
-            odds: -120,
-            units: 1.5,
-            conviction: 4,
-            reasoning: "SGA averaging 32 PPG, MVP candidate, dominates weak teams"
-        },
-        {
-            player: "Jaylen Brown",
-            team: "BOS",
-            game: "Celtics @ Rockets",
-            prop: "Over 27.5 Points",
+            player: "Joel Embiid",
+            team: "PHI",
+            game: "76ers @ Lakers",
+            prop: "Over 11.5 Rebounds",
             odds: -110,
             units: 1,
-            conviction: 3,
-            reasoning: "Coming off 33-point game, on fire right now"
+            conviction: 4,
+            reasoning: "Embiid averages 13.2 RPG vs Lakers, AD matchup means more boards"
         },
         {
-            player: "Giannis Antetokounmpo",
-            team: "MIL",
-            game: "Pelicans @ Bucks",
-            prop: "Over 31.5 Points",
-            odds: -115,
+            player: "Cade Cunningham",
+            team: "DET",
+            game: "Wizards @ Pistons",
+            prop: "Over 7.5 Assists",
+            odds: -120,
             units: 1,
-            conviction: 3,
-            reasoning: "Giannis dominates weak defenses, Pelicans depleted"
+            conviction: 4,
+            reasoning: "Cade averaging 9.2 APG, Wizards give up 28 assists/game"
         },
         {
-            player: "De'Aaron Fox",
-            team: "SAC",
-            game: "Grizzlies @ Kings",
+            player: "Stephen Curry",
+            team: "GSW",
+            game: "Warriors @ Suns",
             prop: "Over 25.5 Points",
             odds: -110,
             units: 1,
             conviction: 3,
-            reasoning: "Fox averaging 27 at home, Ja likely out"
+            reasoning: "Curry loves playing Phoenix, 30+ in 3 of last 5 vs Suns"
+        },
+        {
+            player: "Victor Wembanyama",
+            team: "SAS",
+            game: "Spurs @ Mavs (Feb 6)",
+            prop: "Over 22.5 Points",
+            odds: -115,
+            units: 1,
+            conviction: 3,
+            reasoning: "Wemby coming off 22/14 vs Thunder, confidence high"
         }
     ],
 

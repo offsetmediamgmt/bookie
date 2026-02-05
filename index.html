@@ -85,22 +85,22 @@
             <div class="bets-summary">
                 <div class="summary-card">
                     <div class="summary-icon">📝</div>
-                    <div class="summary-value" id="totalBets">12</div>
+                    <div class="summary-value" id="totalBets">15</div>
                     <div class="summary-label">Total Bets</div>
                 </div>
                 <div class="summary-card risk">
                     <div class="summary-icon">💸</div>
-                    <div class="summary-value" id="totalRisk">$260</div>
+                    <div class="summary-value" id="totalRisk">$310</div>
                     <div class="summary-label">Total Risk</div>
                 </div>
                 <div class="summary-card win">
                     <div class="summary-icon">🏆</div>
-                    <div class="summary-value" id="potentialWin">$650+</div>
+                    <div class="summary-value" id="potentialWin">$850+</div>
                     <div class="summary-label">Potential Win</div>
                 </div>
                 <div class="summary-card progress">
                     <div class="summary-icon">✅</div>
-                    <div class="summary-value" id="betsPlaced">0/16</div>
+                    <div class="summary-value" id="betsPlaced">0/15</div>
                     <div class="summary-label">Placed</div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                         <span class="section-icon">🎲</span>
                         <h3>STRAIGHT BETS</h3>
                     </div>
-                    <span class="section-total">7 bets · $170 risk</span>
+                    <span class="section-total">7 bets · $200 risk</span>
                 </div>
                 <div class="bets-list" id="straightBetsList"></div>
             </div>
@@ -154,7 +154,7 @@
         <div class="page-section" id="page-watch">
             <div class="page-header">
                 <div class="page-title">📺 GAME SCHEDULE</div>
-                <div class="page-subtitle">February 4, 2026 — All Times PST</div>
+                <div class="page-subtitle">February 5, 2026 — Trade Deadline Day!</div>
             </div>
 
             <div class="next-game-card" id="nextGameCard">
@@ -235,6 +235,80 @@
             <div class="page-header">
                 <div class="page-title">📊 DAILY CARD</div>
                 <div class="page-subtitle">February 5, 2026 — Sharp Analysis</div>
+            </div>
+
+            <!-- DATA SOURCES BAR -->
+            <div class="data-sources-bar">
+                <div class="sources-left">
+                    <span class="sources-label">📡 LIVE DATA</span>
+                    <span class="sources-list">TheSpread.com · Action Network · FOX Sports · TeamRankings</span>
+                </div>
+                <div class="sources-right">
+                    <span class="last-updated">Last Updated: Feb 5, 2026 6:00 PM ET</span>
+                </div>
+            </div>
+
+            <!-- SHARP VS PUBLIC EXPLAINER -->
+            <div class="explainer-section">
+                <div class="explainer-header" onclick="toggleExplainer()">
+                    <span class="explainer-icon">📚</span>
+                    <h3>WHAT IS SHARP VS PUBLIC BETTING?</h3>
+                    <span class="explainer-toggle" id="explainerToggle">▼</span>
+                </div>
+                <div class="explainer-content" id="explainerContent">
+                    <div class="explainer-grid">
+                        <div class="explainer-card public">
+                            <div class="explainer-card-header">
+                                <span class="explainer-emoji">🎰</span>
+                                <h4>PUBLIC BETTORS</h4>
+                            </div>
+                            <ul>
+                                <li><strong>Who:</strong> Casual, recreational bettors</li>
+                                <li><strong>Behavior:</strong> Bet on favorites, popular teams, overs</li>
+                                <li><strong>Volume:</strong> High number of bets, smaller amounts</li>
+                                <li><strong>Signals:</strong> High % of bets on one side</li>
+                            </ul>
+                        </div>
+                        <div class="explainer-card sharp">
+                            <div class="explainer-card-header">
+                                <span class="explainer-emoji">🧠</span>
+                                <h4>SHARP BETTORS</h4>
+                            </div>
+                            <ul>
+                                <li><strong>Who:</strong> Professional bettors, syndicates</li>
+                                <li><strong>Behavior:</strong> Find value, bet against public</li>
+                                <li><strong>Volume:</strong> Fewer bets, MUCH larger amounts</li>
+                                <li><strong>Signals:</strong> High % of money despite low % of bets</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="explainer-key-insight">
+                        <span class="key-icon">🔑</span>
+                        <div class="key-text">
+                            <strong>THE KEY INSIGHT:</strong> When 70% of bets are on Team A, but 60% of <em>money</em> is on Team B,
+                            sharps are fading the public. This is called a <strong>"reverse line movement"</strong> signal —
+                            the line should move toward Team A with all those bets, but if it moves toward Team B instead,
+                            sportsbooks are respecting the sharp money.
+                        </div>
+                    </div>
+                    <div class="explainer-how-to-use">
+                        <h4>📊 HOW TO READ THE CHARTS BELOW</h4>
+                        <div class="how-to-grid">
+                            <div class="how-to-item">
+                                <span class="how-icon green">✅</span>
+                                <span><strong>Sharp Play:</strong> Sharp money ≥60% = Follow the pros</span>
+                            </div>
+                            <div class="how-to-item">
+                                <span class="how-icon yellow">⚖️</span>
+                                <span><strong>Fade Alert:</strong> Public ≥70% + sharp opposite = Fade public</span>
+                            </div>
+                            <div class="how-to-item">
+                                <span class="how-icon red">⚠️</span>
+                                <span><strong>Caution:</strong> Public and sharp aligned ≥65% = Trap potential</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- SHARP VS PUBLIC SUMMARY -->
