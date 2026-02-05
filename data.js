@@ -348,8 +348,8 @@ const BOOKIE_DATA = {
         },
         {
             id: 4, sport: "NBA", player: "Anthony Davis", team: "LAL", teamFull: "Lakers", position: "F/C",
-            status: "questionable", injury: "Knee Soreness", return: "Game-Time Decision", impact: "high",
-            notes: "Listed questionable for PHI game. Lakers need him vs Embiid."
+            status: "out", injury: "Knee Soreness", return: "Out Tonight", impact: "high",
+            notes: "OUT for PHI game. LeBron will need to carry the load vs Embiid."
         },
         {
             id: 5, sport: "NBA", player: "Kawhi Leonard", team: "LAC", teamFull: "Clippers", position: "F",
@@ -645,14 +645,14 @@ const BOOKIE_DATA = {
             reasoning: "Cade averaging 9.2 APG, Wizards give up 28 assists/game"
         },
         {
-            player: "Anthony Davis",
+            player: "LeBron James",
             team: "LAL",
             game: "76ers @ Lakers",
-            prop: "Over 10.5 Rebounds",
-            odds: -115,
+            prop: "Over 7.5 Assists",
+            odds: -120,
             units: 1,
             conviction: 4,
-            reasoning: "AD averaging 11.8 RPG, Embiid matchup = battle on the boards"
+            reasoning: "LeBron averaging 9.0 APG, with AD out he'll facilitate even more"
         },
         {
             player: "Victor Wembanyama",
