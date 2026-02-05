@@ -1831,115 +1831,59 @@ function markAllPlaced() {
 // WATCH PAGE - Game Schedule
 // ═══════════════════════════════════════════════════════════════
 function renderWatchPage() {
-    // February 5, 2026 - Trade Deadline + LAST NHL BEFORE OLYMPICS
-    const games = [
-        {
-            id: 1,
-            time: '4:00 PM',
-            timePST: '4:00 PM PST',
-            timeET: '7:00 PM ET',
-            sport: 'NBA',
-            away: { abbr: 'WAS', name: 'Wizards', record: '8-42' },
-            home: { abbr: 'DET', name: 'Pistons', record: '37-12' },
-            channel: 'League Pass',
-            picks: [
-                { pick: 'Wizards +14.5', odds: '-112', amount: 38 },
-                { pick: 'Cade O24.5 pts', odds: '-115', amount: 19 }
-            ],
-            status: 'upcoming'
-        },
-        {
-            id: 2,
-            time: '4:00 PM',
-            timePST: '4:00 PM PST',
-            timeET: '7:00 PM ET',
-            sport: 'NHL',
-            away: { abbr: 'CAR', name: 'Hurricanes', record: '35-15-4' },
-            home: { abbr: 'NYR', name: 'Rangers', record: '28-22-4' },
-            channel: 'ESPN+',
-            picks: [
-                { pick: 'Hurricanes ML', odds: '+110', amount: 19 }
-            ],
-            status: 'upcoming'
-        },
-        {
-            id: 3,
-            time: '4:30 PM',
-            timePST: '4:30 PM PST',
-            timeET: '7:30 PM ET',
-            sport: 'NHL',
-            away: { abbr: 'FLA', name: 'Panthers', record: '37-13-4' },
-            home: { abbr: 'TB', name: 'Lightning', record: '30-20-4' },
-            channel: 'ESPN+',
-            picks: [
-                { pick: 'Panthers ML', odds: '-125', amount: 28 }
-            ],
-            status: 'upcoming'
-        },
-        {
-            id: 4,
-            time: '5:30 PM',
-            timePST: '5:30 PM PST',
-            timeET: '8:30 PM ET',
-            sport: 'NBA',
-            away: { abbr: 'SAS', name: 'Spurs', record: '21-30' },
-            home: { abbr: 'DAL', name: 'Mavericks', record: '28-22' },
-            channel: 'League Pass',
-            picks: [
-                { pick: 'Spurs +7.5', odds: '-110', amount: 19 },
-                { pick: 'Wemby O21.5 pts', odds: '-115', amount: 12 }
-            ],
-            status: 'upcoming'
-        },
-        {
-            id: 5,
-            time: '7:00 PM',
-            timePST: '7:00 PM PST',
-            timeET: '10:00 PM ET',
-            sport: 'NBA',
-            away: { abbr: 'PHI', name: '76ers', record: '28-22' },
-            home: { abbr: 'LAL', name: 'Lakers', record: '29-22' },
-            channel: 'Prime Video',
-            picks: [
-                { pick: '76ers +4.5', odds: '-110', amount: 28 },
-                { pick: 'Maxey O25.5 pts', odds: '-110', amount: 19 }
-            ],
-            status: 'upcoming'
-        },
-        {
-            id: 6,
-            time: '7:00 PM',
-            timePST: '7:00 PM PST',
-            timeET: '10:00 PM ET',
-            sport: 'NBA',
-            away: { abbr: 'GSW', name: 'Warriors', record: '27-24' },
-            home: { abbr: 'PHX', name: 'Suns', record: '30-20' },
-            channel: 'Prime Video',
-            picks: [
-                { pick: 'Warriors +5.5', odds: '-110', amount: 19 }
-            ],
-            status: 'upcoming'
-        },
-        {
-            id: 7,
-            time: '7:00 PM',
-            timePST: '7:00 PM PST',
-            timeET: '10:00 PM ET',
-            sport: 'NHL',
-            away: { abbr: 'LAK', name: 'Kings', record: '30-18-6' },
-            home: { abbr: 'VGK', name: 'Golden Knights', record: '33-16-5' },
-            channel: 'ESPN+',
-            picks: [
-                { pick: 'Under 5.5', odds: '-110', amount: 19 }
-            ],
-            status: 'upcoming'
-        }
-    ];
+    // Build games from BOOKIE_DATA for consistency
+    const games = buildWatchGames();
 
     renderNextGame(games[0]);
     renderTimeline(games);
     renderGamesList(games);
     renderFlightTracker(games);
+}
+
+function buildWatchGames() {
+    // Game schedule with channels - picks will be pulled from BOOKIE_DATA
+    const gameSchedule = [
+        { id: 1, time: '4:00 PM', timeET: '7:00 PM ET', sport: 'NBA', away: 'WAS', home: 'DET', awayName: 'Wizards', homeName: 'Pistons', awayRecord: '8-42', homeRecord: '37-12', channel: 'League Pass' },
+        { id: 2, time: '4:00 PM', timeET: '7:00 PM ET', sport: 'NHL', away: 'CAR', home: 'NYR', awayName: 'Hurricanes', homeName: 'Rangers', awayRecord: '35-15-4', homeRecord: '28-22-4', channel: 'ESPN+' },
+        { id: 3, time: '4:00 PM', timeET: '7:00 PM ET', sport: 'NHL', away: 'FLA', home: 'TB', awayName: 'Panthers', homeName: 'Lightning', awayRecord: '37-13-4', homeRecord: '30-20-4', channel: 'ESPN+' },
+        { id: 4, time: '4:30 PM', timeET: '7:30 PM ET', sport: 'NBA', away: 'CHI', home: 'TOR', awayName: 'Bulls', homeName: 'Raptors', awayRecord: '22-28', homeRecord: '23-27', channel: 'League Pass' },
+        { id: 5, time: '7:00 PM', timeET: '10:00 PM ET', sport: 'NBA', away: 'GSW', home: 'PHX', awayName: 'Warriors', homeName: 'Suns', awayRecord: '27-24', homeRecord: '30-20', channel: 'Prime Video' },
+        { id: 6, time: '7:30 PM', timeET: '10:30 PM ET', sport: 'NBA', away: 'PHI', home: 'LAL', awayName: '76ers', homeName: 'Lakers', awayRecord: '28-22', homeRecord: '29-22', channel: 'Prime Video' },
+        { id: 7, time: '7:00 PM', timeET: '10:00 PM ET', sport: 'NHL', away: 'LAK', home: 'VGK', awayName: 'Kings', homeName: 'Golden Knights', awayRecord: '30-18-6', homeRecord: '33-16-5', channel: 'ESPN+' }
+    ];
+
+    return gameSchedule.map(g => {
+        // Find matching picks from todaysPicks
+        const straightPick = BOOKIE_DATA.todaysPicks.find(p => p.away === g.away && p.home === g.home);
+        // Find matching props
+        const props = BOOKIE_DATA.playerProps.filter(p => {
+            const gameTeams = [g.away, g.home];
+            return gameTeams.includes(p.team);
+        });
+
+        const picks = [];
+        if (straightPick) {
+            const tier = BOOKIE_DATA.unitTiers.find(t => t.locks === straightPick.conviction) || BOOKIE_DATA.unitTiers[1];
+            picks.push({ pick: straightPick.pick, odds: formatOdds(straightPick.odds), amount: tier.amount });
+        }
+        props.forEach(prop => {
+            const tier = BOOKIE_DATA.unitTiers.find(t => t.locks === prop.conviction) || BOOKIE_DATA.unitTiers[1];
+            picks.push({ pick: `${prop.player.split(' ').pop()} ${prop.prop.replace('Over ', 'O').replace('Under ', 'U')}`, odds: formatOdds(prop.odds), amount: tier.amount });
+        });
+
+        return {
+            id: g.id,
+            time: g.time,
+            timePST: g.time + ' PST',
+            timeET: g.timeET,
+            sport: g.sport,
+            away: { abbr: g.away, name: g.awayName, record: g.awayRecord },
+            home: { abbr: g.home, name: g.homeName, record: g.homeRecord },
+            channel: g.channel,
+            picks: picks,
+            status: 'upcoming'
+        };
+    });
 }
 
 // ═══════════════════════════════════════════════════════════════
