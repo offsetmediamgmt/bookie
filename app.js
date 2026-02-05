@@ -206,7 +206,7 @@ function updateCountdown() {
     const countdownEl = document.getElementById('countdownTimer');
     if (!countdownEl) return;
 
-    // First game is at 4:00 PM PST (7:00 PM ET) on Feb 4, 2026
+    // First game is at 4:00 PM PST (7:00 PM ET) on Feb 5, 2026
     const now = new Date();
     const firstGame = new Date();
     firstGame.setHours(16, 0, 0, 0); // 4:00 PM local time
@@ -1260,15 +1260,15 @@ function renderStraightBets() {
     const container = document.getElementById('straightBetsList');
     if (!container) return;
 
+    // February 5, 2026 - Trade Deadline Day + Last NHL before Olympics
     const bets = [
-        { id: 'straight-1', game: 'DEN @ NYK', pick: 'Knicks -5.5', odds: -110, amount: 27, deadline: '4:00 PM', sport: 'NBA', away: 'DEN', home: 'NYK' },
-        { id: 'straight-2', game: 'BOS @ HOU', pick: 'Celtics -2.5', odds: -110, amount: 27, deadline: '5:00 PM', sport: 'NBA', away: 'BOS', home: 'HOU' },
-        { id: 'straight-3', game: 'OKC @ SAS', pick: 'Thunder -6.5', odds: -110, amount: 35, deadline: '6:30 PM', sport: 'NBA', away: 'OKC', home: 'SAS' },
-        { id: 'straight-4', game: 'CLE @ LAC', pick: 'Cavaliers -3', odds: -110, amount: 18, deadline: '7:30 PM', sport: 'NBA', away: 'CLE', home: 'LAC' },
-        { id: 'straight-5', game: 'NOP @ MIL', pick: 'Bucks -8.5', odds: -110, amount: 18, deadline: '5:00 PM', sport: 'NBA', away: 'NOP', home: 'MIL' },
-        { id: 'straight-6', game: 'MEM @ SAC', pick: 'Kings -2.5', odds: -110, amount: 18, deadline: '7:00 PM', sport: 'NBA', away: 'MEM', home: 'SAC' },
-        { id: 'straight-7', game: 'BC @ DUKE', pick: 'Duke -18.5', odds: -110, amount: 18, deadline: '4:00 PM', sport: 'NCAAB', away: 'BC', home: 'DUKE' },
-        { id: 'straight-8', game: 'MISS @ TENN', pick: 'Tennessee -8.5', odds: -110, amount: 27, deadline: '4:00 PM', sport: 'NCAAB', away: 'MISS', home: 'TENN' },
+        { id: 'straight-1', game: 'WAS @ DET', pick: 'Pistons -14.5', odds: -110, amount: 38, deadline: '4:00 PM', sport: 'NBA', away: 'WAS', home: 'DET' },
+        { id: 'straight-2', game: 'PHI @ LAL', pick: '76ers +4.5', odds: -110, amount: 28, deadline: '7:00 PM', sport: 'NBA', away: 'PHI', home: 'LAL' },
+        { id: 'straight-3', game: 'GSW @ PHX', pick: 'Warriors +5.5', odds: -110, amount: 19, deadline: '7:00 PM', sport: 'NBA', away: 'GSW', home: 'PHX' },
+        { id: 'straight-4', game: 'SAS @ DAL', pick: 'Spurs +7.5', odds: -110, amount: 19, deadline: '5:30 PM', sport: 'NBA', away: 'SAS', home: 'DAL' },
+        { id: 'straight-5', game: 'FLA @ TB', pick: 'Panthers ML', odds: -125, amount: 28, deadline: '4:30 PM', sport: 'NHL', away: 'FLA', home: 'TB' },
+        { id: 'straight-6', game: 'CAR @ NYR', pick: 'Hurricanes ML', odds: 110, amount: 19, deadline: '4:00 PM', sport: 'NHL', away: 'CAR', home: 'NYR' },
+        { id: 'straight-7', game: 'LAK @ VGK', pick: 'UNDER 5.5', odds: -110, amount: 19, deadline: '7:00 PM', sport: 'NHL', away: 'LAK', home: 'VGK' },
     ];
 
     container.innerHTML = bets.map((bet, index) => {
@@ -1331,47 +1331,32 @@ function renderParlayBets() {
     const container = document.getElementById('parlayBetsList');
     if (!container) return;
 
+    // February 5, 2026 parlays
     const parlays = [
         {
             id: 'parlay-1',
             name: 'CHALKY PARLAY',
             emoji: '🔒',
-            odds: '+595',
-            amount: 20,
-            toWin: 139,
+            odds: '+450',
+            amount: 25,
+            toWin: 137,
             legs: [
-                { pick: 'Knicks -5.5', away: 'DEN', home: 'NYK' },
-                { pick: 'Celtics -2.5', away: 'BOS', home: 'HOU' },
-                { pick: 'Thunder -6.5', away: 'OKC', home: 'SAS' }
+                { pick: 'Pistons -14.5', away: 'WAS', home: 'DET' },
+                { pick: 'Panthers ML', away: 'FLA', home: 'TB' },
+                { pick: '76ers +4.5', away: 'PHI', home: 'LAL' }
             ]
         },
         {
             id: 'parlay-2',
-            name: 'VALUE PARLAY',
-            emoji: '💰',
-            odds: '+1200',
+            name: 'NHL SPECIAL',
+            emoji: '🏒',
+            odds: '+650',
             amount: 15,
-            toWin: 195,
+            toWin: 112,
             legs: [
-                { pick: 'Knicks -5.5', away: 'DEN', home: 'NYK' },
-                { pick: 'Celtics -2.5', away: 'BOS', home: 'HOU' },
-                { pick: 'Thunder -6.5', away: 'OKC', home: 'SAS' },
-                { pick: 'Duke -18.5', away: 'BC', home: 'DUKE' }
-            ]
-        },
-        {
-            id: 'parlay-3',
-            name: 'MOON SHOT',
-            emoji: '🚀',
-            odds: '+2500',
-            amount: 10,
-            toWin: 260,
-            legs: [
-                { pick: 'Knicks -5.5', away: 'DEN', home: 'NYK' },
-                { pick: 'Thunder -6.5', away: 'OKC', home: 'SAS' },
-                { pick: 'Cavaliers -3', away: 'CLE', home: 'LAC' },
-                { pick: 'Duke -18.5', away: 'BC', home: 'DUKE' },
-                { pick: 'Tennessee -8.5', away: 'MISS', home: 'TENN' }
+                { pick: 'Panthers ML', away: 'FLA', home: 'TB' },
+                { pick: 'Hurricanes ML', away: 'CAR', home: 'NYR' },
+                { pick: 'Under 5.5', away: 'LAK', home: 'VGK' }
             ]
         }
     ];
@@ -1421,12 +1406,11 @@ function renderPropBets() {
     const container = document.getElementById('propBetsList');
     if (!container) return;
 
+    // February 5, 2026 props
     const props = [
-        { id: 'prop-1', player: 'Jalen Brunson', teamAbbr: 'NYK', prop: 'Over 26.5 Points', odds: -115, amount: 27, game: 'DEN @ NYK' },
-        { id: 'prop-2', player: 'Shai Gilgeous-Alexander', teamAbbr: 'OKC', prop: 'Over 30.5 Points', odds: -120, amount: 27, game: 'OKC @ SAS' },
-        { id: 'prop-3', player: 'Jaylen Brown', teamAbbr: 'BOS', prop: 'Over 27.5 Points', odds: -110, amount: 18, game: 'BOS @ HOU' },
-        { id: 'prop-4', player: 'Giannis Antetokounmpo', teamAbbr: 'MIL', prop: 'Over 31.5 Points', odds: -115, amount: 18, game: 'NOP @ MIL' },
-        { id: 'prop-5', player: "De'Aaron Fox", teamAbbr: 'SAC', prop: 'Over 25.5 Points', odds: -110, amount: 18, game: 'MEM @ SAC' },
+        { id: 'prop-1', player: 'Cade Cunningham', teamAbbr: 'DET', prop: 'Over 24.5 Points', odds: -115, amount: 19, game: 'WAS @ DET' },
+        { id: 'prop-2', player: 'Tyrese Maxey', teamAbbr: 'PHI', prop: 'Over 25.5 Points', odds: -110, amount: 19, game: 'PHI @ LAL' },
+        { id: 'prop-3', player: 'Victor Wembanyama', teamAbbr: 'SAS', prop: 'Over 21.5 Points', odds: -115, amount: 12, game: 'SAS @ DAL' },
     ];
 
     container.innerHTML = props.map(prop => {
@@ -1527,9 +1511,9 @@ function resetAllBets() {
 function markAllPlaced() {
     const allIds = [
         'straight-1', 'straight-2', 'straight-3', 'straight-4', 'straight-5',
-        'straight-6', 'straight-7', 'straight-8',
-        'parlay-1', 'parlay-2', 'parlay-3',
-        'prop-1', 'prop-2', 'prop-3', 'prop-4', 'prop-5'
+        'straight-6', 'straight-7',
+        'parlay-1', 'parlay-2',
+        'prop-1', 'prop-2', 'prop-3'
     ];
     allIds.forEach(id => betStatus[id] = 'placed');
     saveBetStatus();
@@ -1540,7 +1524,7 @@ function markAllPlaced() {
 // WATCH PAGE - Game Schedule
 // ═══════════════════════════════════════════════════════════════
 function renderWatchPage() {
-    // February 4, 2026 - No NHL (Olympic break)
+    // February 5, 2026 - Trade Deadline + LAST NHL BEFORE OLYMPICS
     const games = [
         {
             id: 1,
@@ -1548,12 +1532,12 @@ function renderWatchPage() {
             timePST: '4:00 PM PST',
             timeET: '7:00 PM ET',
             sport: 'NBA',
-            away: { abbr: 'DEN', name: 'Nuggets', record: '33-18' },
-            home: { abbr: 'NYK', name: 'Knicks', record: '34-17' },
-            channel: 'TNT',
+            away: { abbr: 'WAS', name: 'Wizards', record: '8-42' },
+            home: { abbr: 'DET', name: 'Pistons', record: '37-12' },
+            channel: 'League Pass',
             picks: [
-                { pick: 'Knicks -5.5', odds: '-110', amount: 27 },
-                { pick: 'Brunson O27.5 pts', odds: '-115', amount: 18 }
+                { pick: 'Pistons -14.5', odds: '-110', amount: 38 },
+                { pick: 'Cade O24.5 pts', odds: '-115', amount: 19 }
             ],
             status: 'upcoming'
         },
@@ -1562,86 +1546,84 @@ function renderWatchPage() {
             time: '4:00 PM',
             timePST: '4:00 PM PST',
             timeET: '7:00 PM ET',
-            sport: 'NCAAB',
-            away: { abbr: 'BC', name: 'Boston College', record: '14-10' },
-            home: { abbr: 'MISS', name: 'Ole Miss', record: '14-10' },
-            channel: 'SECN',
+            sport: 'NHL',
+            away: { abbr: 'CAR', name: 'Hurricanes', record: '35-15-4' },
+            home: { abbr: 'NYR', name: 'Rangers', record: '28-22-4' },
+            channel: 'ESPN+',
             picks: [
-                { pick: 'Boston College -2.5', odds: '-110', amount: 18 }
+                { pick: 'Hurricanes ML', odds: '+110', amount: 19 }
             ],
             status: 'upcoming'
         },
         {
             id: 3,
-            time: '5:00 PM',
-            timePST: '5:00 PM PST',
-            timeET: '8:00 PM ET',
-            sport: 'NBA',
-            away: { abbr: 'BOS', name: 'Celtics', record: '32-18' },
-            home: { abbr: 'HOU', name: 'Rockets', record: '33-16' },
-            channel: 'ESPN',
+            time: '4:30 PM',
+            timePST: '4:30 PM PST',
+            timeET: '7:30 PM ET',
+            sport: 'NHL',
+            away: { abbr: 'FLA', name: 'Panthers', record: '37-13-4' },
+            home: { abbr: 'TB', name: 'Lightning', record: '30-20-4' },
+            channel: 'ESPN+',
             picks: [
-                { pick: 'Celtics -2.5', odds: '-110', amount: 27 },
-                { pick: 'J. Brown O26.5 pts', odds: '-110', amount: 18 }
+                { pick: 'Panthers ML', odds: '-125', amount: 28 }
             ],
             status: 'upcoming'
         },
         {
             id: 4,
-            time: '5:00 PM',
-            timePST: '5:00 PM PST',
-            timeET: '8:00 PM ET',
+            time: '5:30 PM',
+            timePST: '5:30 PM PST',
+            timeET: '8:30 PM ET',
             sport: 'NBA',
-            away: { abbr: 'MIL', name: 'Bucks', record: '28-22' },
-            home: { abbr: 'NOP', name: 'Pelicans', record: '12-39' },
+            away: { abbr: 'SAS', name: 'Spurs', record: '21-30' },
+            home: { abbr: 'DAL', name: 'Mavericks', record: '28-22' },
             channel: 'League Pass',
             picks: [
-                { pick: 'Bucks -3.5', odds: '-110', amount: 18 },
-                { pick: 'Giannis O31.5 pts', odds: '-115', amount: 18 }
+                { pick: 'Spurs +7.5', odds: '-110', amount: 19 },
+                { pick: 'Wemby O21.5 pts', odds: '-115', amount: 12 }
             ],
             status: 'upcoming'
         },
         {
             id: 5,
-            time: '5:00 PM',
-            timePST: '5:00 PM PST',
-            timeET: '8:00 PM ET',
+            time: '7:00 PM',
+            timePST: '7:00 PM PST',
+            timeET: '10:00 PM ET',
             sport: 'NBA',
-            away: { abbr: 'LAL', name: 'Lakers', record: '28-22' },
-            home: { abbr: 'MEM', name: 'Grizzlies', record: '31-19' },
-            channel: 'League Pass',
+            away: { abbr: 'PHI', name: '76ers', record: '28-22' },
+            home: { abbr: 'LAL', name: 'Lakers', record: '29-22' },
+            channel: 'Prime Video',
             picks: [
-                { pick: 'UNDER 232.5', odds: '-110', amount: 18 }
+                { pick: '76ers +4.5', odds: '-110', amount: 28 },
+                { pick: 'Maxey O25.5 pts', odds: '-110', amount: 19 }
             ],
             status: 'upcoming'
         },
         {
             id: 6,
-            time: '5:00 PM',
-            timePST: '5:00 PM PST',
-            timeET: '8:00 PM ET',
+            time: '7:00 PM',
+            timePST: '7:00 PM PST',
+            timeET: '10:00 PM ET',
             sport: 'NBA',
-            away: { abbr: 'SAC', name: 'Kings', record: '26-25' },
-            home: { abbr: 'MIN', name: 'Timberwolves', record: '28-23' },
-            channel: 'League Pass',
+            away: { abbr: 'GSW', name: 'Warriors', record: '27-24' },
+            home: { abbr: 'PHX', name: 'Suns', record: '30-20' },
+            channel: 'Prime Video',
             picks: [
-                { pick: 'Kings +5.5', odds: '-110', amount: 18 },
-                { pick: 'Fox O25.5 pts', odds: '-115', amount: 18 }
+                { pick: 'Warriors +5.5', odds: '-110', amount: 19 }
             ],
             status: 'upcoming'
         },
         {
             id: 7,
-            time: '5:30 PM',
-            timePST: '5:30 PM PST',
-            timeET: '8:30 PM ET',
-            sport: 'NBA',
-            away: { abbr: 'OKC', name: 'Thunder', record: '40-9' },
-            home: { abbr: 'SAS', name: 'Spurs', record: '20-30' },
-            channel: 'NBA TV',
+            time: '7:00 PM',
+            timePST: '7:00 PM PST',
+            timeET: '10:00 PM ET',
+            sport: 'NHL',
+            away: { abbr: 'LAK', name: 'Kings', record: '30-18-6' },
+            home: { abbr: 'VGK', name: 'Golden Knights', record: '33-16-5' },
+            channel: 'ESPN+',
             picks: [
-                { pick: 'Thunder -9.5', odds: '-110', amount: 27 },
-                { pick: 'SGA O30.5 pts', odds: '-115', amount: 18 }
+                { pick: 'Under 5.5', odds: '-110', amount: 19 }
             ],
             status: 'upcoming'
         }
@@ -1951,15 +1933,15 @@ function formatTimeRemaining(minutes) {
 
 // Get games data (would be from BOOKIE_DATA in production)
 function getGamesData() {
-    // February 4, 2026 - No NHL (Olympic break)
+    // February 5, 2026 - Trade Deadline + Last NHL before Olympics
     return [
-        { id: 1, time: '4:00 PM', sport: 'NBA', away: { abbr: 'DEN', name: 'Nuggets' }, home: { abbr: 'NYK', name: 'Knicks' }, channel: 'TNT', picks: [{ pick: 'Knicks -5.5', odds: '-110', amount: 27 }] },
-        { id: 2, time: '4:00 PM', sport: 'NCAAB', away: { abbr: 'BC', name: 'Boston College' }, home: { abbr: 'MISS', name: 'Ole Miss' }, channel: 'SECN', picks: [{ pick: 'BC -2.5', odds: '-110', amount: 18 }] },
-        { id: 3, time: '5:00 PM', sport: 'NBA', away: { abbr: 'BOS', name: 'Celtics' }, home: { abbr: 'HOU', name: 'Rockets' }, channel: 'ESPN', picks: [{ pick: 'Celtics -2.5', odds: '-110', amount: 27 }] },
-        { id: 4, time: '5:00 PM', sport: 'NBA', away: { abbr: 'MIL', name: 'Bucks' }, home: { abbr: 'NOP', name: 'Pelicans' }, channel: 'League Pass', picks: [{ pick: 'Bucks -3.5', odds: '-110', amount: 18 }] },
-        { id: 5, time: '5:00 PM', sport: 'NBA', away: { abbr: 'LAL', name: 'Lakers' }, home: { abbr: 'MEM', name: 'Grizzlies' }, channel: 'League Pass', picks: [{ pick: 'UNDER 232.5', odds: '-110', amount: 18 }] },
-        { id: 6, time: '5:00 PM', sport: 'NBA', away: { abbr: 'SAC', name: 'Kings' }, home: { abbr: 'MIN', name: 'Timberwolves' }, channel: 'League Pass', picks: [{ pick: 'Kings +5.5', odds: '-110', amount: 18 }] },
-        { id: 7, time: '5:30 PM', sport: 'NBA', away: { abbr: 'OKC', name: 'Thunder' }, home: { abbr: 'SAS', name: 'Spurs' }, channel: 'NBA TV', picks: [{ pick: 'Thunder -9.5', odds: '-110', amount: 27 }] }
+        { id: 1, time: '4:00 PM', sport: 'NBA', away: { abbr: 'WAS', name: 'Wizards' }, home: { abbr: 'DET', name: 'Pistons' }, channel: 'League Pass', picks: [{ pick: 'Pistons -14.5', odds: '-110', amount: 38 }] },
+        { id: 2, time: '4:00 PM', sport: 'NHL', away: { abbr: 'CAR', name: 'Hurricanes' }, home: { abbr: 'NYR', name: 'Rangers' }, channel: 'ESPN+', picks: [{ pick: 'Hurricanes ML', odds: '+110', amount: 19 }] },
+        { id: 3, time: '4:30 PM', sport: 'NHL', away: { abbr: 'FLA', name: 'Panthers' }, home: { abbr: 'TB', name: 'Lightning' }, channel: 'ESPN+', picks: [{ pick: 'Panthers ML', odds: '-125', amount: 28 }] },
+        { id: 4, time: '5:30 PM', sport: 'NBA', away: { abbr: 'SAS', name: 'Spurs' }, home: { abbr: 'DAL', name: 'Mavericks' }, channel: 'League Pass', picks: [{ pick: 'Spurs +7.5', odds: '-110', amount: 19 }] },
+        { id: 5, time: '7:00 PM', sport: 'NBA', away: { abbr: 'PHI', name: '76ers' }, home: { abbr: 'LAL', name: 'Lakers' }, channel: 'Prime Video', picks: [{ pick: '76ers +4.5', odds: '-110', amount: 28 }] },
+        { id: 6, time: '7:00 PM', sport: 'NBA', away: { abbr: 'GSW', name: 'Warriors' }, home: { abbr: 'PHX', name: 'Suns' }, channel: 'Prime Video', picks: [{ pick: 'Warriors +5.5', odds: '-110', amount: 19 }] },
+        { id: 7, time: '7:00 PM', sport: 'NHL', away: { abbr: 'LAK', name: 'Kings' }, home: { abbr: 'VGK', name: 'Golden Knights' }, channel: 'ESPN+', picks: [{ pick: 'Under 5.5', odds: '-110', amount: 19 }] }
     ];
 }
 

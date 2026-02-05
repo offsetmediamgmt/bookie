@@ -5,38 +5,49 @@
 
 const BOOKIE_DATA = {
     // ═══════════════════════════════════════════════════════════════
-    // BANKROLL CONFIG - Updated Feb 4, 2026
+    // BANKROLL CONFIG - Updated Feb 5, 2026
     // ═══════════════════════════════════════════════════════════════
     bankroll: {
         starting: 1000,
-        current: 885,
-        unitPercent: 2, // 1 unit = $18 (2% of $885)
-        maxPlayPercent: 5, // MAX plays = $44 (5%)
+        current: 939,
+        unitPercent: 2, // 1 unit = $19 (2% of $939)
+        maxPlayPercent: 5, // MAX plays = $47 (5%)
     },
 
-    // Unit tiers based on conviction (1u = $18)
+    // Unit tiers based on conviction (1u = $19)
     unitTiers: [
         { locks: 1, units: 0.5, label: "Lean", percent: 1, amount: 9 },
-        { locks: 2, units: 1, label: "Standard", percent: 2, amount: 18 },
-        { locks: 3, units: 1.5, label: "Confident", percent: 3, amount: 27 },
-        { locks: 4, units: 2, label: "Strong", percent: 4, amount: 35 },
-        { locks: 5, units: 2.5, label: "MAX PLAY", percent: 5, amount: 44 },
+        { locks: 2, units: 1, label: "Standard", percent: 2, amount: 19 },
+        { locks: 3, units: 1.5, label: "Confident", percent: 3, amount: 28 },
+        { locks: 4, units: 2, label: "Strong", percent: 4, amount: 38 },
+        { locks: 5, units: 2.5, label: "MAX PLAY", percent: 5, amount: 47 },
     ],
 
     // Growth projection (conservative 8u/month at 55% win rate)
     growthProjection: [
-        { month: "Feb", bankroll: 885, gain: -115, note: "Current" },
-        { month: "Mar", bankroll: 1030, gain: 145, note: "+8u" },
-        { month: "Apr", bankroll: 1195, gain: 165, note: "+8u" },
-        { month: "May", bankroll: 1385, gain: 190, note: "+8u" },
-        { month: "Jun", bankroll: 1605, gain: 220, note: "+8u" },
-        { month: "Jul", bankroll: 1860, gain: 255, note: "+8u" },
+        { month: "Feb", bankroll: 939, gain: -61, note: "Current" },
+        { month: "Mar", bankroll: 1090, gain: 151, note: "+8u" },
+        { month: "Apr", bankroll: 1265, gain: 175, note: "+8u" },
+        { month: "May", bankroll: 1465, gain: 200, note: "+8u" },
+        { month: "Jun", bankroll: 1695, gain: 230, note: "+8u" },
+        { month: "Jul", bankroll: 1965, gain: 270, note: "+8u" },
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // TRACK RECORD - Feb 2-3, 2026
+    // TRACK RECORD - Feb 2-5, 2026
     // ═══════════════════════════════════════════════════════════════
     history: [
+        // February 4, 2026 - DAY 3 (4-1 valid bets, several voided)
+        { date: "Feb 4", sport: "NBA", pick: "Knicks -5.5", odds: -110, units: 1.5, result: "win", pl: 1.36,
+          team1: "NYK", score1: 134, team2: "DEN", score2: 127, picked: "NYK" },
+        { date: "Feb 4", sport: "NBA", pick: "Celtics -2.5", odds: -110, units: 1.5, result: "win", pl: 1.36,
+          team1: "BOS", score1: 114, team2: "HOU", score2: 93, picked: "BOS" },
+        { date: "Feb 4", sport: "NBA", pick: "Thunder -9.5", odds: -110, units: 1.5, result: "loss", pl: -1.50,
+          team1: "SAS", score1: 116, team2: "OKC", score2: 106, picked: "OKC" },
+        { date: "Feb 4", sport: "NBA", pick: "Bucks -3.5", odds: -110, units: 1, result: "win", pl: 0.91,
+          team1: "MIL", score1: 141, team2: "NOP", score2: 137, picked: "MIL" },
+        { date: "Feb 4", sport: "NBA", pick: "Brunson O27.5 pts", odds: -115, units: 1, result: "win", pl: 0.87,
+          team1: "NYK", score1: 134, team2: "DEN", score2: 127, picked: "OVER" },
         // February 3, 2026 - DAY 2 (4-6 straights, 3-2 props)
         { date: "Feb 3", sport: "NBA", pick: "76ers +2.5", odds: -102, units: 2, result: "win", pl: 1.96,
           team1: "PHI", score1: 113, team2: "GSW", score2: 94, picked: "PHI" },
@@ -78,146 +89,128 @@ const BOOKIE_DATA = {
     ],
 
     // ═══════════════════════════════════════════════════════════════
-    // TODAY'S PICKS - February 4, 2026
+    // TODAY'S PICKS - February 5, 2026 (Trade Deadline Day!)
     // ═══════════════════════════════════════════════════════════════
     todaysPicks: [
         // NBA PICKS
         {
             id: 1,
             sport: "NBA",
-            away: "DEN",
-            home: "NYK",
+            away: "WAS",
+            home: "DET",
             time: "7:00 PM ET",
-            pick: "Knicks -5.5",
+            pick: "Pistons -14.5",
             odds: -110,
-            units: 1.5,
-            conviction: 4,
+            units: 2,
+            conviction: 5,
             factors: [
-                "Knicks 30-20, strong at MSG (17-7)",
-                "Nuggets on back-to-back after loss in Detroit",
-                "Jokic had 24/15 last night, may be tired",
-                "MSG is a tough place to play"
+                "Pistons 37-12, best record in East",
+                "Wizards 8-42, worst in NBA",
+                "Cade Cunningham averaging 25/9/6",
+                "Detroit 20-4 at home"
             ]
         },
         {
             id: 2,
             sport: "NBA",
-            away: "BOS",
-            home: "HOU",
-            time: "8:00 PM ET",
-            pick: "Celtics -2.5",
+            away: "PHI",
+            home: "LAL",
+            time: "10:00 PM ET",
+            pick: "76ers +4.5",
             odds: -110,
             units: 1.5,
             conviction: 4,
             factors: [
-                "Celtics coming off win, 31-18 record",
-                "Boston just acquired Nikola Vucevic",
-                "Jaylen Brown on fire (33 pts last night)",
-                "Celtics 18-7 on the road"
+                "76ers 3-0 ATS last 3 games",
+                "Embiid and Maxey healthy and rolling",
+                "Lakers inconsistent at home",
+                "Philly 14-11 on the road"
             ]
         },
         {
             id: 3,
             sport: "NBA",
-            away: "OKC",
-            home: "SAS",
-            time: "9:30 PM ET",
-            pick: "Thunder -6.5",
+            away: "GSW",
+            home: "PHX",
+            time: "10:00 PM ET",
+            pick: "Warriors +5.5",
             odds: -110,
-            units: 2,
-            conviction: 4,
+            units: 1,
+            conviction: 3,
             factors: [
-                "OKC 38-11, best record in NBA",
-                "Thunder 20-4 on the road this season",
-                "Spurs struggling without Wemby rest games",
-                "SGA averaging 32 PPG"
+                "Curry still dangerous on any night",
+                "Warriors 15-9 on the road",
+                "Suns may rest players before break",
+                "GSW upset potential high"
             ]
         },
         {
             id: 4,
             sport: "NBA",
-            away: "CLE",
-            home: "LAC",
-            time: "10:30 PM ET",
-            pick: "Cavaliers -3",
+            away: "SAS",
+            home: "DAL",
+            time: "8:30 PM ET",
+            pick: "Spurs +7.5",
             odds: -110,
             units: 1,
             conviction: 3,
             factors: [
-                "Cavs 30-20, playing well",
-                "Clippers without Kawhi Leonard",
-                "Cleveland 14-11 on road",
-                "Donovan Mitchell averaging 25+ PPG"
+                "Spurs just beat Thunder without SGA",
+                "De'Aaron Fox trade boost morale",
+                "Wembanyama 22/14 last game",
+                "Mavs inconsistent at home"
             ]
         },
+        // NHL PICKS - LAST DAY BEFORE OLYMPIC BREAK
         {
             id: 5,
-            sport: "NBA",
-            away: "NOP",
-            home: "MIL",
-            time: "8:00 PM ET",
-            pick: "Bucks -8.5",
-            odds: -110,
-            units: 1,
-            conviction: 3,
+            sport: "NHL",
+            away: "FLA",
+            home: "TB",
+            time: "7:30 PM ET",
+            pick: "Panthers ML",
+            odds: -125,
+            units: 1.5,
+            conviction: 4,
             factors: [
-                "Pelicans decimated by injuries",
-                "Giannis dominating at home",
-                "Bucks need wins for playoff positioning",
-                "NO has worst record in West"
+                "Panthers best team in NHL (37-13-4)",
+                "Florida rivalry game motivation",
+                "Panthers 18-6 on the road",
+                "Last game before Olympic break"
             ]
         },
         {
             id: 6,
-            sport: "NBA",
-            away: "MEM",
-            home: "SAC",
-            time: "10:00 PM ET",
-            pick: "Kings -2.5",
-            odds: -110,
+            sport: "NHL",
+            away: "CAR",
+            home: "NYR",
+            time: "7:00 PM ET",
+            pick: "Hurricanes ML",
+            odds: +110,
             units: 1,
             conviction: 3,
             factors: [
-                "Kings strong at home (16-8)",
-                "De'Aaron Fox playing elite basketball",
-                "Ja Morant questionable with injury",
-                "Sacramento needs playoff push"
+                "Canes 35-15-4, elite road team",
+                "Rangers struggling recently",
+                "Carolina 17-8 on the road",
+                "Value at plus money"
             ]
         },
-        // NO NHL - OLYMPIC BREAK STARTS
-        // NCAAB PICKS
         {
             id: 7,
-            sport: "NCAAB",
-            away: "BC",
-            home: "DUKE",
-            time: "7:00 PM ET",
-            pick: "Duke -18.5",
+            sport: "NHL",
+            away: "LAK",
+            home: "VGK",
+            time: "10:00 PM ET",
+            pick: "UNDER 5.5",
             odds: -110,
             units: 1,
             conviction: 3,
             factors: [
-                "Duke 20-4, dominant at Cameron Indoor",
-                "Cameron Boozer averaging 18 PPG",
-                "BC 10-13, struggling in ACC",
-                "Duke 19-0 straight up in ACC"
-            ]
-        },
-        {
-            id: 8,
-            sport: "NCAAB",
-            away: "MISS",
-            home: "TENN",
-            time: "7:00 PM ET",
-            pick: "Tennessee -8.5",
-            odds: -110,
-            units: 1.5,
-            conviction: 4,
-            factors: [
-                "Tennessee #25, strong at home",
-                "Vols 16-8 overall, 8-3 at home",
-                "Ole Miss 13-10, struggles on road",
-                "SEC home court advantage"
+                "Both teams defensive-minded",
+                "Kings allow only 2.5 goals/game",
+                "Vegas 2.8 goals allowed",
+                "Playoff-style game"
             ]
         }
     ],
