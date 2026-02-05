@@ -216,6 +216,77 @@ const BOOKIE_DATA = {
     ],
 
     // ═══════════════════════════════════════════════════════════════
+    // SHARP VS PUBLIC DATA - February 5, 2026
+    // ═══════════════════════════════════════════════════════════════
+    sharpData: [
+        {
+            id: 1, away: "WAS", home: "DET", pick: "Pistons -14.5",
+            publicBets: 72, publicMoney: 45, sharpBets: 28, sharpMoney: 55,
+            insight: "Sharp money FADING public on huge spread",
+            insightType: "sharp" // sharp, fade, against
+        },
+        {
+            id: 2, away: "PHI", home: "LAL", pick: "76ers +4.5",
+            publicBets: 35, publicMoney: 30, sharpBets: 65, sharpMoney: 70,
+            insight: "Sharps LOVE 76ers as road dogs",
+            insightType: "sharp"
+        },
+        {
+            id: 3, away: "FLA", home: "TB", pick: "Panthers ML",
+            publicBets: 58, publicMoney: 52, sharpBets: 42, sharpMoney: 48,
+            insight: "Split action - rivalry game",
+            insightType: "fade"
+        },
+        {
+            id: 4, away: "CAR", home: "NYR", pick: "Hurricanes ML",
+            publicBets: 40, publicMoney: 35, sharpBets: 60, sharpMoney: 65,
+            insight: "Sharp value play at plus money",
+            insightType: "sharp"
+        }
+    ],
+
+    // ═══════════════════════════════════════════════════════════════
+    // HISTORICAL TRENDS - Team ATS Records & H2H
+    // ═══════════════════════════════════════════════════════════════
+    trends: {
+        "DET": { atsLast10: "7-3", atsHome: "18-6", ouLast10: "5-5", streak: "W3 ATS" },
+        "WAS": { atsLast10: "3-7", atsAway: "4-18", ouLast10: "6-4", streak: "L4 ATS" },
+        "PHI": { atsLast10: "6-4", atsAway: "12-9", ouLast10: "4-6", streak: "W3 ATS" },
+        "LAL": { atsLast10: "4-6", atsHome: "13-10", ouLast10: "5-5", streak: "L2 ATS" },
+        "GSW": { atsLast10: "5-5", atsAway: "10-11", ouLast10: "6-4", streak: "W1 ATS" },
+        "PHX": { atsLast10: "6-4", atsHome: "14-8", ouLast10: "5-5", streak: "W2 ATS" },
+        "SAS": { atsLast10: "7-3", atsAway: "11-9", ouLast10: "4-6", streak: "W4 ATS" },
+        "DAL": { atsLast10: "5-5", atsHome: "12-11", ouLast10: "6-4", streak: "L1 ATS" },
+        "FLA": { atsLast10: "6-4", atsAway: "15-7", ouLast10: "4-6", streak: "W2 ATS" },
+        "TB": { atsLast10: "5-5", atsHome: "14-9", ouLast10: "5-5", streak: "L1 ATS" },
+        "CAR": { atsLast10: "7-3", atsAway: "16-6", ouLast10: "5-5", streak: "W3 ATS" },
+        "NYR": { atsLast10: "4-6", atsHome: "12-10", ouLast10: "6-4", streak: "L2 ATS" }
+    },
+
+    h2h: {
+        "DET_WAS": [
+            { date: "Jan 15", score: "DET 118-94", result: "win", covered: true },
+            { date: "Dec 8", score: "DET 122-105", result: "win", covered: true },
+            { date: "Nov 2", score: "WAS 108-104", result: "loss", covered: false }
+        ],
+        "PHI_LAL": [
+            { date: "Jan 28", score: "PHI 121-116", result: "win", covered: true },
+            { date: "Dec 15", score: "LAL 118-117", result: "loss", covered: true },
+            { date: "Nov 10", score: "PHI 109-105", result: "win", covered: true }
+        ],
+        "FLA_TB": [
+            { date: "Jan 20", score: "FLA 4-2", result: "win", covered: true },
+            { date: "Dec 12", score: "TB 3-2", result: "loss", covered: false },
+            { date: "Nov 5", score: "FLA 5-3", result: "win", covered: true }
+        ],
+        "CAR_NYR": [
+            { date: "Jan 18", score: "CAR 4-1", result: "win", covered: true },
+            { date: "Dec 5", score: "CAR 3-2 OT", result: "win", covered: true },
+            { date: "Oct 28", score: "NYR 4-3", result: "loss", covered: false }
+        ]
+    },
+
+    // ═══════════════════════════════════════════════════════════════
     // INJURY REPORT - February 5, 2026
     // ═══════════════════════════════════════════════════════════════
     injuries: [

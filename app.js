@@ -398,9 +398,210 @@ function updateUnitCalculator() {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// SHARP VS PUBLIC - Daily Card Feature
+// ═══════════════════════════════════════════════════════════════
+function renderSharpSummary() {
+    const container = document.getElementById('sharpSummaryCards');
+    if (!container) return;
+
+    const sharpData = BOOKIE_DATA.sharpData || [];
+
+    container.innerHTML = sharpData.map(game => {
+        const insightClass = game.insightType === 'sharp' ? '' :
+                            game.insightType === 'fade' ? 'fade' : 'against';
+        const insightIcon = game.insightType === 'sharp' ? '🧠' :
+                           game.insightType === 'fade' ? '⚖️' : '⚠️';
+
+        return `
+            <div class="sharp-card">
+                <div class="sharp-card-header">
+                    <div class="sharp-card-teams">
+                        ${getTeamLogo(game.away, 32)}
+                        <span class="sharp-card-vs">@</span>
+                        ${getTeamLogo(game.home, 32)}
+                    </div>
+                    <div class="sharp-card-info">
+                        <div class="sharp-card-matchup">${game.away} @ ${game.home}</div>
+                        <div class="sharp-card-time">Today</div>
+                    </div>
+                    <div class="sharp-card-pick">${game.pick}</div>
+                </div>
+
+                <div class="sharp-bars">
+                    <div class="sharp-bar-row">
+                        <div class="sharp-bar-title">% of Bets</div>
+                        <div class="sharp-bar-labels">
+                            <span class="sharp-bar-label public">
+                                <span>PUBLIC</span>
+                                <span class="sharp-bar-value">${game.publicBets}%</span>
+                            </span>
+                            <span class="sharp-bar-label sharp">
+                                <span class="sharp-bar-value">${game.sharpBets}%</span>
+                                <span>SHARP</span>
+                            </span>
+                        </div>
+                        <div class="sharp-bar-track">
+                            <div class="sharp-bar-fill" style="width: ${game.sharpBets}%"></div>
+                        </div>
+                    </div>
+
+                    <div class="sharp-bar-row">
+                        <div class="sharp-bar-title">% of Money</div>
+                        <div class="sharp-bar-labels">
+                            <span class="sharp-bar-label public">
+                                <span>PUBLIC</span>
+                                <span class="sharp-bar-value">${game.publicMoney}%</span>
+                            </span>
+                            <span class="sharp-bar-label sharp">
+                                <span class="sharp-bar-value">${game.sharpMoney}%</span>
+                                <span>SHARP</span>
+                            </span>
+                        </div>
+                        <div class="sharp-bar-track">
+                            <div class="sharp-bar-fill" style="width: ${game.sharpMoney}%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sharp-insight ${insightClass}">
+                    <span class="sharp-insight-icon">${insightIcon}</span>
+                    <span class="sharp-insight-text">${game.insight}</span>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ENHANCED PICKS WITH TRENDS
+// ═══════════════════════════════════════════════════════════════
+function renderEnhancedPicks() {
+    const container = document.getElementById('enhancedPicksList');
+    if (!container) return;
+
+    const picks = BOOKIE_DATA.todaysPicks || [];
+    const trends = BOOKIE_DATA.trends || {};
+    const h2h = BOOKIE_DATA.h2h || {};
+
+    container.innerHTML = picks.map(pick => {
+        const homeTrends = trends[pick.home] || {};
+        const awayTrends = trends[pick.away] || {};
+        const h2hKey = `${pick.away}_${pick.home}`;
+        const h2hGames = h2h[h2hKey] || [];
+
+        // Determine which team we're betting on for trend display
+        const pickingHome = pick.pick.includes(pick.home) || pick.pick.toLowerCase().includes('under');
+        const mainTrends = pickingHome ? homeTrends : awayTrends;
+        const mainTeam = pickingHome ? pick.home : pick.away;
+
+        // Determine trend box classes
+        const atsClass = getRecordClass(mainTrends.atsLast10);
+        const homeAwayClass = getRecordClass(pickingHome ? mainTrends.atsHome : mainTrends.atsAway);
+        const streakClass = mainTrends.streak?.startsWith('W') ? 'positive' :
+                           mainTrends.streak?.startsWith('L') ? 'negative' : 'neutral';
+
+        return `
+            <div class="enhanced-pick-card">
+                <div class="enhanced-pick-header">
+                    <div class="enhanced-pick-teams">
+                        ${getTeamLogo(pick.away, 40)}
+                        <span class="enhanced-pick-vs">@</span>
+                        ${getTeamLogo(pick.home, 40)}
+                    </div>
+                    <div class="enhanced-pick-info">
+                        <div class="enhanced-pick-matchup">${pick.away} @ ${pick.home}</div>
+                        <div class="enhanced-pick-meta">${getSportEmoji(pick.sport)} ${pick.sport} · ${pick.time}</div>
+                    </div>
+                    <div class="enhanced-pick-bet">
+                        <div class="enhanced-pick-line">${pick.pick}</div>
+                        <div class="enhanced-pick-odds">${formatOdds(pick.odds)} · ${pick.units}u</div>
+                    </div>
+                </div>
+
+                <div class="enhanced-pick-body">
+                    <div class="trends-grid">
+                        <div class="trend-box ${atsClass}">
+                            <div class="trend-label">ATS Last 10</div>
+                            <div class="trend-value">${mainTrends.atsLast10 || 'N/A'}</div>
+                            <div class="trend-sub">${mainTeam}</div>
+                        </div>
+                        <div class="trend-box ${homeAwayClass}">
+                            <div class="trend-label">${pickingHome ? 'Home' : 'Away'} ATS</div>
+                            <div class="trend-value">${pickingHome ? (mainTrends.atsHome || 'N/A') : (mainTrends.atsAway || 'N/A')}</div>
+                            <div class="trend-sub">This Season</div>
+                        </div>
+                        <div class="trend-box ${streakClass}">
+                            <div class="trend-label">ATS Streak</div>
+                            <div class="trend-value">${mainTrends.streak || 'N/A'}</div>
+                            <div class="trend-sub">Current</div>
+                        </div>
+                    </div>
+
+                    ${h2hGames.length > 0 ? `
+                    <div class="h2h-section">
+                        <div class="h2h-header">
+                            <span>📊</span> Head-to-Head (Last 3)
+                        </div>
+                        <div class="h2h-results">
+                            ${h2hGames.map(game => `
+                                <div class="h2h-game ${game.result}">
+                                    <div class="h2h-score">${game.score}</div>
+                                    <div class="h2h-date">${game.date}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    ${getSharpIndicator(pick)}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function getRecordClass(record) {
+    if (!record) return 'neutral';
+    const [wins, losses] = record.split('-').map(Number);
+    if (wins > losses) return 'positive';
+    if (losses > wins) return 'negative';
+    return 'neutral';
+}
+
+function getSharpIndicator(pick) {
+    const sharpData = BOOKIE_DATA.sharpData || [];
+    const matchingSharp = sharpData.find(s =>
+        (s.away === pick.away && s.home === pick.home) ||
+        (s.home === pick.away && s.away === pick.home)
+    );
+
+    if (!matchingSharp) return '';
+
+    const isSharpSide = matchingSharp.sharpMoney >= 55;
+    if (!isSharpSide) return '';
+
+    return `
+        <div class="pick-sharp-indicator">
+            <span class="pick-sharp-icon">🧠</span>
+            <div class="pick-sharp-info">
+                <div class="pick-sharp-title">SHARP MONEY AGREES</div>
+                <div class="pick-sharp-desc">${matchingSharp.sharpMoney}% of money on this side</div>
+            </div>
+            <span class="pick-sharp-badge">SHARP</span>
+        </div>
+    `;
+}
+
+// ═══════════════════════════════════════════════════════════════
 // DAILY CARD RENDERING - Compact Style matching Bets Page
 // ═══════════════════════════════════════════════════════════════
 function renderDailyCard() {
+    // Render Sharp vs Public Section
+    renderSharpSummary();
+
+    // Render Enhanced Picks with Trends
+    renderEnhancedPicks();
+
     // Render MAX Plays - Compact card style (same as Watch page)
     const maxPlaysContainer = document.getElementById('maxPlaysList');
     if (maxPlaysContainer) {

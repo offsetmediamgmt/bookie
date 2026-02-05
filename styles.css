@@ -5430,3 +5430,471 @@ body {
         border-top: 1px solid var(--border);
     }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   DAILY CARD - SHARP VS PUBLIC
+   ═══════════════════════════════════════════════════════════════ */
+
+.sharp-summary {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.sharp-summary-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.sharp-summary-header .sharp-icon {
+    font-size: 20px;
+}
+
+.sharp-summary-header h3 {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    flex: 1;
+}
+
+.sharp-badge {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #9c27b0, #e040fb);
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.sharp-summary-intro {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.sharp-summary-intro p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.sharp-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sharp-card {
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.2s ease;
+}
+
+.sharp-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-primary);
+}
+
+.sharp-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.sharp-card-teams {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sharp-card-vs {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.sharp-card-info {
+    flex: 1;
+}
+
+.sharp-card-matchup {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.sharp-card-time {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.sharp-card-pick {
+    background: var(--accent-primary);
+    color: #000;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.sharp-bars {
+    margin-bottom: 12px;
+}
+
+.sharp-bar-row {
+    margin-bottom: 10px;
+}
+
+.sharp-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.sharp-bar-label {
+    font-size: 10px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sharp-bar-label.public {
+    color: #ff6b81;
+}
+
+.sharp-bar-label.sharp {
+    color: #00e676;
+}
+
+.sharp-bar-value {
+    font-weight: 800;
+}
+
+.sharp-bar-track {
+    height: 8px;
+    background: rgba(255, 107, 129, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.sharp-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00e676, #69f0ae);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.sharp-bar-title {
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+
+.sharp-insight {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: rgba(0, 230, 118, 0.1);
+    border: 1px solid rgba(0, 230, 118, 0.2);
+    border-radius: 8px;
+}
+
+.sharp-insight.fade {
+    background: rgba(255, 165, 0, 0.1);
+    border-color: rgba(255, 165, 0, 0.2);
+}
+
+.sharp-insight.against {
+    background: rgba(255, 71, 87, 0.1);
+    border-color: rgba(255, 71, 87, 0.2);
+}
+
+.sharp-insight-icon {
+    font-size: 16px;
+}
+
+.sharp-insight-text {
+    font-size: 11px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DAILY CARD - ENHANCED PICKS WITH TRENDS
+   ═══════════════════════════════════════════════════════════════ */
+
+.enhanced-picks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.enhanced-pick-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.enhanced-pick-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.enhanced-pick-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid var(--border);
+}
+
+.enhanced-pick-teams {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.enhanced-pick-vs {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.enhanced-pick-info {
+    flex: 1;
+}
+
+.enhanced-pick-matchup {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.enhanced-pick-meta {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.enhanced-pick-bet {
+    text-align: right;
+}
+
+.enhanced-pick-line {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--accent-primary);
+    margin-bottom: 2px;
+}
+
+.enhanced-pick-odds {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.enhanced-pick-body {
+    padding: 16px;
+}
+
+/* Trends Grid */
+.trends-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.trend-box {
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+}
+
+.trend-box.positive {
+    border-color: rgba(0, 230, 118, 0.3);
+    background: rgba(0, 230, 118, 0.05);
+}
+
+.trend-box.negative {
+    border-color: rgba(255, 71, 87, 0.3);
+    background: rgba(255, 71, 87, 0.05);
+}
+
+.trend-box.neutral {
+    border-color: rgba(255, 165, 0, 0.3);
+    background: rgba(255, 165, 0, 0.05);
+}
+
+.trend-label {
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.trend-value {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.trend-box.positive .trend-value { color: #00e676; }
+.trend-box.negative .trend-value { color: #ff4757; }
+.trend-box.neutral .trend-value { color: #ffa502; }
+
+.trend-sub {
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* H2H Section */
+.h2h-section {
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.h2h-header {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.h2h-results {
+    display: flex;
+    gap: 6px;
+}
+
+.h2h-game {
+    flex: 1;
+    text-align: center;
+    padding: 8px 6px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+}
+
+.h2h-game.win {
+    background: rgba(0, 230, 118, 0.1);
+    border: 1px solid rgba(0, 230, 118, 0.2);
+}
+
+.h2h-game.loss {
+    background: rgba(255, 71, 87, 0.1);
+    border: 1px solid rgba(255, 71, 87, 0.2);
+}
+
+.h2h-score {
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.h2h-game.win .h2h-score { color: #00e676; }
+.h2h-game.loss .h2h-score { color: #ff4757; }
+
+.h2h-date {
+    font-size: 9px;
+    color: var(--text-muted);
+}
+
+/* Sharp Indicator in Pick */
+.pick-sharp-indicator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: rgba(156, 39, 176, 0.1);
+    border: 1px solid rgba(156, 39, 176, 0.2);
+    border-radius: 8px;
+}
+
+.pick-sharp-icon {
+    font-size: 18px;
+}
+
+.pick-sharp-info {
+    flex: 1;
+}
+
+.pick-sharp-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: #e040fb;
+    margin-bottom: 2px;
+}
+
+.pick-sharp-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.pick-sharp-badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #9c27b0, #e040fb);
+    color: #fff;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .sharp-card-header {
+        flex-wrap: wrap;
+    }
+
+    .sharp-card-pick {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .trends-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+
+    .trend-box {
+        padding: 10px 6px;
+    }
+
+    .trend-value {
+        font-size: 14px;
+    }
+
+    .h2h-results {
+        flex-wrap: wrap;
+    }
+
+    .h2h-game {
+        flex: 0 0 calc(33% - 4px);
+    }
+}
