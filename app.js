@@ -3006,19 +3006,34 @@ function renderAnalyticsInsights() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// AI PICK GENERATOR - REDESIGNED
+// AI PICK GENERATOR - DEEP ANALYSIS ENGINE
+// Uses: Sharp money, ATS trends, H2H, injuries, situational factors
 // ═══════════════════════════════════════════════════════════════
 const todaysGames = {
     NBA: [
-        { away: 'WAS', home: 'DET', time: '7:00 PM', spread: 'DET -14.5', ou: '227.5' },
-        { away: 'PHI', home: 'LAL', time: '10:30 PM', spread: 'LAL -4.5', ou: '231.5' },
-        { away: 'GSW', home: 'PHX', time: '10:00 PM', spread: 'PHX -6.5', ou: '217.5' },
-        { away: 'CHI', home: 'TOR', time: '7:30 PM', spread: 'TOR -8.5', ou: '225.5' },
+        { away: 'WAS', home: 'DET', time: '7:00 PM ET', spread: 'DET -14.5', ou: '227.5',
+          awayRecord: '13-37', homeRecord: '32-18',
+          keyFactors: ['Biggest spread of the day', 'Wizards worst team in NBA', 'Pistons best in East'] },
+        { away: 'PHI', home: 'LAL', time: '10:30 PM ET', spread: 'LAL -4.5', ou: '231.5',
+          awayRecord: '28-22', homeRecord: '29-19',
+          keyFactors: ['Embiid vs AD matchup', '76ers 4-1 ATS L5', 'Sharp money on PHI'] },
+        { away: 'GSW', home: 'PHX', time: '10:00 PM ET', spread: 'PHX -6.5', ou: '217.5',
+          awayRecord: '27-24', homeRecord: '31-20',
+          keyFactors: ['Curry vs Booker', 'Warriors 5-5 ATS L10', 'GSW beat PHX 120-117 Dec 28'] },
+        { away: 'CHI', home: 'TOR', time: '7:30 PM ET', spread: 'TOR -8.5', ou: '225.5',
+          awayRecord: '22-28', homeRecord: '23-27',
+          keyFactors: ['Both teams struggling', '8.5 is a big spread', 'Trade deadline chaos'] },
     ],
     NHL: [
-        { away: 'FLA', home: 'TB', time: '7:00 PM', spread: 'TB -1.5', ou: '6.5' },
-        { away: 'CAR', home: 'NYR', time: '7:00 PM', spread: 'NYR -1.5', ou: '5.5' },
-        { away: 'LAK', home: 'VGK', time: '10:00 PM', spread: 'VGK -1.5', ou: '5.5' },
+        { away: 'FLA', home: 'TB', time: '7:00 PM ET', spread: 'TB -1.5', ou: '6.5',
+          awayRecord: '37-13-4', homeRecord: '36-14-4',
+          keyFactors: ['RIVALRY GAME', 'Panthers 5-1 last 6 @ Tampa', 'Last game before Olympic break'] },
+        { away: 'CAR', home: 'NYR', time: '7:00 PM ET', spread: 'NYR -1.5', ou: '5.5',
+          awayRecord: '35-15-4', homeRecord: '28-22-4',
+          keyFactors: ['Elite road team vs struggling home team', 'Canes 17-8 on road', 'Rangers 4-6 L10'] },
+        { away: 'LAK', home: 'VGK', time: '10:00 PM ET', spread: 'VGK -1.5', ou: '5.5',
+          awayRecord: '27-24-5', homeRecord: '30-18-5',
+          keyFactors: ['Pacific Division clash', 'Both teams elite defense', 'Unders 7-3 L10 for VGK'] },
     ],
     NCAAB: []
 };
@@ -3148,128 +3163,267 @@ function runAIAnalysis() {
     const output = document.getElementById('aiOutputSection');
     output.style.display = 'block';
 
-    // Set matchup
+    // Set matchup with records
     document.getElementById('aiMatchup').innerHTML = `
         ${getTeamLogo(game.away, 40)}
         <span style="margin: 0 15px; color: var(--text-muted);">@</span>
         ${getTeamLogo(game.home, 40)}
-        <span style="margin-left: 15px;">${game.away} @ ${game.home}</span>
+        <span style="margin-left: 15px; font-weight: 800;">${game.away} @ ${game.home}</span>
+        <span style="margin-left: 10px; font-size: 12px; color: var(--text-muted);">(${game.awayRecord || ''} vs ${game.homeRecord || ''})</span>
     `;
 
-    // Get trends data
+    // Get comprehensive data from BOOKIE_DATA
     const awayTrends = BOOKIE_DATA.trends[game.away] || {};
     const homeTrends = BOOKIE_DATA.trends[game.home] || {};
     const h2hKey = `${game.away}_${game.home}`;
     const h2h = BOOKIE_DATA.h2h[h2hKey] || [];
     const sharpData = BOOKIE_DATA.sharpData.find(s => s.away === game.away && s.home === game.home);
+    const injuries = BOOKIE_DATA.injuries.filter(i => i.team === game.away || i.team === game.home);
 
-    // Analyze factors
-    let awayScore = 0, homeScore = 0;
+    // Deep Analysis Scoring System
+    let analysisData = {
+        awayScore: 0,
+        homeScore: 0,
+        factors: [],
+        warnings: []
+    };
 
-    // ATS Trends
+    // ═══════════════════════════════════════════════════════════════
+    // FACTOR 1: ATS TRENDS (Weight: 25%)
+    // ═══════════════════════════════════════════════════════════════
     const awayATS = awayTrends.atsLast10 || 'N/A';
     const homeATS = homeTrends.atsLast10 || 'N/A';
-    document.getElementById('aiTrends').innerHTML = `
-        <p><strong>${game.away}:</strong> ${awayATS} ATS L10, ${awayTrends.atsAway || 'N/A'} away</p>
-        <p><strong>${game.home}:</strong> ${homeATS} ATS L10, ${homeTrends.atsHome || 'N/A'} home</p>
-        <p class="trend-note">${awayTrends.note || ''} ${homeTrends.note || ''}</p>
-    `;
 
-    // Sharp Action
-    if (sharpData) {
-        document.getElementById('aiSharp').innerHTML = `
-            <p><strong>Public:</strong> ${sharpData.publicBets}% bets, ${sharpData.publicMoney}% money</p>
-            <p><strong>Sharp:</strong> ${sharpData.sharpBets}% bets, ${sharpData.sharpMoney}% money</p>
-            <p class="sharp-insight">${sharpData.insight}</p>
-        `;
-        if (sharpData.insightType === 'sharp') awayScore += 2;
-    } else {
-        document.getElementById('aiSharp').innerHTML = '<p>No sharp data available for this game</p>';
+    let trendAnalysis = `<div style="margin-bottom: 8px;"><strong>${game.away}:</strong> ${awayATS} ATS L10`;
+    if (awayTrends.atsAway) trendAnalysis += ` | ${awayTrends.atsAway} away`;
+    if (awayTrends.streak) trendAnalysis += ` | ${awayTrends.streak}`;
+    trendAnalysis += `</div>`;
+
+    trendAnalysis += `<div style="margin-bottom: 8px;"><strong>${game.home}:</strong> ${homeATS} ATS L10`;
+    if (homeTrends.atsHome) trendAnalysis += ` | ${homeTrends.atsHome} home`;
+    if (homeTrends.streak) trendAnalysis += ` | ${homeTrends.streak}`;
+    trendAnalysis += `</div>`;
+
+    // Score ATS trends
+    if (awayTrends.atsLast10) {
+        const [aw, al] = awayTrends.atsLast10.split('-').map(Number);
+        if (aw >= 6) { analysisData.awayScore += 15; analysisData.factors.push(`${game.away} hot ATS (${awayATS})`); }
+        else if (aw <= 4) { analysisData.homeScore += 10; }
+    }
+    if (homeTrends.atsLast10) {
+        const [hw, hl] = homeTrends.atsLast10.split('-').map(Number);
+        if (hw >= 6) { analysisData.homeScore += 15; analysisData.factors.push(`${game.home} hot ATS (${homeATS})`); }
+        else if (hw <= 4) { analysisData.awayScore += 10; }
     }
 
-    // H2H
+    if (awayTrends.note) trendAnalysis += `<div style="font-size: 11px; color: var(--accent-gold); margin-top: 8px;">📌 ${awayTrends.note}</div>`;
+    if (homeTrends.note) trendAnalysis += `<div style="font-size: 11px; color: var(--accent-gold);">📌 ${homeTrends.note}</div>`;
+
+    document.getElementById('aiTrends').innerHTML = trendAnalysis;
+
+    // ═══════════════════════════════════════════════════════════════
+    // FACTOR 2: SHARP VS PUBLIC MONEY (Weight: 35%)
+    // ═══════════════════════════════════════════════════════════════
+    if (sharpData) {
+        const sharpAnalysis = `
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                <div style="background: var(--bg-card); padding: 10px; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 10px; color: var(--text-muted);">PUBLIC</div>
+                    <div style="font-size: 18px; font-weight: 800;">${sharpData.publicBets}%</div>
+                    <div style="font-size: 10px; color: var(--text-muted);">${sharpData.publicMoney}% money</div>
+                </div>
+                <div style="background: linear-gradient(145deg, rgba(0,212,255,0.1), transparent); padding: 10px; border-radius: 8px; text-align: center; border: 1px solid var(--accent-primary);">
+                    <div style="font-size: 10px; color: var(--accent-primary);">SHARP</div>
+                    <div style="font-size: 18px; font-weight: 800; color: var(--accent-primary);">${sharpData.sharpBets}%</div>
+                    <div style="font-size: 10px; color: var(--text-muted);">${sharpData.sharpMoney}% money</div>
+                </div>
+            </div>
+            <div style="font-size: 12px; padding: 10px; background: ${sharpData.insightType === 'sharp' ? 'rgba(0,209,115,0.1)' : sharpData.insightType === 'fade' ? 'rgba(255,215,0,0.1)' : 'rgba(255,77,79,0.1)'}; border-radius: 8px;">
+                ${sharpData.insightType === 'sharp' ? '🧠' : sharpData.insightType === 'fade' ? '⚖️' : '⚠️'} ${sharpData.insight}
+            </div>
+            <div style="font-size: 10px; color: var(--text-muted); margin-top: 8px;">Source: ${sharpData.source}</div>
+        `;
+        document.getElementById('aiSharp').innerHTML = sharpAnalysis;
+
+        // Heavy weighting for sharp money
+        if (sharpData.insightType === 'sharp') {
+            if (sharpData.pick.includes(game.away)) {
+                analysisData.awayScore += 25;
+                analysisData.factors.push(`SHARP PLAY: ${sharpData.sharpMoney}% of money on ${game.away}`);
+            } else {
+                analysisData.homeScore += 25;
+                analysisData.factors.push(`SHARP PLAY: ${sharpData.sharpMoney}% of money on ${game.home}`);
+            }
+        } else if (sharpData.insightType === 'fade') {
+            analysisData.warnings.push('PUBLIC TRAP: Fade signal detected');
+        }
+    } else {
+        document.getElementById('aiSharp').innerHTML = '<p style="color: var(--text-muted);">No sharp/public data available for this game. Limited betting action tracked.</p>';
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // FACTOR 3: HEAD TO HEAD (Weight: 15%)
+    // ═══════════════════════════════════════════════════════════════
     if (h2h.length > 0) {
         const awayWins = h2h.filter(g => g.result === 'win').length;
-        document.getElementById('aiH2H').innerHTML = `
-            <p><strong>Last ${h2h.length} meetings:</strong> ${game.away} ${awayWins}-${h2h.length - awayWins}</p>
-            ${h2h.slice(0, 3).map(g => `<p>${g.date}: ${g.score}</p>`).join('')}
+        const coverPct = h2h.filter(g => g.covered).length;
+
+        let h2hAnalysis = `
+            <div style="margin-bottom: 10px;">
+                <strong>Last ${h2h.length} meetings:</strong> ${game.away} ${awayWins}-${h2h.length - awayWins}
+                <span style="margin-left: 10px; color: var(--accent-gold);">(${coverPct}/${h2h.length} covered)</span>
+            </div>
         `;
+        h2hAnalysis += h2h.slice(0, 3).map(g => `
+            <div style="font-size: 11px; padding: 6px 0; border-bottom: 1px solid var(--border);">
+                ${g.date}: ${g.score} ${g.covered ? '<span style="color: var(--accent-green);">✓ Cover</span>' : '<span style="color: var(--accent-red);">✗ No Cover</span>'}
+            </div>
+        `).join('');
+
+        document.getElementById('aiH2H').innerHTML = h2hAnalysis;
+
+        if (awayWins >= 2) {
+            analysisData.awayScore += 10;
+            analysisData.factors.push(`${game.away} ${awayWins}-${h2h.length - awayWins} in recent H2H`);
+        } else if (awayWins <= 1 && h2h.length >= 3) {
+            analysisData.homeScore += 10;
+            analysisData.factors.push(`${game.home} ${h2h.length - awayWins}-${awayWins} in recent H2H`);
+        }
     } else {
-        document.getElementById('aiH2H').innerHTML = '<p>No recent H2H data</p>';
+        document.getElementById('aiH2H').innerHTML = '<p style="color: var(--text-muted);">No recent head-to-head data available.</p>';
     }
 
-    // Injuries
-    const injuries = BOOKIE_DATA.injuries.filter(i => i.team === game.away || i.team === game.home);
+    // ═══════════════════════════════════════════════════════════════
+    // FACTOR 4: INJURIES (Weight: 25%)
+    // ═══════════════════════════════════════════════════════════════
     if (injuries.length > 0) {
-        document.getElementById('aiInjury').innerHTML = injuries.map(i =>
-            `<p><strong>${i.player}</strong> (${i.team}): ${i.status} - ${i.injury}</p>`
-        ).join('');
+        const awayInjuries = injuries.filter(i => i.team === game.away);
+        const homeInjuries = injuries.filter(i => i.team === game.home);
+
+        let injuryAnalysis = '';
+
+        if (awayInjuries.length > 0) {
+            injuryAnalysis += `<div style="margin-bottom: 8px;"><strong>${game.away} Injuries:</strong></div>`;
+            injuryAnalysis += awayInjuries.map(i => `
+                <div style="font-size: 11px; padding: 6px; margin-bottom: 4px; background: ${i.status === 'out' ? 'rgba(255,77,79,0.1)' : 'rgba(255,215,0,0.1)'}; border-radius: 6px;">
+                    <span style="font-weight: 700;">${i.player}</span>
+                    <span style="color: ${i.status === 'out' ? 'var(--accent-red)' : 'var(--accent-gold)'};">(${i.status.toUpperCase()})</span>
+                    - ${i.injury}
+                </div>
+            `).join('');
+
+            // Deduct from away team for injuries
+            const awayHighImpact = awayInjuries.filter(i => i.impact === 'high' && i.status === 'out').length;
+            if (awayHighImpact > 0) {
+                analysisData.homeScore += awayHighImpact * 8;
+                analysisData.warnings.push(`${game.away} missing ${awayHighImpact} key player(s)`);
+            }
+        }
+
+        if (homeInjuries.length > 0) {
+            injuryAnalysis += `<div style="margin: 8px 0;"><strong>${game.home} Injuries:</strong></div>`;
+            injuryAnalysis += homeInjuries.map(i => `
+                <div style="font-size: 11px; padding: 6px; margin-bottom: 4px; background: ${i.status === 'out' ? 'rgba(255,77,79,0.1)' : 'rgba(255,215,0,0.1)'}; border-radius: 6px;">
+                    <span style="font-weight: 700;">${i.player}</span>
+                    <span style="color: ${i.status === 'out' ? 'var(--accent-red)' : 'var(--accent-gold)'};">(${i.status.toUpperCase()})</span>
+                    - ${i.injury}
+                </div>
+            `).join('');
+
+            // Deduct from home team for injuries
+            const homeHighImpact = homeInjuries.filter(i => i.impact === 'high' && i.status === 'out').length;
+            if (homeHighImpact > 0) {
+                analysisData.awayScore += homeHighImpact * 8;
+                analysisData.warnings.push(`${game.home} missing ${homeHighImpact} key player(s)`);
+            }
+        }
+
+        document.getElementById('aiInjury').innerHTML = injuryAnalysis;
     } else {
-        document.getElementById('aiInjury').innerHTML = '<p>No significant injuries</p>';
+        document.getElementById('aiInjury').innerHTML = '<p style="color: var(--accent-green);">✓ No significant injuries reported for either team.</p>';
+        analysisData.factors.push('Both teams healthy');
     }
 
-    // Calculate confidence and recommendation
-    const confidence = calculateConfidence(game, awayTrends, homeTrends, sharpData, h2h);
-    const confLevel = confidence >= 75 ? 'high' : confidence >= 50 ? 'medium' : 'low';
+    // ═══════════════════════════════════════════════════════════════
+    // CALCULATE FINAL CONFIDENCE & RECOMMENDATION
+    // ═══════════════════════════════════════════════════════════════
+    const confidence = calculateConfidence(analysisData, game, sharpData);
+    const confLevel = confidence >= 75 ? 'high' : confidence >= 55 ? 'medium' : 'low';
 
     document.getElementById('aiConfidence').innerHTML = `
-        <span class="confidence-label">Confidence</span>
+        <span class="confidence-label">AI Confidence</span>
         <span class="confidence-value ${confLevel}">${confidence}%</span>
     `;
 
-    // Generate recommendation
-    const rec = generateRecommendation(game, awayTrends, homeTrends, sharpData, confidence);
+    // Generate recommendation based on all factors
+    const rec = generateRecommendation(game, analysisData, sharpData, confidence, awayTrends, homeTrends);
     document.getElementById('aiRecPick').textContent = rec.pick;
     document.getElementById('aiRecReasoning').textContent = rec.reasoning;
-    document.getElementById('aiRecUnits').textContent = `Recommended: ${rec.units}u ($${rec.units * 20})`;
+    document.getElementById('aiRecUnits').textContent = `Recommended: ${rec.units}u ($${Math.round(rec.units * 19)})`;
 
     output.scrollIntoView({ behavior: 'smooth' });
 }
 
-function calculateConfidence(game, awayTrends, homeTrends, sharpData, h2h) {
-    let score = 50;
+function calculateConfidence(analysisData, game, sharpData) {
+    let baseScore = 50;
 
-    // Trends factor
-    if (awayTrends.atsLast10) {
-        const [w, l] = awayTrends.atsLast10.split('-').map(Number);
-        if (w > l) score += 5;
+    // Add the difference between away and home scores
+    const scoreDiff = Math.abs(analysisData.awayScore - analysisData.homeScore);
+    baseScore += Math.min(scoreDiff, 30);
+
+    // Sharp money is a major confidence booster
+    if (sharpData && sharpData.insightType === 'sharp') {
+        baseScore += 15;
     }
 
-    // Sharp money factor
-    if (sharpData && sharpData.sharpMoney >= 60) score += 15;
-    if (sharpData && sharpData.insightType === 'sharp') score += 10;
-
-    // H2H factor
-    if (h2h.length >= 2) {
-        const wins = h2h.filter(g => g.result === 'win').length;
-        if (wins >= 2) score += 10;
+    // Multiple factors aligning increases confidence
+    if (analysisData.factors.length >= 3) {
+        baseScore += 10;
     }
 
-    return Math.min(95, Math.max(25, score));
+    // Warnings decrease confidence
+    baseScore -= analysisData.warnings.length * 5;
+
+    return Math.min(92, Math.max(35, baseScore));
 }
 
-function generateRecommendation(game, awayTrends, homeTrends, sharpData, confidence) {
+function generateRecommendation(game, analysisData, sharpData, confidence, awayTrends, homeTrends) {
     let pick, reasoning, units;
+    const favorSide = analysisData.awayScore > analysisData.homeScore ? 'away' : 'home';
 
-    // Default to taking the dog with the spread
+    // Build pick based on analysis
     if (sharpData && sharpData.insightType === 'sharp') {
+        // Sharp money is king
         pick = sharpData.pick;
-        reasoning = `Sharp money (${sharpData.sharpMoney}%) supports this side. ${sharpData.insight}`;
-    } else if (awayTrends.atsLast10) {
-        const [w, l] = awayTrends.atsLast10.split('-').map(Number);
-        if (w > l) {
-            pick = `${game.away} ${game.spread.includes(game.away) ? game.spread.split(' ')[1] : '+' + game.spread.split('-')[1]}`;
-            reasoning = `${game.away} is ${awayTrends.atsLast10} ATS in last 10. ${awayTrends.note || ''}`;
-        } else {
-            pick = `${game.home} ${game.spread}`;
-            reasoning = `${game.home} is ${homeTrends.atsLast10 || 'solid'} ATS at home.`;
-        }
+        reasoning = `Sharp money (${sharpData.sharpMoney}%) strongly supports this side. ${analysisData.factors.slice(0, 2).join('. ')}.`;
+    } else if (favorSide === 'away') {
+        // Extract the spread number for away team
+        const spreadMatch = game.spread.match(/-?\d+\.?\d*/);
+        const spreadNum = spreadMatch ? parseFloat(spreadMatch[0]) : 0;
+        pick = `${game.away} +${Math.abs(spreadNum)}`;
+
+        let reasons = [];
+        if (awayTrends.atsLast10) reasons.push(`${game.away} ${awayTrends.atsLast10} ATS L10`);
+        if (analysisData.factors.length > 0) reasons.push(analysisData.factors[0]);
+        reasoning = reasons.join('. ') + '.';
     } else {
         pick = game.spread;
-        reasoning = 'Limited data available. Proceed with caution.';
+        let reasons = [];
+        if (homeTrends.atsLast10) reasons.push(`${game.home} ${homeTrends.atsLast10} ATS L10`);
+        if (analysisData.factors.length > 0) reasons.push(analysisData.factors[0]);
+        reasoning = reasons.join('. ') + '.';
     }
 
-    units = confidence >= 75 ? 2 : confidence >= 50 ? 1.5 : 1;
+    // Add warnings to reasoning if any
+    if (analysisData.warnings.length > 0) {
+        reasoning += ` ⚠️ ${analysisData.warnings[0]}`;
+    }
+
+    // Unit sizing based on confidence
+    if (confidence >= 80) units = 2.5;
+    else if (confidence >= 70) units = 2;
+    else if (confidence >= 60) units = 1.5;
+    else units = 1;
 
     return { pick, reasoning, units };
 }
@@ -3278,29 +3432,47 @@ function renderAIQuickPicks() {
     const container = document.getElementById('aiQuickPicks');
     if (!container) return;
 
+    // Get today's picks from BOOKIE_DATA and calculate real confidence
     const quickPicks = BOOKIE_DATA.todaysPicks.slice(0, 5).map((pick, i) => {
-        const confidence = 90 - (i * 10);
+        // Get sharp data if available
+        const sharpData = BOOKIE_DATA.sharpData.find(s => s.away === pick.away && s.home === pick.home);
+        const trends = BOOKIE_DATA.trends[pick.away] || {};
+
+        // Calculate confidence based on conviction and sharp money
+        let confidence = pick.conviction * 15 + 20;
+        if (sharpData && sharpData.insightType === 'sharp') confidence += 15;
+        if (trends.atsLast10) {
+            const [w] = trends.atsLast10.split('-').map(Number);
+            if (w >= 6) confidence += 5;
+        }
+        confidence = Math.min(95, confidence);
+
         return { ...pick, confidence, rank: i + 1 };
     });
 
-    container.innerHTML = quickPicks.map(pick => `
-        <div class="ai-quick-card">
-            <div class="ai-quick-rank">#${pick.rank}</div>
-            <div class="ai-quick-teams">
-                ${getTeamLogo(pick.away, 28)}
-                <span style="margin: 0 5px; color: var(--text-muted);">@</span>
-                ${getTeamLogo(pick.home, 28)}
+    container.innerHTML = quickPicks.map(pick => {
+        const confClass = pick.confidence >= 80 ? 'high' : pick.confidence >= 60 ? 'medium' : 'low';
+        return `
+            <div class="ai-quick-card">
+                <div class="ai-quick-rank">#${pick.rank}</div>
+                <div class="ai-quick-teams">
+                    ${getTeamLogo(pick.away, 28)}
+                    <span style="margin: 0 5px; color: var(--text-muted);">@</span>
+                    ${getTeamLogo(pick.home, 28)}
+                </div>
+                <div class="ai-quick-info">
+                    <div class="ai-quick-matchup">${pick.away} @ ${pick.home}</div>
+                    <div class="ai-quick-meta">${getSportEmoji(pick.sport)} ${pick.sport} · ${pick.time}</div>
+                </div>
+                <div class="ai-quick-pick">
+                    <div class="ai-quick-line">${pick.pick}</div>
+                    <div class="ai-quick-confidence" style="color: ${confClass === 'high' ? 'var(--accent-green)' : confClass === 'medium' ? 'var(--accent-gold)' : 'var(--text-muted)'};">
+                        ${pick.confidence}% · ${'🔒'.repeat(pick.conviction)}
+                    </div>
+                </div>
             </div>
-            <div class="ai-quick-info">
-                <div class="ai-quick-matchup">${pick.away} @ ${pick.home}</div>
-                <div class="ai-quick-meta">${getSportEmoji(pick.sport)} ${pick.sport} · ${pick.time}</div>
-            </div>
-            <div class="ai-quick-pick">
-                <div class="ai-quick-line">${pick.pick}</div>
-                <div class="ai-quick-confidence">${pick.confidence}% confidence</div>
-            </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // ═══════════════════════════════════════════════════════════════
