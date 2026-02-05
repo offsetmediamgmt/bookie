@@ -117,25 +117,6 @@
                 </div>
             </div>
 
-            <!-- LIVE SCORE TRACKER -->
-            <div class="live-tracker-section">
-                <div class="live-tracker-header">
-                    <div class="live-header-left">
-                        <span class="live-icon pulse">🔴</span>
-                        <h3>LIVE BET TRACKER</h3>
-                    </div>
-                    <div class="live-header-right">
-                        <span class="live-status" id="liveStatus">3 Active</span>
-                        <button class="refresh-btn" onclick="refreshLiveScores()">
-                            <span class="refresh-icon">🔄</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="live-tracker-grid" id="liveTrackerGrid">
-                    <!-- Populated by JS -->
-                </div>
-            </div>
-
             <!-- Straight Bets -->
             <div class="bets-section">
                 <div class="bets-section-header">
@@ -143,7 +124,7 @@
                         <span class="section-icon">🎲</span>
                         <h3>STRAIGHT BETS</h3>
                     </div>
-                    <span class="section-total">7 bets · $200 risk</span>
+                    <span class="section-total" id="straightBetsTotal">Loading...</span>
                 </div>
                 <div class="bets-list" id="straightBetsList"></div>
             </div>
@@ -155,7 +136,7 @@
                         <span class="section-icon">🎰</span>
                         <h3>PARLAYS</h3>
                     </div>
-                    <span class="section-total">2 parlays · $40 risk</span>
+                    <span class="section-total" id="parlaysTotal">Loading...</span>
                 </div>
                 <div class="parlays-vertical" id="parlayBetsList"></div>
             </div>
@@ -167,7 +148,7 @@
                         <span class="section-icon">⭐</span>
                         <h3>PLAYER PROPS</h3>
                     </div>
-                    <span class="section-total">3 props · $50 risk</span>
+                    <span class="section-total" id="propsTotal">Loading...</span>
                 </div>
                 <div class="props-list" id="propBetsList"></div>
             </div>

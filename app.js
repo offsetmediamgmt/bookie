@@ -1488,16 +1488,23 @@ function renderStraightBets() {
     const container = document.getElementById('straightBetsList');
     if (!container) return;
 
-    // February 5, 2026 - Trade Deadline Day + Last NHL before Olympics
-    const bets = [
-        { id: 'straight-1', game: 'WAS @ DET', pick: 'Pistons -14.5', odds: -110, amount: 38, deadline: '4:00 PM', sport: 'NBA', away: 'WAS', home: 'DET' },
-        { id: 'straight-2', game: 'PHI @ LAL', pick: '76ers +4.5', odds: -110, amount: 28, deadline: '7:00 PM', sport: 'NBA', away: 'PHI', home: 'LAL' },
-        { id: 'straight-3', game: 'GSW @ PHX', pick: 'Warriors +5.5', odds: -110, amount: 19, deadline: '7:00 PM', sport: 'NBA', away: 'GSW', home: 'PHX' },
-        { id: 'straight-4', game: 'SAS @ DAL', pick: 'Spurs +7.5', odds: -110, amount: 19, deadline: '5:30 PM', sport: 'NBA', away: 'SAS', home: 'DAL' },
-        { id: 'straight-5', game: 'FLA @ TB', pick: 'Panthers ML', odds: -125, amount: 28, deadline: '4:30 PM', sport: 'NHL', away: 'FLA', home: 'TB' },
-        { id: 'straight-6', game: 'CAR @ NYR', pick: 'Hurricanes ML', odds: 110, amount: 19, deadline: '4:00 PM', sport: 'NHL', away: 'CAR', home: 'NYR' },
-        { id: 'straight-7', game: 'LAK @ VGK', pick: 'UNDER 5.5', odds: -110, amount: 19, deadline: '7:00 PM', sport: 'NHL', away: 'LAK', home: 'VGK' },
-    ];
+    // Pull from BOOKIE_DATA.todaysPicks
+    const bets = BOOKIE_DATA.todaysPicks.map(pick => {
+        const unitTier = BOOKIE_DATA.unitTiers.find(t => t.locks === pick.conviction) || BOOKIE_DATA.unitTiers[1];
+        return {
+            id: `straight-${pick.id}`,
+            game: `${pick.away} @ ${pick.home}`,
+            pick: pick.pick,
+            odds: pick.odds,
+            amount: unitTier.amount,
+            deadline: pick.time.replace(' ET', ''),
+            sport: pick.sport,
+            away: pick.away,
+            home: pick.home,
+            conviction: pick.conviction,
+            factors: pick.factors
+        };
+    });
 
     container.innerHTML = bets.map((bet, index) => {
         const potentialWin = calculateWin(bet.amount, bet.odds);
@@ -1559,35 +1566,28 @@ function renderParlayBets() {
     const container = document.getElementById('parlayBetsList');
     if (!container) return;
 
-    // February 5, 2026 parlays
-    const parlays = [
-        {
-            id: 'parlay-1',
-            name: 'CHALKY PARLAY',
-            emoji: '🔒',
-            odds: '+450',
-            amount: 25,
-            toWin: 137,
-            legs: [
-                { pick: 'Pistons -14.5', away: 'WAS', home: 'DET' },
-                { pick: 'Panthers ML', away: 'FLA', home: 'TB' },
-                { pick: '76ers +4.5', away: 'PHI', home: 'LAL' }
-            ]
-        },
-        {
-            id: 'parlay-2',
-            name: 'NHL SPECIAL',
-            emoji: '🏒',
-            odds: '+650',
-            amount: 15,
-            toWin: 112,
-            legs: [
-                { pick: 'Panthers ML', away: 'FLA', home: 'TB' },
-                { pick: 'Hurricanes ML', away: 'CAR', home: 'NYR' },
-                { pick: 'Under 5.5', away: 'LAK', home: 'VGK' }
-            ]
-        }
-    ];
+    // Pull from BOOKIE_DATA.parlays
+    const parlayEmojis = { safe: '🔒', value: '💎', risky: '🚀' };
+    const parlays = Object.entries(BOOKIE_DATA.parlays).map(([key, p], index) => {
+        // Parse team codes from leg game strings (e.g., "PHI @ LAL")
+        const legs = p.legs.map(leg => {
+            const parts = leg.game.split(' @ ');
+            return {
+                pick: leg.pick,
+                away: parts[0] || '',
+                home: parts[1] || ''
+            };
+        });
+        return {
+            id: `parlay-${index + 1}`,
+            name: p.name,
+            emoji: parlayEmojis[key] || '🎲',
+            odds: p.odds,
+            amount: p.wager,
+            toWin: p.payout,
+            legs: legs
+        };
+    });
 
     container.innerHTML = parlays.map(parlay => {
         const status = betStatus[parlay.id];
@@ -1634,12 +1634,21 @@ function renderPropBets() {
     const container = document.getElementById('propBetsList');
     if (!container) return;
 
-    // February 5, 2026 props
-    const props = [
-        { id: 'prop-1', player: 'Cade Cunningham', teamAbbr: 'DET', prop: 'Over 24.5 Points', odds: -115, amount: 19, game: 'WAS @ DET' },
-        { id: 'prop-2', player: 'Tyrese Maxey', teamAbbr: 'PHI', prop: 'Over 25.5 Points', odds: -110, amount: 19, game: 'PHI @ LAL' },
-        { id: 'prop-3', player: 'Victor Wembanyama', teamAbbr: 'SAS', prop: 'Over 21.5 Points', odds: -115, amount: 12, game: 'SAS @ DAL' },
-    ];
+    // Pull from BOOKIE_DATA.playerProps
+    const props = BOOKIE_DATA.playerProps.map((p, index) => {
+        const unitTier = BOOKIE_DATA.unitTiers.find(t => t.locks === p.conviction) || BOOKIE_DATA.unitTiers[1];
+        return {
+            id: `prop-${index + 1}`,
+            player: p.player,
+            teamAbbr: p.team,
+            prop: p.prop,
+            odds: p.odds,
+            amount: unitTier.amount,
+            game: p.game,
+            conviction: p.conviction,
+            reasoning: p.reasoning
+        };
+    });
 
     container.innerHTML = props.map(prop => {
         const potentialWin = calculateWin(prop.amount, prop.odds);
@@ -1703,7 +1712,12 @@ function toggleAnalysisCard(index) {
 }
 
 function updateBetCounts() {
-    const total = 18; // 10 straights + 3 parlays + 5 props
+    // Calculate totals dynamically from BOOKIE_DATA
+    const straightCount = BOOKIE_DATA.todaysPicks.length;
+    const parlayCount = Object.keys(BOOKIE_DATA.parlays).length;
+    const propCount = BOOKIE_DATA.playerProps.length;
+    const total = straightCount + parlayCount + propCount;
+
     const placed = Object.values(betStatus).filter(v => v === 'placed').length;
     const missed = Object.values(betStatus).filter(v => v === 'missed').length;
     const el = document.getElementById('betsPlaced');
@@ -1718,14 +1732,67 @@ function updateBetCounts() {
         }
     }
 
-    // Update total risk display
-    const totalRisk = 250 + 55 + 115; // straights + parlays + props = $420
+    // Calculate total risk dynamically
+    let totalRisk = 0;
+    // Straight bets risk
+    BOOKIE_DATA.todaysPicks.forEach(pick => {
+        const unitTier = BOOKIE_DATA.unitTiers.find(t => t.locks === pick.conviction) || BOOKIE_DATA.unitTiers[1];
+        totalRisk += unitTier.amount;
+    });
+    // Parlay risk
+    Object.values(BOOKIE_DATA.parlays).forEach(p => {
+        totalRisk += p.wager;
+    });
+    // Prop risk
+    BOOKIE_DATA.playerProps.forEach(p => {
+        const unitTier = BOOKIE_DATA.unitTiers.find(t => t.locks === p.conviction) || BOOKIE_DATA.unitTiers[1];
+        totalRisk += unitTier.amount;
+    });
+
     const riskEl = document.getElementById('totalRisk');
     if (riskEl) riskEl.textContent = '$' + totalRisk;
 
-    // Update potential win
+    // Calculate potential win dynamically
+    let potentialWin = 0;
+    // Straight bets potential
+    BOOKIE_DATA.todaysPicks.forEach(pick => {
+        const unitTier = BOOKIE_DATA.unitTiers.find(t => t.locks === pick.conviction) || BOOKIE_DATA.unitTiers[1];
+        potentialWin += calculateWin(unitTier.amount, pick.odds);
+    });
+    // Parlay potential
+    Object.values(BOOKIE_DATA.parlays).forEach(p => {
+        potentialWin += p.payout;
+    });
+    // Prop potential
+    BOOKIE_DATA.playerProps.forEach(p => {
+        const unitTier = BOOKIE_DATA.unitTiers.find(t => t.locks === p.conviction) || BOOKIE_DATA.unitTiers[1];
+        potentialWin += calculateWin(unitTier.amount, p.odds);
+    });
+
     const potentialEl = document.getElementById('potentialWin');
-    if (potentialEl) potentialEl.textContent = '$1,200+';
+    if (potentialEl) potentialEl.textContent = '$' + potentialWin.toLocaleString();
+
+    // Update section totals
+    let straightRisk = 0;
+    BOOKIE_DATA.todaysPicks.forEach(pick => {
+        const unitTier = BOOKIE_DATA.unitTiers.find(t => t.locks === pick.conviction) || BOOKIE_DATA.unitTiers[1];
+        straightRisk += unitTier.amount;
+    });
+    const straightTotalEl = document.getElementById('straightBetsTotal');
+    if (straightTotalEl) straightTotalEl.textContent = `${straightCount} bets · $${straightRisk} risk`;
+
+    let parlayRisk = 0;
+    Object.values(BOOKIE_DATA.parlays).forEach(p => parlayRisk += p.wager);
+    const parlaysTotalEl = document.getElementById('parlaysTotal');
+    if (parlaysTotalEl) parlaysTotalEl.textContent = `${parlayCount} parlays · $${parlayRisk} risk`;
+
+    let propRisk = 0;
+    BOOKIE_DATA.playerProps.forEach(p => {
+        const unitTier = BOOKIE_DATA.unitTiers.find(t => t.locks === p.conviction) || BOOKIE_DATA.unitTiers[1];
+        propRisk += unitTier.amount;
+    });
+    const propsTotalEl = document.getElementById('propsTotal');
+    if (propsTotalEl) propsTotalEl.textContent = `${propCount} props · $${propRisk} risk`;
 }
 
 function resetAllBets() {
@@ -1737,12 +1804,24 @@ function resetAllBets() {
 }
 
 function markAllPlaced() {
-    const allIds = [
-        'straight-1', 'straight-2', 'straight-3', 'straight-4', 'straight-5',
-        'straight-6', 'straight-7',
-        'parlay-1', 'parlay-2',
-        'prop-1', 'prop-2', 'prop-3'
-    ];
+    // Generate IDs dynamically from BOOKIE_DATA
+    const allIds = [];
+
+    // Straight bet IDs
+    BOOKIE_DATA.todaysPicks.forEach(pick => {
+        allIds.push(`straight-${pick.id}`);
+    });
+
+    // Parlay IDs
+    Object.keys(BOOKIE_DATA.parlays).forEach((key, index) => {
+        allIds.push(`parlay-${index + 1}`);
+    });
+
+    // Prop bet IDs
+    BOOKIE_DATA.playerProps.forEach((p, index) => {
+        allIds.push(`prop-${index + 1}`);
+    });
+
     allIds.forEach(id => betStatus[id] = 'placed');
     saveBetStatus();
     renderBetsPage();
