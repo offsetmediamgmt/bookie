@@ -268,80 +268,6 @@
                 <div class="page-subtitle">February 5, 2026 — Sharp Analysis</div>
             </div>
 
-            <!-- DATA SOURCES BAR -->
-            <div class="data-sources-bar">
-                <div class="sources-left">
-                    <span class="sources-label">📡 LIVE DATA</span>
-                    <span class="sources-list">TheSpread.com · Action Network · FOX Sports · TeamRankings</span>
-                </div>
-                <div class="sources-right">
-                    <span class="last-updated">Last Updated: Feb 5, 2026 6:00 PM ET</span>
-                </div>
-            </div>
-
-            <!-- SHARP VS PUBLIC EXPLAINER -->
-            <div class="explainer-section">
-                <div class="explainer-header" onclick="toggleExplainer()">
-                    <span class="explainer-icon">📚</span>
-                    <h3>WHAT IS SHARP VS PUBLIC BETTING?</h3>
-                    <span class="explainer-toggle" id="explainerToggle">▼</span>
-                </div>
-                <div class="explainer-content" id="explainerContent">
-                    <div class="explainer-grid">
-                        <div class="explainer-card public">
-                            <div class="explainer-card-header">
-                                <span class="explainer-emoji">🎰</span>
-                                <h4>PUBLIC BETTORS</h4>
-                            </div>
-                            <ul>
-                                <li><strong>Who:</strong> Casual, recreational bettors</li>
-                                <li><strong>Behavior:</strong> Bet on favorites, popular teams, overs</li>
-                                <li><strong>Volume:</strong> High number of bets, smaller amounts</li>
-                                <li><strong>Signals:</strong> High % of bets on one side</li>
-                            </ul>
-                        </div>
-                        <div class="explainer-card sharp">
-                            <div class="explainer-card-header">
-                                <span class="explainer-emoji">🧠</span>
-                                <h4>SHARP BETTORS</h4>
-                            </div>
-                            <ul>
-                                <li><strong>Who:</strong> Professional bettors, syndicates</li>
-                                <li><strong>Behavior:</strong> Find value, bet against public</li>
-                                <li><strong>Volume:</strong> Fewer bets, MUCH larger amounts</li>
-                                <li><strong>Signals:</strong> High % of money despite low % of bets</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="explainer-key-insight">
-                        <span class="key-icon">🔑</span>
-                        <div class="key-text">
-                            <strong>THE KEY INSIGHT:</strong> When 70% of bets are on Team A, but 60% of <em>money</em> is on Team B,
-                            sharps are fading the public. This is called a <strong>"reverse line movement"</strong> signal —
-                            the line should move toward Team A with all those bets, but if it moves toward Team B instead,
-                            sportsbooks are respecting the sharp money.
-                        </div>
-                    </div>
-                    <div class="explainer-how-to-use">
-                        <h4>📊 HOW TO READ THE CHARTS BELOW</h4>
-                        <div class="how-to-grid">
-                            <div class="how-to-item">
-                                <span class="how-icon green">✅</span>
-                                <span><strong>Sharp Play:</strong> Sharp money ≥60% = Follow the pros</span>
-                            </div>
-                            <div class="how-to-item">
-                                <span class="how-icon yellow">⚖️</span>
-                                <span><strong>Fade Alert:</strong> Public ≥70% + sharp opposite = Fade public</span>
-                            </div>
-                            <div class="how-to-item">
-                                <span class="how-icon red">⚠️</span>
-                                <span><strong>Caution:</strong> Public and sharp aligned ≥65% = Trap potential</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- SHARP VS PUBLIC SUMMARY -->
             <div class="sharp-summary">
                 <div class="sharp-summary-header">
@@ -472,64 +398,89 @@
              ═══════════════════════════════════════════════════════════════ -->
         <div class="page-section" id="page-analytics">
             <div class="page-header">
-                <div class="page-title">📊 PERFORMANCE ANALYTICS</div>
-                <div class="page-subtitle">Deep dive into your betting performance</div>
+                <div class="page-title">📊 ANALYTICS</div>
+                <div class="page-subtitle">Performance Intelligence Dashboard</div>
             </div>
 
-            <!-- Overall Stats -->
-            <div class="analytics-hero">
-                <div class="analytics-hero-stat main">
-                    <div class="analytics-hero-value" id="analyticsROI">-6.1%</div>
-                    <div class="analytics-hero-label">Overall ROI</div>
+            <!-- Main Performance Card -->
+            <div class="analytics-main-card">
+                <div class="analytics-main-left">
+                    <div class="analytics-roi-display">
+                        <div class="roi-ring" id="roiRing">
+                            <svg viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45" class="roi-ring-bg"/>
+                                <circle cx="50" cy="50" r="45" class="roi-ring-fill" id="roiRingFill"/>
+                            </svg>
+                            <div class="roi-ring-content">
+                                <span class="roi-value" id="analyticsROI">52%</span>
+                                <span class="roi-label">WIN RATE</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="analytics-hero-stat">
-                    <div class="analytics-hero-value" id="analyticsRecord">12-11</div>
-                    <div class="analytics-hero-label">Record</div>
-                </div>
-                <div class="analytics-hero-stat">
-                    <div class="analytics-hero-value" id="analyticsUnits">-3.22u</div>
-                    <div class="analytics-hero-label">Net Units</div>
-                </div>
-                <div class="analytics-hero-stat">
-                    <div class="analytics-hero-value" id="analyticsAvgOdds">-108</div>
-                    <div class="analytics-hero-label">Avg Odds</div>
+                <div class="analytics-main-right">
+                    <div class="analytics-stat-row">
+                        <div class="analytics-stat-item">
+                            <span class="stat-number" id="analyticsRecord">12-11</span>
+                            <span class="stat-label">RECORD</span>
+                        </div>
+                        <div class="analytics-stat-item">
+                            <span class="stat-number" id="analyticsUnits">-3.22u</span>
+                            <span class="stat-label">NET UNITS</span>
+                        </div>
+                    </div>
+                    <div class="analytics-stat-row">
+                        <div class="analytics-stat-item">
+                            <span class="stat-number" id="analyticsAvgOdds">-108</span>
+                            <span class="stat-label">AVG ODDS</span>
+                        </div>
+                        <div class="analytics-stat-item">
+                            <span class="stat-number" id="analyticsStreak">4W</span>
+                            <span class="stat-label">STREAK</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- ROI by Sport -->
-            <div class="analytics-section">
-                <div class="analytics-section-header">
-                    <span class="section-icon">🏆</span>
-                    <h3>ROI BY SPORT</h3>
+            <!-- Bankroll Chart -->
+            <div class="analytics-chart-section">
+                <div class="analytics-chart-header">
+                    <h3>BANKROLL PERFORMANCE</h3>
+                    <div class="chart-period-tabs">
+                        <button class="period-tab active" data-period="week">7D</button>
+                        <button class="period-tab" data-period="month">30D</button>
+                        <button class="period-tab" data-period="all">ALL</button>
+                    </div>
                 </div>
-                <div class="analytics-sport-grid" id="analyticsBySport"></div>
+                <div class="analytics-chart-container" id="bankrollChart"></div>
+                <div class="chart-legend">
+                    <span class="legend-item"><span class="legend-dot green"></span>Profit</span>
+                    <span class="legend-item"><span class="legend-dot red"></span>Loss</span>
+                </div>
             </div>
 
-            <!-- ROI by Bet Type -->
-            <div class="analytics-section">
-                <div class="analytics-section-header">
-                    <span class="section-icon">🎯</span>
-                    <h3>ROI BY BET TYPE</h3>
+            <!-- Sport Breakdown -->
+            <div class="analytics-breakdown-section">
+                <div class="breakdown-header">
+                    <h3>BREAKDOWN BY SPORT</h3>
                 </div>
-                <div class="analytics-type-grid" id="analyticsByType"></div>
+                <div class="analytics-sport-bars" id="analyticsBySport"></div>
             </div>
 
-            <!-- Performance Chart -->
-            <div class="analytics-section">
-                <div class="analytics-section-header">
-                    <span class="section-icon">📈</span>
-                    <h3>BANKROLL OVER TIME</h3>
+            <!-- Bet Type Performance -->
+            <div class="analytics-breakdown-section">
+                <div class="breakdown-header">
+                    <h3>BREAKDOWN BY BET TYPE</h3>
                 </div>
-                <div class="analytics-chart" id="bankrollChart"></div>
+                <div class="analytics-type-bars" id="analyticsByType"></div>
             </div>
 
-            <!-- Best & Worst -->
-            <div class="analytics-section">
-                <div class="analytics-section-header">
-                    <span class="section-icon">🔥</span>
-                    <h3>HOT & COLD STREAKS</h3>
+            <!-- Insights -->
+            <div class="analytics-insights-section">
+                <div class="insights-header">
+                    <h3>PERFORMANCE INSIGHTS</h3>
                 </div>
-                <div class="analytics-streaks" id="analyticsStreaks"></div>
+                <div class="analytics-insights-grid" id="analyticsInsights"></div>
             </div>
         </div>
 
@@ -538,93 +489,134 @@
              ═══════════════════════════════════════════════════════════════ -->
         <div class="page-section" id="page-ai">
             <div class="page-header">
-                <div class="page-title">🤖 AI PICK GENERATOR</div>
-                <div class="page-subtitle">Data-driven analysis for any matchup</div>
+                <div class="page-title">🤖 AI PICKS</div>
+                <div class="page-subtitle">Neural Network Analysis Engine</div>
             </div>
 
-            <!-- Game Selector -->
-            <div class="ai-input-section">
-                <div class="ai-input-header">
-                    <span class="ai-icon">🎮</span>
-                    <h3>SELECT A GAME TO ANALYZE</h3>
+            <!-- AI Hero Section -->
+            <div class="ai-hero-section">
+                <div class="ai-hero-visual">
+                    <div class="ai-brain-icon">
+                        <div class="brain-pulse"></div>
+                        <span>🧠</span>
+                    </div>
+                    <div class="ai-status">
+                        <span class="status-dot pulse"></span>
+                        <span class="status-text">ANALYZING GAMES</span>
+                    </div>
                 </div>
-                <div class="ai-game-selector">
-                    <select id="aiSportSelect" class="ai-select">
-                        <option value="">Select Sport</option>
-                        <option value="NBA">🏀 NBA</option>
-                        <option value="NHL">🏒 NHL</option>
-                        <option value="NCAAB">🏀 NCAAB</option>
-                        <option value="NFL">🏈 NFL</option>
-                    </select>
-                    <select id="aiGameSelect" class="ai-select" disabled>
-                        <option value="">Select Game</option>
-                    </select>
-                    <button class="ai-analyze-btn" id="aiAnalyzeBtn" onclick="runAIAnalysis()">
-                        <span class="btn-icon">🧠</span>
-                        ANALYZE
+                <div class="ai-hero-stats">
+                    <div class="ai-hero-stat">
+                        <span class="ai-stat-value">7</span>
+                        <span class="ai-stat-label">Games Today</span>
+                    </div>
+                    <div class="ai-hero-stat">
+                        <span class="ai-stat-value">85%</span>
+                        <span class="ai-stat-label">Model Confidence</span>
+                    </div>
+                    <div class="ai-hero-stat">
+                        <span class="ai-stat-value">3</span>
+                        <span class="ai-stat-label">Strong Signals</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sport Selector - Modern Toggle Buttons -->
+            <div class="ai-sport-selector">
+                <div class="sport-toggle-group" id="aiSportToggles">
+                    <button class="sport-toggle" data-sport="NBA">
+                        <span class="sport-icon">🏀</span>
+                        <span class="sport-name">NBA</span>
+                        <span class="sport-count">4</span>
+                    </button>
+                    <button class="sport-toggle" data-sport="NHL">
+                        <span class="sport-icon">🏒</span>
+                        <span class="sport-name">NHL</span>
+                        <span class="sport-count">3</span>
+                    </button>
+                    <button class="sport-toggle" data-sport="NCAAB">
+                        <span class="sport-icon">🎓</span>
+                        <span class="sport-name">NCAAB</span>
+                        <span class="sport-count">0</span>
                     </button>
                 </div>
             </div>
 
-            <!-- AI Analysis Output -->
-            <div class="ai-output-section" id="aiOutputSection" style="display: none;">
-                <div class="ai-output-header">
-                    <div class="ai-matchup" id="aiMatchup"></div>
-                    <div class="ai-confidence" id="aiConfidence"></div>
+            <!-- Game Cards Grid -->
+            <div class="ai-games-section">
+                <div class="ai-games-header">
+                    <h3>SELECT A GAME TO ANALYZE</h3>
+                    <span class="ai-games-count" id="aiGamesCount">4 games available</span>
                 </div>
-
-                <!-- Factors Grid -->
-                <div class="ai-factors-grid">
-                    <div class="ai-factor-card" id="aiTrendsCard">
-                        <div class="ai-factor-header">
-                            <span class="factor-icon">📊</span>
-                            <h4>ATS TRENDS</h4>
-                        </div>
-                        <div class="ai-factor-content" id="aiTrends"></div>
-                    </div>
-                    <div class="ai-factor-card" id="aiSharpCard">
-                        <div class="ai-factor-header">
-                            <span class="factor-icon">🧠</span>
-                            <h4>SHARP ACTION</h4>
-                        </div>
-                        <div class="ai-factor-content" id="aiSharp"></div>
-                    </div>
-                    <div class="ai-factor-card" id="aiH2HCard">
-                        <div class="ai-factor-header">
-                            <span class="factor-icon">⚔️</span>
-                            <h4>HEAD TO HEAD</h4>
-                        </div>
-                        <div class="ai-factor-content" id="aiH2H"></div>
-                    </div>
-                    <div class="ai-factor-card" id="aiInjuryCard">
-                        <div class="ai-factor-header">
-                            <span class="factor-icon">🏥</span>
-                            <h4>INJURY IMPACT</h4>
-                        </div>
-                        <div class="ai-factor-content" id="aiInjury"></div>
-                    </div>
-                </div>
-
-                <!-- AI Recommendation -->
-                <div class="ai-recommendation" id="aiRecommendation">
-                    <div class="ai-rec-header">
-                        <span class="rec-icon">🎯</span>
-                        <h3>AI RECOMMENDATION</h3>
-                    </div>
-                    <div class="ai-rec-pick" id="aiRecPick"></div>
-                    <div class="ai-rec-reasoning" id="aiRecReasoning"></div>
-                    <div class="ai-rec-units" id="aiRecUnits"></div>
+                <div class="ai-games-grid" id="aiGamesGrid">
+                    <!-- Populated by JS -->
                 </div>
             </div>
 
-            <!-- Quick Picks -->
-            <div class="ai-quick-section">
-                <div class="ai-quick-header">
-                    <span class="quick-icon">⚡</span>
-                    <h3>TODAY'S AI TOP PICKS</h3>
-                    <span class="section-badge green">AUTO-GENERATED</span>
+            <!-- Hidden selects for backward compatibility -->
+            <select id="aiSportSelect" style="display:none;"></select>
+            <select id="aiGameSelect" style="display:none;"></select>
+
+            <!-- AI Analysis Output -->
+            <div class="ai-output-section" id="aiOutputSection" style="display: none;">
+                <div class="ai-output-card">
+                    <div class="ai-output-header">
+                        <div class="ai-matchup" id="aiMatchup"></div>
+                        <div class="ai-confidence-ring" id="aiConfidence"></div>
+                    </div>
+
+                    <!-- Factors Grid -->
+                    <div class="ai-factors-grid">
+                        <div class="ai-factor-card" id="aiTrendsCard">
+                            <div class="ai-factor-header">
+                                <span class="factor-icon">📊</span>
+                                <h4>ATS TRENDS</h4>
+                            </div>
+                            <div class="ai-factor-content" id="aiTrends"></div>
+                        </div>
+                        <div class="ai-factor-card" id="aiSharpCard">
+                            <div class="ai-factor-header">
+                                <span class="factor-icon">🧠</span>
+                                <h4>SHARP ACTION</h4>
+                            </div>
+                            <div class="ai-factor-content" id="aiSharp"></div>
+                        </div>
+                        <div class="ai-factor-card" id="aiH2HCard">
+                            <div class="ai-factor-header">
+                                <span class="factor-icon">⚔️</span>
+                                <h4>HEAD TO HEAD</h4>
+                            </div>
+                            <div class="ai-factor-content" id="aiH2H"></div>
+                        </div>
+                        <div class="ai-factor-card" id="aiInjuryCard">
+                            <div class="ai-factor-header">
+                                <span class="factor-icon">🏥</span>
+                                <h4>INJURY IMPACT</h4>
+                            </div>
+                            <div class="ai-factor-content" id="aiInjury"></div>
+                        </div>
+                    </div>
+
+                    <!-- AI Recommendation -->
+                    <div class="ai-recommendation" id="aiRecommendation">
+                        <div class="ai-rec-badge">AI RECOMMENDATION</div>
+                        <div class="ai-rec-pick" id="aiRecPick"></div>
+                        <div class="ai-rec-reasoning" id="aiRecReasoning"></div>
+                        <div class="ai-rec-units" id="aiRecUnits"></div>
+                    </div>
                 </div>
-                <div class="ai-quick-picks" id="aiQuickPicks"></div>
+            </div>
+
+            <!-- Today's Top AI Picks -->
+            <div class="ai-top-picks-section">
+                <div class="ai-top-header">
+                    <div class="ai-top-title">
+                        <span class="lightning-icon">⚡</span>
+                        <h3>TODAY'S TOP AI PICKS</h3>
+                    </div>
+                    <span class="ai-badge pulse">LIVE</span>
+                </div>
+                <div class="ai-top-picks-grid" id="aiQuickPicks"></div>
             </div>
         </div>
 
@@ -634,61 +626,80 @@
         <div class="page-section" id="page-arbitrage">
             <div class="page-header">
                 <div class="page-title">💎 VALUE FINDER</div>
-                <div class="page-subtitle">Find +EV bets and arbitrage opportunities</div>
+                <div class="page-subtitle">Edge Detection & Odds Intelligence</div>
             </div>
 
-            <!-- Value Summary -->
-            <div class="value-summary">
-                <div class="value-stat-card">
-                    <div class="value-stat-icon">💰</div>
-                    <div class="value-stat-value" id="valueOpps">3</div>
-                    <div class="value-stat-label">+EV Opportunities</div>
+            <!-- Value Hero Section -->
+            <div class="value-hero-section">
+                <div class="value-hero-main">
+                    <div class="value-hero-icon">
+                        <div class="diamond-glow"></div>
+                        <span>💎</span>
+                    </div>
+                    <div class="value-hero-content">
+                        <div class="value-hero-label">BEST EDGE TODAY</div>
+                        <div class="value-hero-value" id="valueBestEV">+4.2%</div>
+                        <div class="value-hero-game">PHI +4.5 @ FanDuel</div>
+                    </div>
                 </div>
-                <div class="value-stat-card">
-                    <div class="value-stat-icon">📊</div>
-                    <div class="value-stat-value" id="valueBestEV">+4.2%</div>
-                    <div class="value-stat-label">Best Edge Today</div>
-                </div>
-                <div class="value-stat-card arb">
-                    <div class="value-stat-icon">🔄</div>
-                    <div class="value-stat-value" id="arbOpps">0</div>
-                    <div class="value-stat-label">Arb Opportunities</div>
+                <div class="value-hero-stats">
+                    <div class="value-stat-box">
+                        <span class="stat-icon">🎯</span>
+                        <span class="stat-number" id="valueOpps">3</span>
+                        <span class="stat-text">+EV Bets</span>
+                    </div>
+                    <div class="value-stat-box">
+                        <span class="stat-icon">📊</span>
+                        <span class="stat-number">4</span>
+                        <span class="stat-text">Line Moves</span>
+                    </div>
+                    <div class="value-stat-box arb">
+                        <span class="stat-icon">🔄</span>
+                        <span class="stat-number" id="arbOpps">0</span>
+                        <span class="stat-text">Arb Opps</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Odds Comparison -->
-            <div class="odds-comparison-section">
-                <div class="odds-section-header">
-                    <span class="section-icon">📱</span>
-                    <h3>ODDS COMPARISON</h3>
-                    <span class="section-badge">LIVE ODDS</span>
+            <!-- +EV Bets Section -->
+            <div class="value-ev-section">
+                <div class="value-section-header">
+                    <div class="header-left">
+                        <span class="header-icon">💰</span>
+                        <h3>POSITIVE EV BETS</h3>
+                    </div>
+                    <span class="value-badge pulse">+EV</span>
                 </div>
-                <div class="odds-comparison-intro">
-                    <p>Compare odds across sportsbooks to find the best value. Green highlights = best available odds.</p>
-                </div>
-                <div class="odds-comparison-table" id="oddsComparisonTable"></div>
+                <div class="ev-cards-grid" id="evBetsList"></div>
             </div>
 
-            <!-- +EV Bets -->
-            <div class="ev-section">
-                <div class="ev-section-header">
-                    <span class="section-icon">💎</span>
-                    <h3>POSITIVE EV BETS</h3>
-                    <span class="section-badge gold">+EV</span>
+            <!-- Odds Comparison Section -->
+            <div class="value-odds-section">
+                <div class="value-section-header">
+                    <div class="header-left">
+                        <span class="header-icon">📱</span>
+                        <h3>ODDS COMPARISON</h3>
+                    </div>
+                    <div class="sportsbook-logos">
+                        <span class="book-chip dk">DK</span>
+                        <span class="book-chip fd">FD</span>
+                        <span class="book-chip mgm">MGM</span>
+                        <span class="book-chip csr">CSR</span>
+                    </div>
                 </div>
-                <div class="ev-explainer">
-                    <p><strong>+EV (Positive Expected Value)</strong> means the odds offered are better than the "true" probability. Over time, betting +EV spots is profitable.</p>
-                </div>
-                <div class="ev-bets-list" id="evBetsList"></div>
+                <div class="odds-cards-grid" id="oddsComparisonTable"></div>
             </div>
 
-            <!-- Line Movement -->
-            <div class="line-movement-section">
-                <div class="line-section-header">
-                    <span class="section-icon">📈</span>
-                    <h3>LINE MOVEMENT TRACKER</h3>
+            <!-- Line Movement Section -->
+            <div class="value-lines-section">
+                <div class="value-section-header">
+                    <div class="header-left">
+                        <span class="header-icon">📈</span>
+                        <h3>LINE MOVEMENT</h3>
+                    </div>
+                    <span class="steam-badge">STEAM MOVES</span>
                 </div>
-                <div class="line-movement-list" id="lineMovementList"></div>
+                <div class="line-cards-grid" id="lineMovementList"></div>
             </div>
         </div>
 

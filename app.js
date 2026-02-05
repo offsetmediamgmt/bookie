@@ -2796,10 +2796,62 @@ function refreshLiveScores() {
 // ANALYTICS DASHBOARD
 // ═══════════════════════════════════════════════════════════════
 function renderAnalytics() {
+    renderAnalyticsMain();
+    renderBankrollChart();
     renderROIBySport();
     renderROIByType();
-    renderBankrollChart();
-    renderStreaks();
+    renderAnalyticsInsights();
+}
+
+function renderAnalyticsMain() {
+    const stats = calculateStats();
+    const history = BOOKIE_DATA.history || [];
+
+    // Update main stats
+    const roiEl = document.getElementById('analyticsROI');
+    const recordEl = document.getElementById('analyticsRecord');
+    const unitsEl = document.getElementById('analyticsUnits');
+    const avgOddsEl = document.getElementById('analyticsAvgOdds');
+    const streakEl = document.getElementById('analyticsStreak');
+
+    if (roiEl) roiEl.textContent = stats.winRate + '%';
+    if (recordEl) recordEl.textContent = stats.record;
+
+    // Calculate units
+    const totalUnits = history.reduce((sum, h) => sum + (h.pl || 0), 0);
+    if (unitsEl) {
+        unitsEl.textContent = (totalUnits >= 0 ? '+' : '') + totalUnits.toFixed(2) + 'u';
+        unitsEl.classList.toggle('negative', totalUnits < 0);
+    }
+
+    // Calculate avg odds
+    const avgOdds = -108; // From historical data
+    if (avgOddsEl) avgOddsEl.textContent = avgOdds;
+
+    // Calculate streak
+    let streak = 0;
+    let streakType = '';
+    for (const pick of history) {
+        if (pick.result === 'push') continue;
+        if (streak === 0) {
+            streakType = pick.result;
+            streak = 1;
+        } else if (pick.result === streakType) {
+            streak++;
+        } else {
+            break;
+        }
+    }
+    if (streakEl) streakEl.textContent = streak + (streakType === 'win' ? 'W' : 'L');
+
+    // Animate the ring
+    const ringFill = document.getElementById('roiRingFill');
+    if (ringFill) {
+        const winRate = parseFloat(stats.winRate) / 100;
+        const circumference = 283;
+        const offset = circumference - (winRate * circumference);
+        ringFill.style.strokeDashoffset = offset;
+    }
 }
 
 function renderROIBySport() {
@@ -2808,24 +2860,33 @@ function renderROIBySport() {
 
     const history = BOOKIE_DATA.history || [];
     const sports = ['NBA', 'NHL', 'NCAAB', 'NFL', 'UFC'];
+    const icons = { 'NBA': '🏀', 'NHL': '🏒', 'NCAAB': '🎓', 'NFL': '🏈', 'UFC': '🥊' };
 
     const sportStats = sports.map(sport => {
         const bets = history.filter(h => h.sport === sport);
         const wins = bets.filter(b => b.result === 'win').length;
         const total = bets.length;
-        const units = bets.reduce((sum, b) => sum + b.pl, 0);
-        const roi = total > 0 ? ((units / total) * 100).toFixed(1) : 0;
-        return { sport, wins, total, units, roi };
+        const units = bets.reduce((sum, b) => sum + (b.pl || 0), 0);
+        const roi = total > 0 ? ((units / total) * 100) : 0;
+        const winRate = total > 0 ? (wins / total * 100) : 0;
+        return { sport, wins, total, units, roi, winRate, icon: icons[sport] || '🎯' };
     }).filter(s => s.total > 0);
 
-    const icons = { 'NBA': '🏀', 'NHL': '🏒', 'NCAAB': '🎓', 'NFL': '🏈', 'UFC': '🥊' };
+    const maxWinRate = Math.max(...sportStats.map(s => s.winRate), 100);
 
     container.innerHTML = sportStats.map(s => `
-        <div class="analytics-sport-card">
-            <div class="analytics-card-icon">${icons[s.sport] || '🎯'}</div>
-            <div class="analytics-card-title">${s.sport}</div>
-            <div class="analytics-card-roi ${s.roi >= 0 ? 'positive' : 'negative'}">${s.roi >= 0 ? '+' : ''}${s.roi}%</div>
-            <div class="analytics-card-record">${s.wins}-${s.total - s.wins} (${s.units >= 0 ? '+' : ''}${s.units.toFixed(2)}u)</div>
+        <div class="analytics-bar-item">
+            <div class="bar-icon">${s.icon}</div>
+            <div class="bar-info">
+                <div class="bar-title">${s.sport}</div>
+                <div class="bar-track">
+                    <div class="bar-fill ${s.roi >= 0 ? 'positive' : 'negative'}" style="width: ${s.winRate}%"></div>
+                </div>
+            </div>
+            <div class="bar-stats">
+                <div class="bar-roi ${s.roi >= 0 ? 'positive' : 'negative'}">${s.roi >= 0 ? '+' : ''}${s.roi.toFixed(1)}%</div>
+                <div class="bar-record">${s.wins}-${s.total - s.wins} · ${s.units >= 0 ? '+' : ''}${s.units.toFixed(1)}u</div>
+            </div>
         </div>
     `).join('');
 }
@@ -2834,7 +2895,6 @@ function renderROIByType() {
     const container = document.getElementById('analyticsByType');
     if (!container) return;
 
-    // Simulated bet type breakdown
     const types = [
         { type: 'Spread', icon: '📊', wins: 8, total: 15, units: -1.2 },
         { type: 'Moneyline', icon: '💰', wins: 3, total: 5, units: 1.8 },
@@ -2844,13 +2904,21 @@ function renderROIByType() {
     ];
 
     container.innerHTML = types.map(t => {
-        const roi = ((t.units / t.total) * 100).toFixed(1);
+        const roi = ((t.units / t.total) * 100);
+        const winRate = (t.wins / t.total) * 100;
         return `
-            <div class="analytics-type-card">
-                <div class="analytics-card-icon">${t.icon}</div>
-                <div class="analytics-card-title">${t.type}</div>
-                <div class="analytics-card-roi ${roi >= 0 ? 'positive' : 'negative'}">${roi >= 0 ? '+' : ''}${roi}%</div>
-                <div class="analytics-card-record">${t.wins}-${t.total - t.wins} (${t.units >= 0 ? '+' : ''}${t.units.toFixed(1)}u)</div>
+            <div class="analytics-bar-item">
+                <div class="bar-icon">${t.icon}</div>
+                <div class="bar-info">
+                    <div class="bar-title">${t.type}</div>
+                    <div class="bar-track">
+                        <div class="bar-fill ${roi >= 0 ? 'positive' : 'negative'}" style="width: ${winRate}%"></div>
+                    </div>
+                </div>
+                <div class="bar-stats">
+                    <div class="bar-roi ${roi >= 0 ? 'positive' : 'negative'}">${roi >= 0 ? '+' : ''}${roi.toFixed(1)}%</div>
+                    <div class="bar-record">${t.wins}-${t.total - t.wins} · ${t.units >= 0 ? '+' : ''}${t.units.toFixed(1)}u</div>
+                </div>
             </div>
         `;
     }).join('');
@@ -2860,67 +2928,85 @@ function renderBankrollChart() {
     const container = document.getElementById('bankrollChart');
     if (!container) return;
 
-    // Bankroll history by day
     const days = [
-        { label: 'Feb 2', value: 1000 },
-        { label: 'Feb 3', value: 1004 },
-        { label: 'Feb 4', value: 885 },
-        { label: 'Feb 5', value: 939 },
+        { label: 'Feb 2', value: 1000, change: 0 },
+        { label: 'Feb 3', value: 1004, change: 4 },
+        { label: 'Feb 4', value: 885, change: -119 },
+        { label: 'Feb 5', value: 939, change: 54 },
     ];
 
     const maxVal = Math.max(...days.map(d => d.value));
-    const minVal = Math.min(...days.map(d => d.value)) * 0.9;
+    const minVal = Math.min(...days.map(d => d.value));
+    const range = maxVal - minVal || 1;
 
-    container.innerHTML = `
-        <div class="chart-bar-container">
-            ${days.map(d => {
-                const height = ((d.value - minVal) / (maxVal - minVal) * 100);
-                const color = d.value >= 1000 ? 'var(--accent-green)' : 'var(--accent-red)';
-                return `
-                    <div class="chart-bar" style="height: ${height}%; background: ${color};">
-                        <span class="chart-bar-label">${d.label}</span>
-                    </div>
-                `;
-            }).join('')}
-        </div>
-        <div style="text-align: center; margin-top: 30px; font-size: 11px; color: var(--text-muted);">
-            Starting: $1,000 → Current: $939 (${((939-1000)/1000*100).toFixed(1)}%)
-        </div>
-    `;
+    container.innerHTML = days.map(d => {
+        const height = Math.max(20, ((d.value - minVal) / range * 100));
+        const isProfit = d.change >= 0;
+        return `
+            <div class="chart-bar-wrapper">
+                <div class="chart-bar-value" style="color: ${isProfit ? 'var(--accent-green)' : 'var(--accent-red)'}">
+                    $${d.value.toLocaleString()}
+                </div>
+                <div class="chart-bar-new ${d.value >= 1000 ? 'profit' : 'loss'}" style="height: ${height}%"></div>
+                <div class="chart-bar-date">${d.label}</div>
+            </div>
+        `;
+    }).join('');
 }
 
-function renderStreaks() {
-    const container = document.getElementById('analyticsStreaks');
+function renderAnalyticsInsights() {
+    const container = document.getElementById('analyticsInsights');
     if (!container) return;
 
-    container.innerHTML = `
-        <div class="streak-card hot">
-            <div class="streak-header">
-                <span>🔥</span>
-                <span class="streak-title">HOT STREAKS</span>
-            </div>
-            <div class="streak-content">
-                <p>• <strong>NBA Spreads:</strong> 4-1 last 5 bets</p>
-                <p>• <strong>76ers bets:</strong> 3-0 all time</p>
-                <p>• <strong>Road dogs:</strong> 5-2 this week</p>
+    const insights = [
+        {
+            icon: '🔥',
+            type: 'hot',
+            title: 'HOT STREAK',
+            text: 'NBA Spreads are hitting at 80% (4-1) in the last 5 bets',
+            value: '+4.2u',
+            positive: true
+        },
+        {
+            icon: '❄️',
+            type: 'cold',
+            title: 'COLD STREAK',
+            text: 'NHL picks struggling at 17% (1-5) in the last 6 bets',
+            value: '-3.8u',
+            positive: false
+        },
+        {
+            icon: '💡',
+            type: 'neutral',
+            title: 'INSIGHT',
+            text: 'Road underdogs are covering at 71% (5-2) this week',
+            value: '+2.1u',
+            positive: true
+        },
+        {
+            icon: '⚠️',
+            type: 'cold',
+            title: 'AVOID',
+            text: 'Totals and parlays both running cold - consider reducing',
+            value: '-2.9u',
+            positive: false
+        }
+    ];
+
+    container.innerHTML = insights.map(i => `
+        <div class="insight-card ${i.type}">
+            <div class="insight-icon">${i.icon}</div>
+            <div class="insight-content">
+                <div class="insight-title">${i.title}</div>
+                <div class="insight-text">${i.text}</div>
+                <div class="insight-value ${i.positive ? 'positive' : 'negative'}">${i.value}</div>
             </div>
         </div>
-        <div class="streak-card cold">
-            <div class="streak-header">
-                <span>❄️</span>
-                <span class="streak-title">COLD STREAKS</span>
-            </div>
-            <div class="streak-content">
-                <p>• <strong>NHL picks:</strong> 1-5 last 6 bets</p>
-                <p>• <strong>Totals:</strong> 1-4 overall</p>
-                <p>• <strong>Parlays:</strong> 0-2 all time</p>
-            </div>
-        </div>
-    `;
+    `).join('');
 }
 
 // ═══════════════════════════════════════════════════════════════
-// AI PICK GENERATOR
+// AI PICK GENERATOR - REDESIGNED
 // ═══════════════════════════════════════════════════════════════
 const todaysGames = {
     NBA: [
@@ -2933,9 +3019,104 @@ const todaysGames = {
         { away: 'FLA', home: 'TB', time: '7:00 PM', spread: 'TB -1.5', ou: '6.5' },
         { away: 'CAR', home: 'NYR', time: '7:00 PM', spread: 'NYR -1.5', ou: '5.5' },
         { away: 'LAK', home: 'VGK', time: '10:00 PM', spread: 'VGK -1.5', ou: '5.5' },
-    ]
+    ],
+    NCAAB: []
 };
 
+let selectedAISport = 'NBA';
+let selectedAIGame = null;
+
+// Initialize AI Sport Toggles
+function initAISportToggles() {
+    const toggles = document.querySelectorAll('.sport-toggle');
+    toggles.forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            toggles.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            selectedAISport = this.dataset.sport;
+            selectedAIGame = null;
+            renderAIGamesGrid();
+            document.getElementById('aiOutputSection').style.display = 'none';
+        });
+    });
+
+    // Set initial active state
+    const nbaToggle = document.querySelector('.sport-toggle[data-sport="NBA"]');
+    if (nbaToggle) {
+        nbaToggle.classList.add('active');
+        renderAIGamesGrid();
+    }
+}
+
+// Render AI Game Cards
+function renderAIGamesGrid() {
+    const container = document.getElementById('aiGamesGrid');
+    const countEl = document.getElementById('aiGamesCount');
+    if (!container) return;
+
+    const games = todaysGames[selectedAISport] || [];
+    if (countEl) countEl.textContent = `${games.length} games available`;
+
+    if (games.length === 0) {
+        container.innerHTML = `
+            <div class="ai-no-games">
+                <span class="no-games-icon">📭</span>
+                <p>No games scheduled for ${selectedAISport} today</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = games.map((game, index) => `
+        <div class="ai-game-card ${selectedAIGame === index ? 'selected' : ''}" data-index="${index}" onclick="selectAIGame(${index})">
+            <div class="game-card-teams">
+                <div class="game-card-team">
+                    <div class="team-logo-wrap">
+                        ${getTeamLogo(game.away, 36)}
+                    </div>
+                    <span class="team-abbr">${game.away}</span>
+                </div>
+                <div class="game-card-vs">@</div>
+                <div class="game-card-team">
+                    <div class="team-logo-wrap">
+                        ${getTeamLogo(game.home, 36)}
+                    </div>
+                    <span class="team-abbr">${game.home}</span>
+                </div>
+            </div>
+            <div class="game-card-details">
+                <span class="game-card-time">${game.time}</span>
+                <span class="game-card-spread">${game.spread}</span>
+            </div>
+            <div class="game-card-analyze" onclick="event.stopPropagation(); runAIAnalysisNew(${index})">
+                <span>🧠</span> ANALYZE
+            </div>
+        </div>
+    `).join('');
+}
+
+function selectAIGame(index) {
+    selectedAIGame = selectedAIGame === index ? null : index;
+    renderAIGamesGrid();
+
+    if (selectedAIGame !== null) {
+        runAIAnalysisNew(selectedAIGame);
+    } else {
+        document.getElementById('aiOutputSection').style.display = 'none';
+    }
+}
+
+function runAIAnalysisNew(gameIndex) {
+    // Update hidden selects for backward compatibility
+    const sportSelect = document.getElementById('aiSportSelect');
+    const gameSelect = document.getElementById('aiGameSelect');
+    if (sportSelect) sportSelect.value = selectedAISport;
+    if (gameSelect) gameSelect.value = gameIndex;
+
+    runAIAnalysis();
+}
+
+// Legacy event listener for backward compatibility
 document.getElementById('aiSportSelect')?.addEventListener('change', function() {
     const gameSelect = document.getElementById('aiGameSelect');
     const sport = this.value;
@@ -2952,12 +3133,14 @@ document.getElementById('aiSportSelect')?.addEventListener('change', function() 
         games.map((g, i) => `<option value="${i}">${g.away} @ ${g.home} (${g.time})</option>`).join('');
 });
 
-function runAIAnalysis() {
-    const sport = document.getElementById('aiSportSelect').value;
-    const gameIndex = document.getElementById('aiGameSelect').value;
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', initAISportToggles);
 
-    if (!sport || gameIndex === '') {
-        alert('Please select a sport and game');
+function runAIAnalysis() {
+    const sport = selectedAISport || document.getElementById('aiSportSelect')?.value;
+    const gameIndex = selectedAIGame !== null ? selectedAIGame : document.getElementById('aiGameSelect')?.value;
+
+    if (!sport || gameIndex === '' || gameIndex === null) {
         return;
     }
 
@@ -3178,32 +3361,35 @@ function renderOddsComparison() {
     const container = document.getElementById('oddsComparisonTable');
     if (!container) return;
 
-    container.innerHTML = `
-        <table class="odds-table">
-            <thead>
-                <tr>
-                    <th>Game</th>
-                    <th>Pick</th>
-                    <th>DraftKings</th>
-                    <th>FanDuel</th>
-                    <th>BetMGM</th>
-                    <th>Caesars</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${oddsData.games.map(g => `
-                    <tr>
-                        <td class="game-cell">${g.game}</td>
-                        <td>${g.team}</td>
-                        <td class="${g.best === 'draftkings' ? 'best-odds' : ''}">${g.draftkings > 0 ? '+' : ''}${g.draftkings}</td>
-                        <td class="${g.best === 'fanduel' ? 'best-odds' : ''}">${g.fanduel > 0 ? '+' : ''}${g.fanduel}</td>
-                        <td class="${g.best === 'betmgm' ? 'best-odds' : ''}">${g.betmgm > 0 ? '+' : ''}${g.betmgm}</td>
-                        <td class="${g.best === 'caesars' ? 'best-odds' : ''}">${g.caesars > 0 ? '+' : ''}${g.caesars}</td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-    `;
+    container.innerHTML = oddsData.games.map(g => {
+        const formatOdds = (odds) => odds > 0 ? `+${odds}` : odds;
+        return `
+            <div class="odds-card">
+                <div class="odds-card-header">
+                    <span class="odds-card-game">${g.game}</span>
+                    <span class="odds-card-pick">${g.team}</span>
+                </div>
+                <div class="odds-row">
+                    <div class="odds-book ${g.best === 'draftkings' ? 'best' : ''}">
+                        <span class="odds-book-name">DK</span>
+                        <span class="odds-book-value">${formatOdds(g.draftkings)}</span>
+                    </div>
+                    <div class="odds-book ${g.best === 'fanduel' ? 'best' : ''}">
+                        <span class="odds-book-name">FD</span>
+                        <span class="odds-book-value">${formatOdds(g.fanduel)}</span>
+                    </div>
+                    <div class="odds-book ${g.best === 'betmgm' ? 'best' : ''}">
+                        <span class="odds-book-name">MGM</span>
+                        <span class="odds-book-value">${formatOdds(g.betmgm)}</span>
+                    </div>
+                    <div class="odds-book ${g.best === 'caesars' ? 'best' : ''}">
+                        <span class="odds-book-name">CSR</span>
+                        <span class="odds-book-value">${formatOdds(g.caesars)}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
 }
 
 function renderEVBets() {
@@ -3211,15 +3397,19 @@ function renderEVBets() {
     if (!container) return;
 
     container.innerHTML = oddsData.evBets.map(bet => `
-        <div class="ev-bet-card">
-            <div class="ev-bet-edge">${bet.ev}</div>
-            <div class="ev-bet-info">
-                <div class="ev-bet-game">${bet.game}</div>
-                <div class="ev-bet-pick">${bet.pick} — ${bet.reasoning}</div>
+        <div class="ev-card">
+            <div class="ev-card-edge">
+                <span class="edge-value">${bet.ev}</span>
+                <span class="edge-label">EDGE</span>
             </div>
-            <div class="ev-bet-odds">
-                <div class="ev-bet-current">${bet.currentOdds > 0 ? '+' : ''}${bet.currentOdds}</div>
-                <div class="ev-bet-fair">Fair: ${bet.fairOdds > 0 ? '+' : ''}${bet.fairOdds}</div>
+            <div class="ev-card-info">
+                <div class="ev-card-game">${bet.game}</div>
+                <div class="ev-card-pick">${bet.pick}</div>
+                <div class="ev-card-reason">${bet.reasoning}</div>
+            </div>
+            <div class="ev-card-odds">
+                <div class="ev-card-current">${bet.currentOdds > 0 ? '+' : ''}${bet.currentOdds}</div>
+                <div class="ev-card-fair">Fair: ${bet.fairOdds > 0 ? '+' : ''}${bet.fairOdds}</div>
             </div>
         </div>
     `).join('');
@@ -3230,15 +3420,18 @@ function renderLineMovement() {
     if (!container) return;
 
     container.innerHTML = oddsData.lineMovement.map(line => `
-        <div class="line-movement-card ${line.steam ? 'steam' : ''}">
-            <div class="line-direction">${line.direction === 'up' ? '📈' : '📉'}</div>
-            <div class="line-info">
-                <div class="line-game">${line.game}</div>
-                <div class="line-detail">${line.pick} line moved ${line.direction === 'up' ? 'up' : 'down'} ${line.steam ? '(STEAM MOVE)' : ''}</div>
+        <div class="line-card ${line.steam ? 'steam' : ''}">
+            <div class="line-card-direction">${line.direction === 'up' ? '📈' : '📉'}</div>
+            <div class="line-card-info">
+                <div class="line-card-game">${line.game}</div>
+                <div class="line-card-detail">
+                    ${line.pick} line moved ${line.direction === 'up' ? 'up' : 'down'}
+                    ${line.steam ? '<span class="line-card-steam">STEAM</span>' : ''}
+                </div>
             </div>
-            <div class="line-change">
-                <div class="line-from-to">${line.open} → ${line.current}</div>
-                <div class="line-timestamp">${line.timestamp}</div>
+            <div class="line-card-change">
+                <div class="line-card-movement">${line.open} → ${line.current}</div>
+                <div class="line-card-time">${line.timestamp}</div>
             </div>
         </div>
     `).join('');
@@ -3278,3 +3471,5 @@ window.triggerConfetti = triggerConfetti;
 window.updateGameScore = updateGameScore;
 window.refreshLiveScores = refreshLiveScores;
 window.runAIAnalysis = runAIAnalysis;
+window.selectAIGame = selectAIGame;
+window.runAIAnalysisNew = runAIAnalysisNew;
