@@ -186,12 +186,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initCalculators();
     renderBetsPage();
     renderWatchPage();
+    renderInjuryPage();
     renderDailyCard();
     renderHistory();
     renderPlayerProps();
     updateHeaderStats();
     loadBetStatus();
     initCountdownTimer();
+    initInjuryFilters();
 });
 
 // ═══════════════════════════════════════════════════════════════
@@ -1633,6 +1635,129 @@ function renderWatchPage() {
     renderTimeline(games);
     renderGamesList(games);
     renderFlightTracker(games);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INJURY REPORT PAGE
+// ═══════════════════════════════════════════════════════════════
+let currentInjuryFilter = 'all';
+
+function initInjuryFilters() {
+    const filterBtns = document.querySelectorAll('#injuryFilters .filter-btn');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentInjuryFilter = btn.dataset.filter;
+            renderInjuryPage();
+        });
+    });
+}
+
+function renderInjuryPage() {
+    const injuries = BOOKIE_DATA.injuries || [];
+
+    // Filter by sport if needed
+    const filtered = currentInjuryFilter === 'all'
+        ? injuries
+        : injuries.filter(i => i.sport === currentInjuryFilter);
+
+    // Update summary counts
+    const outCount = filtered.filter(i => i.status === 'out').length;
+    const questionableCount = filtered.filter(i => i.status === 'questionable').length;
+    const probableCount = filtered.filter(i => i.status === 'probable').length;
+
+    const outEl = document.getElementById('injuryOut');
+    const questionableEl = document.getElementById('injuryQuestionable');
+    const probableEl = document.getElementById('injuryProbable');
+
+    if (outEl) outEl.textContent = outCount;
+    if (questionableEl) questionableEl.textContent = questionableCount;
+    if (probableEl) probableEl.textContent = probableCount;
+
+    // Render key injuries (high impact)
+    renderKeyInjuries(filtered.filter(i => i.impact === 'high'));
+
+    // Render full list grouped by team
+    renderFullInjuryList(filtered);
+}
+
+function renderKeyInjuries(injuries) {
+    const container = document.getElementById('keyInjuriesList');
+    if (!container) return;
+
+    if (injuries.length === 0) {
+        container.innerHTML = '<div class="no-data">No high-impact injuries to report</div>';
+        return;
+    }
+
+    container.innerHTML = injuries.map(injury => `
+        <div class="injury-card ${injury.status}">
+            <div class="injury-player-img">
+                ${getTeamLogo(injury.team, 50)}
+            </div>
+            <div class="injury-info">
+                <div class="injury-player-name">${injury.player}</div>
+                <div class="injury-team-position">${injury.teamFull} · ${injury.position} · ${getSportEmoji(injury.sport)} ${injury.sport}</div>
+                <div class="injury-details">${injury.injury} — ${injury.notes}</div>
+            </div>
+            <div class="injury-status">
+                <span class="injury-status-badge ${injury.status}">${injury.status.toUpperCase()}</span>
+                <span class="injury-return">${injury.return}</span>
+                <span class="injury-impact ${injury.impact}">${injury.impact.toUpperCase()} IMPACT</span>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderFullInjuryList(injuries) {
+    const container = document.getElementById('fullInjuryList');
+    if (!container) return;
+
+    // Group by team
+    const byTeam = {};
+    injuries.forEach(injury => {
+        if (!byTeam[injury.team]) {
+            byTeam[injury.team] = {
+                team: injury.team,
+                teamFull: injury.teamFull,
+                sport: injury.sport,
+                players: []
+            };
+        }
+        byTeam[injury.team].players.push(injury);
+    });
+
+    const teams = Object.values(byTeam);
+
+    if (teams.length === 0) {
+        container.innerHTML = '<div class="no-data">No injuries to report</div>';
+        return;
+    }
+
+    container.innerHTML = teams.map(team => `
+        <div class="injury-team-group">
+            <div class="injury-team-header">
+                <div class="injury-team-logo">
+                    ${getTeamLogo(team.team, 36)}
+                </div>
+                <div class="injury-team-name">${team.teamFull}</div>
+                <span class="injury-team-count">${team.players.length} ${team.players.length === 1 ? 'player' : 'players'}</span>
+            </div>
+            <div class="injury-team-players">
+                ${team.players.map(p => `
+                    <div class="injury-team-player">
+                        <div class="injury-player-info">
+                            <span class="injury-player-position">${p.position}</span>
+                            <span class="injury-player-detail">${p.player}</span>
+                            <span class="injury-player-reason">— ${p.injury}</span>
+                        </div>
+                        <span class="injury-status-badge ${p.status}">${p.status.toUpperCase()}</span>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
 }
 
 function renderNextGame(game) {

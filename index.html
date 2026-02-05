@@ -52,13 +52,13 @@
             <span class="nav-icon">📺</span>
             <span class="nav-text">WATCH</span>
         </a>
+        <a class="nav-item" data-page="injury" data-theme="theme-injury">
+            <span class="nav-icon">🏥</span>
+            <span class="nav-text">INJURIES</span>
+        </a>
         <a class="nav-item" data-page="history" data-theme="theme-history">
             <span class="nav-icon">📈</span>
             <span class="nav-text">TRACK RECORD</span>
-        </a>
-        <a class="nav-item" data-page="daily" data-theme="theme-daily">
-            <span class="nav-icon">📊</span>
-            <span class="nav-text">DAILY CARD</span>
         </a>
         <a class="nav-item" data-page="bankroll" data-theme="theme-bankroll">
             <span class="nav-icon">💰</span>
@@ -170,6 +170,58 @@
                 <p>Teams traveling long distances or to high altitude face recovery challenges that can impact performance.</p>
             </div>
             <div class="flight-tracker-list" id="flightTrackerList"></div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             INJURY REPORT PAGE
+             ═══════════════════════════════════════════════════════════════ -->
+        <div class="page-section" id="page-injury">
+            <div class="page-header">
+                <div class="page-title">🏥 INJURY REPORT</div>
+                <div class="page-subtitle">Notable Players — Updated Feb 5, 2026</div>
+            </div>
+
+            <!-- Injury Summary -->
+            <div class="injury-summary">
+                <div class="injury-stat-card out">
+                    <div class="injury-stat-value" id="injuryOut">12</div>
+                    <div class="injury-stat-label">OUT</div>
+                </div>
+                <div class="injury-stat-card questionable">
+                    <div class="injury-stat-value" id="injuryQuestionable">8</div>
+                    <div class="injury-stat-label">QUESTIONABLE</div>
+                </div>
+                <div class="injury-stat-card probable">
+                    <div class="injury-stat-value" id="injuryProbable">5</div>
+                    <div class="injury-stat-label">PROBABLE</div>
+                </div>
+            </div>
+
+            <!-- Sport Filters -->
+            <div class="injury-filters" id="injuryFilters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="NBA">🏀 NBA</button>
+                <button class="filter-btn" data-filter="NHL">🏒 NHL</button>
+                <button class="filter-btn" data-filter="NFL">🏈 NFL</button>
+            </div>
+
+            <!-- Key Injuries Section -->
+            <div class="injury-section">
+                <div class="injury-section-header">
+                    <span class="section-icon">⚠️</span>
+                    <h3>KEY INJURIES — Betting Impact</h3>
+                </div>
+                <div class="injury-list" id="keyInjuriesList"></div>
+            </div>
+
+            <!-- All Injuries by Team -->
+            <div class="injury-section">
+                <div class="injury-section-header">
+                    <span class="section-icon">📋</span>
+                    <h3>FULL INJURY REPORT</h3>
+                </div>
+                <div class="injury-teams-list" id="fullInjuryList"></div>
+            </div>
         </div>
 
         <!-- ═══════════════════════════════════════════════════════════════

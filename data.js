@@ -216,6 +216,90 @@ const BOOKIE_DATA = {
     ],
 
     // ═══════════════════════════════════════════════════════════════
+    // INJURY REPORT - February 5, 2026
+    // ═══════════════════════════════════════════════════════════════
+    injuries: [
+        // NBA - KEY INJURIES
+        {
+            id: 1, sport: "NBA", player: "Shai Gilgeous-Alexander", team: "OKC", teamFull: "Thunder", position: "G",
+            status: "out", injury: "Abdominal Strain", return: "After All-Star Break", impact: "high",
+            notes: "Reigning MVP out until at least Feb 15. Thunder 40-11 without him tonight."
+        },
+        {
+            id: 2, sport: "NBA", player: "Giannis Antetokounmpo", team: "MIL", teamFull: "Bucks", position: "F",
+            status: "out", injury: "Right Calf Strain", return: "TBD - Trade Rumors", impact: "high",
+            notes: "Out since Jan 23. Trade deadline speculation swirling. May be dealt today."
+        },
+        {
+            id: 3, sport: "NBA", player: "Jaylen Brown", team: "BOS", teamFull: "Celtics", position: "G/F",
+            status: "out", injury: "Hamstring/Knee", return: "Day-to-Day", impact: "high",
+            notes: "Missed last game vs Rockets. Averaging 29.5 PPG this season."
+        },
+        {
+            id: 4, sport: "NBA", player: "Anthony Davis", team: "LAL", teamFull: "Lakers", position: "F/C",
+            status: "questionable", injury: "Knee Soreness", return: "Game-Time Decision", impact: "high",
+            notes: "Listed questionable for PHI game. Lakers need him vs Embiid."
+        },
+        {
+            id: 5, sport: "NBA", player: "Kawhi Leonard", team: "LAC", teamFull: "Clippers", position: "F",
+            status: "out", injury: "Knee Inflammation", return: "Indefinite", impact: "high",
+            notes: "Has played only 6 games this season. Clippers managing carefully."
+        },
+        {
+            id: 6, sport: "NBA", player: "Ja Morant", team: "MEM", teamFull: "Grizzlies", position: "G",
+            status: "questionable", injury: "Shoulder", return: "Game-Time Decision", impact: "high",
+            notes: "Dealing with shoulder issue. Grizzlies off tonight."
+        },
+        {
+            id: 7, sport: "NBA", player: "Zion Williamson", team: "NOP", teamFull: "Pelicans", position: "F",
+            status: "out", injury: "Hamstring", return: "Out for Season", impact: "medium",
+            notes: "Season-ending injury. Pelicans 12-39, worst in West."
+        },
+        {
+            id: 8, sport: "NBA", player: "Victor Wembanyama", team: "SAS", teamFull: "Spurs", position: "C",
+            status: "probable", injury: "Rest", return: "Expected to Play", impact: "low",
+            notes: "May rest before Olympic break. 22/14 last game vs OKC."
+        },
+        // NHL - KEY INJURIES
+        {
+            id: 9, sport: "NHL", player: "Connor McDavid", team: "EDM", teamFull: "Oilers", position: "C",
+            status: "out", injury: "Olympics", return: "Feb 25", impact: "medium",
+            notes: "Healthy - heading to Milan for Team Canada. NHL pauses after tonight."
+        },
+        {
+            id: 10, sport: "NHL", player: "Auston Matthews", team: "TOR", teamFull: "Maple Leafs", position: "C",
+            status: "out", injury: "Olympics", return: "Feb 25", impact: "medium",
+            notes: "Healthy - representing USA in Milan. Last game before break."
+        },
+        {
+            id: 11, sport: "NHL", player: "Igor Shesterkin", team: "NYR", teamFull: "Rangers", position: "G",
+            status: "probable", injury: "Rest", return: "Expected to Start", impact: "medium",
+            notes: "Should start vs Hurricanes in final game before Olympic break."
+        },
+        {
+            id: 12, sport: "NHL", player: "Matthew Tkachuk", team: "FLA", teamFull: "Panthers", position: "LW",
+            status: "probable", injury: "Upper Body", return: "Expected to Play", impact: "medium",
+            notes: "Listed probable for Tampa rivalry game. Panthers 37-13-4."
+        },
+        // NFL - SUPER BOWL
+        {
+            id: 13, sport: "NFL", player: "Kenneth Walker III", team: "SEA", teamFull: "Seahawks", position: "RB",
+            status: "probable", injury: "Ankle", return: "Expected to Play SB", impact: "medium",
+            notes: "Full participant in practice. Ready for Super Bowl vs Patriots."
+        },
+        {
+            id: 14, sport: "NFL", player: "DK Metcalf", team: "SEA", teamFull: "Seahawks", position: "WR",
+            status: "probable", injury: "Shoulder", return: "Will Play SB", impact: "low",
+            notes: "No limitations in practice. Full go for Super Bowl."
+        },
+        {
+            id: 15, sport: "NFL", player: "Drake Maye", team: "NE", teamFull: "Patriots", position: "QB",
+            status: "probable", injury: "Finger", return: "Will Start SB", impact: "low",
+            notes: "Rookie QB healthy and ready for biggest game of his life."
+        }
+    ],
+
+    // ═══════════════════════════════════════════════════════════════
     // WEEKLY PICKS - February 4-8, 2026 (SUPER BOWL WEEK)
     // ═══════════════════════════════════════════════════════════════
     weeklyPicks: [

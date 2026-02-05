@@ -35,6 +35,7 @@
 .theme-bets { --accent-primary: #00e676; --accent-secondary: #69f0ae; --accent-glow: rgba(0, 230, 118, 0.3); --gradient-primary: linear-gradient(135deg, #00e676 0%, #69f0ae 100%); }
 .theme-watch { --accent-primary: #ff6b35; --accent-secondary: #ff8c5a; --accent-glow: rgba(255, 107, 53, 0.3); --gradient-primary: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 100%); }
 .theme-daily { --accent-primary: #0066ff; --accent-secondary: #00aaff; --accent-glow: rgba(0, 102, 255, 0.3); --gradient-primary: linear-gradient(135deg, #0066ff 0%, #00aaff 100%); }
+.theme-injury { --accent-primary: #ff4757; --accent-secondary: #ff6b81; --accent-glow: rgba(255, 71, 87, 0.3); --gradient-primary: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%); }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -5075,5 +5076,357 @@ body {
         width: 100%;
         text-align: center;
         margin-top: 8px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   INJURY REPORT PAGE
+   ═══════════════════════════════════════════════════════════════ */
+
+.injury-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.injury-stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+
+.injury-stat-card.out {
+    border-color: rgba(255, 71, 87, 0.4);
+    background: rgba(255, 71, 87, 0.08);
+}
+
+.injury-stat-card.questionable {
+    border-color: rgba(255, 165, 0, 0.4);
+    background: rgba(255, 165, 0, 0.08);
+}
+
+.injury-stat-card.probable {
+    border-color: rgba(0, 230, 118, 0.4);
+    background: rgba(0, 230, 118, 0.08);
+}
+
+.injury-stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.injury-stat-card.out .injury-stat-value { color: #ff4757; }
+.injury-stat-card.questionable .injury-stat-value { color: #ffa502; }
+.injury-stat-card.probable .injury-stat-value { color: #00e676; }
+
+.injury-stat-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+}
+
+.injury-filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.injury-section {
+    margin-bottom: 24px;
+}
+
+.injury-section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.injury-section-header .section-icon {
+    font-size: 18px;
+}
+
+.injury-section-header h3 {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--text-primary);
+}
+
+.injury-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.injury-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.2s ease;
+}
+
+.injury-card:hover {
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+}
+
+.injury-card.out {
+    border-left: 3px solid #ff4757;
+}
+
+.injury-card.questionable {
+    border-left: 3px solid #ffa502;
+}
+
+.injury-card.probable {
+    border-left: 3px solid #00e676;
+}
+
+.injury-card.day-to-day {
+    border-left: 3px solid #00d4ff;
+}
+
+.injury-player-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--bg-dark);
+    border: 2px solid var(--border);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.injury-player-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.injury-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.injury-player-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+}
+
+.injury-team-position {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.injury-details {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.injury-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.injury-status-badge {
+    font-size: 9px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 1px;
+}
+
+.injury-status-badge.out {
+    background: rgba(255, 71, 87, 0.2);
+    color: #ff4757;
+}
+
+.injury-status-badge.questionable {
+    background: rgba(255, 165, 0, 0.2);
+    color: #ffa502;
+}
+
+.injury-status-badge.probable {
+    background: rgba(0, 230, 118, 0.2);
+    color: #00e676;
+}
+
+.injury-status-badge.day-to-day {
+    background: rgba(0, 212, 255, 0.2);
+    color: #00d4ff;
+}
+
+.injury-return {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.injury-impact {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(255, 71, 87, 0.15);
+    color: #ff6b81;
+    font-weight: 600;
+}
+
+.injury-impact.high {
+    background: rgba(255, 71, 87, 0.2);
+    color: #ff4757;
+}
+
+.injury-impact.medium {
+    background: rgba(255, 165, 0, 0.2);
+    color: #ffa502;
+}
+
+.injury-impact.low {
+    background: rgba(0, 230, 118, 0.2);
+    color: #00e676;
+}
+
+/* Team Groupings */
+.injury-teams-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.injury-team-group {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.injury-team-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+}
+
+.injury-team-header:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.injury-team-logo {
+    width: 36px;
+    height: 36px;
+}
+
+.injury-team-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.injury-team-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.injury-team-count {
+    font-size: 11px;
+    color: var(--text-secondary);
+    background: var(--bg-dark);
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.injury-team-players {
+    padding: 12px;
+}
+
+.injury-team-player {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+}
+
+.injury-team-player:last-child {
+    margin-bottom: 0;
+}
+
+.injury-team-player:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.injury-player-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.injury-player-position {
+    font-size: 10px;
+    color: var(--text-muted);
+    background: var(--bg-dark);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.injury-player-detail {
+    font-size: 13px;
+    color: var(--text-primary);
+}
+
+.injury-player-reason {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .injury-summary {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .injury-stat-card {
+        padding: 12px 8px;
+    }
+
+    .injury-stat-value {
+        font-size: 22px;
+    }
+
+    .injury-card {
+        flex-wrap: wrap;
+    }
+
+    .injury-status {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid var(--border);
     }
 }
